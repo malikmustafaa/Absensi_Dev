@@ -47,17 +47,6 @@ class _BerandaState extends State<Beranda> {
     });
   }
 
-  isLogout() async {
-    final pref = await SharedPreferences.getInstance();
-
-    pref.setBool("isLogin", false);
-    Navigator.of(context).push(
-      MaterialPageRoute(
-        builder: (context) => const LoginPage(),
-      ),
-    );
-  }
-
   @override
   Widget build(BuildContext context) {
     return ChangeNotifierProvider(

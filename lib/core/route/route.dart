@@ -6,8 +6,8 @@ import '../../features/examples/example/view/example_view.dart';
 
 enum RouteType { push, pushReplace, pushRemove }
 
-// const initialRoute = SplashPage.routeName;
-const initialRoute = ExamplePage.routeName;
+const initialRoute = SplashPage.routeName;
+// const initialRoute = ExamplePage.routeName;
 
 //====GENERATE ROUTES====
 Route<dynamic>? generateRoutes(RouteSettings settings) {
