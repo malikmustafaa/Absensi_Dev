@@ -106,3 +106,9 @@ var buttonYaStyle = const TextStyle(
     fontFamily: 'Ubuntu',
     fontSize: 16,
     fontWeight: FontWeight.w700);
+
+var buttonDisable = const TextStyle(
+    color: whiteColor,
+    fontFamily: 'Ubuntu',
+    fontSize: 12,
+    fontWeight: FontWeight.w500);

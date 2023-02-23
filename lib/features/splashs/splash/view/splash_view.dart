@@ -3,7 +3,6 @@ import 'package:b7c_clean_architecture/features/splashs/splash/view_model/splash
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-import '../../../../core/route/route.dart';
 import '../../../homes/home/view/home_view.dart';
 
 class SplashPage extends StatefulWidget {

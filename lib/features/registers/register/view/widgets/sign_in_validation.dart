@@ -1,3 +1,7 @@
+// ignore_for_file: unnecessary_null_comparison
+
+import 'dart:developer';
+
 import 'package:flutter/material.dart';
 import './validation_item.dart';
 
@@ -11,9 +15,7 @@ class SignupValidation with ChangeNotifier {
   ValidationItem get lastName => _lastName;
   ValidationItem get dob => _dob;
   bool get isValid {
-    if (_lastName.value != null &&
-        _firstName.value != null &&
-        dob.value != null) {
+    if (_firstName.value != null && dob.value != null) {
       return true;
     } else {
       return false;
@@ -50,7 +52,6 @@ class SignupValidation with ChangeNotifier {
   }
 
   void submitData() {
-    print(
-        "FirstName: ${firstName.value}, LastName: ${lastName.value}, ${DateTime.parse(dob.value)}");
+    log("FirstName: ${firstName.value}, LastName: ${lastName.value}, ${DateTime.parse(dob.value)}");
   }
 }

@@ -21,37 +21,35 @@ class GridBeranda extends StatefulWidget {
 class _GridBerandaState extends State<GridBeranda> {
   @override
   Widget build(BuildContext context) {
-    return Container(
-      child: Column(
-        children: [
-          Expanded(
-            child: GestureDetector(
-              onTap: widget.onTap,
-              child: Container(
-                height: 80,
-                width: 80,
-                decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(15),
-                  color: widget.color,
-                  image: const DecorationImage(
-                    fit: BoxFit.cover,
-                    image: AssetImage(
-                      'assets/images/orang.png',
-                    ),
+    return Column(
+      children: [
+        Expanded(
+          child: GestureDetector(
+            onTap: widget.onTap,
+            child: Container(
+              height: 80,
+              width: 80,
+              decoration: BoxDecoration(
+                borderRadius: BorderRadius.circular(15),
+                color: widget.color,
+                image: const DecorationImage(
+                  fit: BoxFit.cover,
+                  image: AssetImage(
+                    'assets/images/orang.png',
                   ),
                 ),
               ),
             ),
           ),
-          const SizedBox(
-            height: 5,
-          ),
-          Text(
-            widget.text,
-            style: textFieldStyle,
-          ),
-        ],
-      ),
+        ),
+        const SizedBox(
+          height: 5,
+        ),
+        Text(
+          widget.text,
+          style: textFieldStyle,
+        ),
+      ],
     );
   }
 }

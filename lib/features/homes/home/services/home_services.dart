@@ -4,7 +4,6 @@ import 'package:flutter/material.dart';
 import 'package:b7c_clean_architecture/application/api/api.dart';
 
 import '../../../../domain/entity/home/request_home_entity.dart';
-import '../../../../domain/entity/home/response_home_entity.dart';
 import '../../../../domain/repository/home/home_repository.dart';
 
 class HomeServices extends Api implements HomeRepository {
@@ -21,7 +20,7 @@ class HomeServices extends Api implements HomeRepository {
       // ignore: use_build_context_synchronously
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(
-          content: Text('Mohon periksa kembali!'),
+          content: const Text('Mohon periksa kembali!'),
           action: SnackBarAction(
             label: 'Ok',
             onPressed: () {},

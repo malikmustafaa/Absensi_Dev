@@ -38,7 +38,8 @@ class ItemKategori extends StatelessWidget {
                   width: 54,
                   decoration: BoxDecoration(
                     border: Border.all(
-                        color: Color.fromARGB(222, 244, 125, 180), width: 1.4),
+                        color: const Color.fromARGB(222, 244, 125, 180),
+                        width: 1.4),
                     color: default2Color,
                     borderRadius: BorderRadius.circular(12),
                   ),

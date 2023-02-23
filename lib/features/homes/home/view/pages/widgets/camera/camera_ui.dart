@@ -30,6 +30,7 @@ class KameraUI extends StatefulWidget {
   final EdgeInsets? infoMargin;
   final EdgeInsets? info2Margin;
   @override
+  // ignore: library_private_types_in_public_api
   _KameraUIState createState() => _KameraUIState();
 }
 
