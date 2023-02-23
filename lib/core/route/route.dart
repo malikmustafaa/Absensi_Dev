@@ -2,12 +2,10 @@ import 'package:b7c_clean_architecture/features/splashs/splash/view/splash_view.
 import 'package:flutter/material.dart';
 import 'package:b7c_clean_architecture/routes/all_route.dart';
 
-import '../../features/examples/example/view/example_view.dart';
-
 enum RouteType { push, pushReplace, pushRemove }
 
 // const initialRoute = SplashPage.routeName;
-const initialRoute = ExamplePage.routeName;
+const initialRoute = SplashPage.routeName;
 
 //====GENERATE ROUTES====
 Route<dynamic>? generateRoutes(RouteSettings settings) {
