@@ -1,9 +1,10 @@
 import 'package:b7c_clean_architecture/features/homes/home/view/pages/widgets/list_absensi_widget.dart';
 import 'package:flutter/material.dart';
-
+import '../../../../../contants/color_style.dart';
 import '../../model/list_absensi_model.dart';
 
 class Riwayat extends StatefulWidget {
+  static const routeName = "/Riwayat";
   const Riwayat({Key? key}) : super(key: key);
 
   @override
@@ -11,10 +12,6 @@ class Riwayat extends StatefulWidget {
 }
 
 class _RiwayatState extends State<Riwayat> {
-  //  Future<void> setStatelonglat(BuildContext context) {
-  // // providerVM.pushDataKehadiran(context, param);
-  // }
-
   @override
   void initState() {
     super.initState();
@@ -27,43 +24,28 @@ class _RiwayatState extends State<Riwayat> {
 
   @override
   Widget build(BuildContext context) {
-    // final provider = context.read<ListAbsensiViewModel>();
-    // final provider = Provider.of<DashboardViewModel>(context, listen: true);
-
     return Scaffold(
+      backgroundColor: greyBgColor,
       body: SafeArea(
         child: SizedBox(
-          // width: 160,
           child: Container(
             width: MediaQuery.of(context).size.width,
-            // padding: EdgeInsets.symmetric(
-            // vertical: context.padding2, horizontal: context.padding0),
             decoration: BoxDecoration(
               color: Colors.white,
-              borderRadius: BorderRadius.circular(15),
-              // boxShadow: [
-              //   BoxShadow(
-              //     // color: Palette.neutral100.withOpacity(0.25),
-              //     spreadRadius: 2,
-              //     blurRadius: 8,
-              //     offset: const Offset(1, 1),
-              //   ),
-              // ],
+              borderRadius: BorderRadius.circular(
+                15,
+              ),
             ),
             child: ListView.builder(
-                shrinkWrap: true,
-                scrollDirection: Axis.vertical,
-                itemCount: listOther.length,
-                itemBuilder: (BuildContext context, int index) =>
-                    ListAbsensiWidget(
-                      onTap: () {
-                        // provider.otherNavGoTo(listOther[index].text);
-                      },
-                      icons: listOther[index].icon,
-                      color: listOther[index].color,
-                      text: listOther[index].text,
-                      divider: listOther[index].divider != '0',
-                    )),
+              itemCount: listOther.length,
+              itemBuilder: (BuildContext context, int index) =>
+                  ListAbsensiWidget(
+                fullname: listOther[index].fullname,
+                jabatan: listOther[index].fullname,
+                tanggal: listOther[index].tanggal,
+                jam: listOther[index].jam,
+              ),
+            ),
           ),
         ),
       ),

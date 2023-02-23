@@ -1,4 +1,4 @@
-// ignore_for_file: use_build_context_synchronously
+// ignore_for_file: use_build_context_synchronously, unused_local_variable
 
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -17,13 +17,7 @@ class ListAbsensiViewModel extends ChangeNotifier {
 
     var requestListAbsensiEntity = RequestListAbsensiEntity(noNis: noNis);
 
-    // ignore: unused_local_variable
     var res = await listAbsensiServices.listAbsensi(context,
         requestListAbsensiEntity: requestListAbsensiEntity);
-
-    // if (res != null) {
-    //   log('================>view model list absensi>$res');
-    //   notifyListeners();
-    // }
   }
 }

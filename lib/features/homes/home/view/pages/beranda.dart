@@ -11,6 +11,7 @@ import 'widgets/item_kategori.dart';
 import 'widgets/list_tile.dart';
 
 class Beranda extends StatefulWidget {
+  static const routeName = "/Beranda";
   const Beranda({
     Key? key,
   }) : super(key: key);

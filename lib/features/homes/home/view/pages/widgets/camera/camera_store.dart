@@ -1,3 +1,5 @@
+// ignore_for_file: use_build_context_synchronously, library_private_types_in_public_api
+
 import 'dart:convert';
 import 'dart:io';
 
@@ -10,9 +12,11 @@ import 'package:path_provider/path_provider.dart' as path_provider;
 
 import '../../../../../../../contants/color_style.dart';
 import '../../../../view_model/home_view_model.dart';
+import '../../../home_view.dart';
 import 'camera_ui.dart';
 
 class CameraPage extends StatefulWidget {
+  static const routeName = "/CameraPage";
   const CameraPage(
       {Key? key, required this.cLatitude, required this.cLongitude})
       : super(key: key);
@@ -21,7 +25,6 @@ class CameraPage extends StatefulWidget {
   final String cLongitude;
 
   @override
-  // ignore: library_private_types_in_public_api
   _CameraPageState createState() => _CameraPageState();
 }
 
@@ -85,7 +88,6 @@ class _CameraPageState extends State<CameraPage> {
     param['latitude'] = widget.cLatitude;
     param['longitude'] = widget.cLongitude;
     param['gambar'] = img64;
-    // ignore: use_build_context_synchronously
     providerVM.pushDataKehadiran(context, param);
   }
 
@@ -147,16 +149,14 @@ class _CameraPageState extends State<CameraPage> {
                         children: [
                           IconButton(
                             onPressed: () {
-                              Navigator.of(context).pop();
+                              Navigator.pushNamedAndRemoveUntil(context,
+                                  HomePage.routeName, ModalRoute.withName('/'));
                             },
-                            icon: const Icon(Icons.arrow_back_ios),
+                            icon: const Icon(Icons.arrow_back),
                           ),
-                          const Text(
-                            'IDENTIFIKASI ABSENSI',
-                            style: TextStyle(
-                                fontWeight: FontWeight.w600,
-                                fontFamily: 'Poppins',
-                                fontSize: 14),
+                          Text(
+                            'Rekam Kehadiran',
+                            style: fullnameStyle,
                           ),
                         ],
                       ),

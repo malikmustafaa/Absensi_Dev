@@ -6,15 +6,15 @@ class ListAbsensiModel extends HomeEntity {
 }
 
 class ModelClass {
-  String text;
-  String icon;
-  String divider;
-  String color;
+  String fullname;
+  String jabatan;
+  String tanggal;
+  String jam;
   ModelClass(
-    this.text,
-    this.icon,
-    this.divider,
-    this.color,
+    this.fullname,
+    this.jabatan,
+    this.tanggal,
+    this.jam,
   );
 }
 
