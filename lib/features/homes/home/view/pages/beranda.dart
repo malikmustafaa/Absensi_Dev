@@ -69,6 +69,9 @@ class _BerandaState extends State<Beranda> {
     );
   }
 
+  ///
+  ///dasda
+  ///adaac
   Widget _headSection() {
     return Scaffold(
       backgroundColor: Colors.white,
