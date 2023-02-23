@@ -1,3 +1,5 @@
+// ignore_for_file: use_build_context_synchronously
+
 import 'package:flutter/material.dart';
 import 'package:b7c_clean_architecture/application/api/api.dart';
 
@@ -15,7 +17,6 @@ class ListAbsensiServices extends Api implements ListAbsensiRepository {
     if (res != null && res['status'] != "01" && res['status'] == "1") {
       return ResponseListAbsensiEntity.fromJson(res);
     } else {
-      // ignore: use_build_context_synchronously
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(
           content: Text('${res['message']} \nMohon periksa kembali!'),

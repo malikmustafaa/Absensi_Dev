@@ -4,6 +4,7 @@ import 'package:provider/provider.dart';
 import '../../../../../contants/color_style.dart';
 
 class Pengaturan extends StatefulWidget {
+  static const routeName = "/Pengaturan";
   const Pengaturan({Key? key}) : super(key: key);
 
   @override

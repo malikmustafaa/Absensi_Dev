@@ -58,7 +58,6 @@ class _MyHomePageState extends State<RekamKehadiran> {
   @override
   void dispose() {
     super.dispose();
-    _onMapCreated;
   }
 
   void _onMapCreated(GoogleMapController cntlr) {
@@ -154,6 +153,7 @@ class _MyHomePageState extends State<RekamKehadiran> {
           children: [
             IconButton(
               onPressed: () {
+                Navigator.of(context).pop();
                 Navigator.pushNamedAndRemoveUntil(
                     context, HomePage.routeName, ModalRoute.withName('/'));
               },
@@ -187,10 +187,8 @@ class _MyHomePageState extends State<RekamKehadiran> {
               zoom: 17.0,
             ),
             mapType: MapType.normal,
-
             onMapCreated: _onMapCreated,
             myLocationEnabled: false,
-            // markers: Set.from(allMarkers),
             markers: Set<Marker>.of(
               _markers,
             ),
