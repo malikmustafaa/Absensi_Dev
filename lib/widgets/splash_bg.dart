@@ -11,7 +11,7 @@ class Background extends StatelessWidget {
         Expanded(
           child: Container(),
         ),
-        ImgFooterSplash(),
+        const ImgFooterSplash(),
       ],
     );
   }
@@ -38,6 +38,8 @@ class ImgHeaderSplash extends StatelessWidget {
 
 // image footer splash
 class ImgFooterSplash extends StatelessWidget {
+  const ImgFooterSplash({Key? key}) : super(key: key);
+
   @override
   Widget build(BuildContext context) {
     return Stack(

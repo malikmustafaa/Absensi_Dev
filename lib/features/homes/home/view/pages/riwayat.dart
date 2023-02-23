@@ -1,9 +1,7 @@
 import 'package:b7c_clean_architecture/features/homes/home/view/pages/widgets/list_absensi_widget.dart';
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
 
 import '../../model/list_absensi_model.dart';
-import '../../view_model/list_absensi_view_model.dart';
 
 class Riwayat extends StatefulWidget {
   const Riwayat({Key? key}) : super(key: key);

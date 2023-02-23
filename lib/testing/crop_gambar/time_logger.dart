@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 class TimeLogger {
   TimeLogger([this.tag = '']);
 
@@ -10,14 +12,14 @@ class TimeLogger {
 
   void logTime() {
     if (start == null) {
-      print('The start is null, you must start recorder first.');
+      log('The start is null, you must start recorder first.');
       return;
     }
     final diff = DateTime.now().millisecondsSinceEpoch - start!;
     if (tag != '') {
-      print('$tag : $diff ms');
+      log('$tag : $diff ms');
     } else {
-      print('run time $diff ms');
+      log('run time $diff ms');
     }
   }
 }

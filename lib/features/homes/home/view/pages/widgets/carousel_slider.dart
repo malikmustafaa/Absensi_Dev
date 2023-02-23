@@ -14,8 +14,6 @@ class CarouselSliderWidget extends StatefulWidget {
 }
 
 class _CarouselSliderWidgetState extends State<CarouselSliderWidget> {
-  int _currentIndex = 0;
-
   List cardList = [
     ImageSliderWidget(
       icon: 'assets/images/smkn1.png',
@@ -77,9 +75,7 @@ class _CarouselSliderWidgetState extends State<CarouselSliderWidget> {
             autoPlayCurve: Curves.fastOutSlowIn,
             pauseAutoPlayOnTouch: true,
             onPageChanged: (index, reason) {
-              setState(() {
-                _currentIndex = index;
-              });
+              setState(() {});
             },
           ),
           items: cardList.map((card) {

@@ -22,39 +22,37 @@ class ButtonInkwell extends StatefulWidget {
 class _ButtonInkwellState extends State<ButtonInkwell> {
   @override
   Widget build(BuildContext context) {
-    return Container(
-      child: Material(
-          color: Colors.amber,
-          child: InkWell(
-            focusColor: Colors.amber,
-            hoverColor: Colors.amber,
-            splashColor: Colors.amber,
-            highlightColor: Colors.amber,
-            borderRadius: BorderRadius.circular(20),
-            onTap: () {
-              widget.onTap;
-            },
-            child: Column(
-              children: [
-                Container(
-                  // height: 20,
-                  // width: 54,
-                  color: Colors.amber,
-                  child: widget.icon,
-                ),
-                const SizedBox(
-                  height: 10,
-                ),
-                Text(
-                  '${widget.text}',
-                  style: const TextStyle(
-                      fontFamily: 'Ubuntu',
-                      fontWeight: FontWeight.w700,
-                      fontSize: 16),
-                ),
-              ],
-            ),
-          )),
-    );
+    return Material(
+        color: Colors.amber,
+        child: InkWell(
+          focusColor: Colors.amber,
+          hoverColor: Colors.amber,
+          splashColor: Colors.amber,
+          highlightColor: Colors.amber,
+          borderRadius: BorderRadius.circular(20),
+          onTap: () {
+            widget.onTap;
+          },
+          child: Column(
+            children: [
+              Container(
+                // height: 20,
+                // width: 54,
+                color: Colors.amber,
+                child: widget.icon,
+              ),
+              const SizedBox(
+                height: 10,
+              ),
+              Text(
+                '${widget.text}',
+                style: const TextStyle(
+                    fontFamily: 'Ubuntu',
+                    fontWeight: FontWeight.w700,
+                    fontSize: 16),
+              ),
+            ],
+          ),
+        ));
   }
 }

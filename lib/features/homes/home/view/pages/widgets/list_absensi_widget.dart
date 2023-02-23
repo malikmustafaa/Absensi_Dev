@@ -21,7 +21,7 @@ class ListAbsensiWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      padding: EdgeInsets.symmetric(vertical: 15, horizontal: 15),
+      padding: const EdgeInsets.symmetric(vertical: 15, horizontal: 15),
       child: Material(
         child: InkWell(
           onTap: onTap,
@@ -35,15 +35,12 @@ class ListAbsensiWidget extends StatelessWidget {
                   : const SizedBox(),
               Row(
                 children: [
-                  Image(
+                  const Image(
                     image: AssetImage('assets/images/orang.png'),
                     height: 50,
                   ),
-                  Container(
-                    // padding: EdgeInsets.only(left: context.padding2),
-                    child: Text(
-                      text,
-                    ),
+                  Text(
+                    text,
                   ),
                 ],
               ),
