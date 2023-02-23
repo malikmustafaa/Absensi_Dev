@@ -10,6 +10,7 @@ import 'package:path_provider/path_provider.dart' as path_provider;
 
 import '../../../../../../../contants/color_style.dart';
 import '../../../../view_model/home_view_model.dart';
+import '../../../home_view.dart';
 import 'camera_ui.dart';
 
 class CameraPage extends StatefulWidget {
@@ -147,16 +148,14 @@ class _CameraPageState extends State<CameraPage> {
                         children: [
                           IconButton(
                             onPressed: () {
-                              Navigator.of(context).pop();
+                              Navigator.pushNamedAndRemoveUntil(context,
+                                  HomePage.routeName, ModalRoute.withName('/'));
                             },
-                            icon: const Icon(Icons.arrow_back_ios),
+                            icon: const Icon(Icons.arrow_back),
                           ),
-                          const Text(
-                            'IDENTIFIKASI ABSENSI',
-                            style: TextStyle(
-                                fontWeight: FontWeight.w600,
-                                fontFamily: 'Poppins',
-                                fontSize: 14),
+                          Text(
+                            'Rekam Kehadiran',
+                            style: fullnameStyle,
                           ),
                         ],
                       ),
