@@ -11,6 +11,7 @@ import 'package:provider/provider.dart';
 import '../../view_model/home_view_model.dart';
 
 class RekamKehadiran extends StatefulWidget {
+  static const routeName = "/RekamKehadiran";
   const RekamKehadiran({Key? key, required this.dt1}) : super(key: key);
   final String dt1;
   @override
@@ -37,6 +38,24 @@ class _MyHomePageState extends State<RekamKehadiran> {
       strokeColor: Colors.blue.shade100.withOpacity(0.1),
     ),
   };
+
+  @override
+  void initState() {
+    super.initState();
+    BitmapDescriptor.fromAssetImage(
+      const ImageConfiguration(),
+      'assets/images/smk1.png',
+    ).then((value) => iconSMKN1 = value);
+    BitmapDescriptor.fromAssetImage(
+      const ImageConfiguration(),
+      'assets/images/orang.png',
+    ).then((value) => iconUser = value);
+  }
+
+  @override
+  void dispose() {
+    super.dispose();
+  }
 
   void _onMapCreated(GoogleMapController cntlr) {
     controller = cntlr;
@@ -106,24 +125,6 @@ class _MyHomePageState extends State<RekamKehadiran> {
         zoom: 18.0,
       ),
     ));
-  }
-
-  @override
-  void initState() {
-    super.initState();
-    BitmapDescriptor.fromAssetImage(
-      const ImageConfiguration(),
-      'assets/images/smk1.png',
-    ).then((value) => iconSMKN1 = value);
-    BitmapDescriptor.fromAssetImage(
-      const ImageConfiguration(),
-      'assets/images/orang.png',
-    ).then((value) => iconUser = value);
-  }
-
-  @override
-  void dispose() {
-    super.dispose();
   }
 
   @override
