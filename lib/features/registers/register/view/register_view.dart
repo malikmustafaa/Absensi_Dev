@@ -15,8 +15,8 @@ class RegisterPage extends StatefulWidget {
 }
 
 class _RegisterPageState extends State<RegisterPage> {
-  bool obscureText = false;
-  bool obscureText1 = false;
+  bool obscureText = true;
+  bool obscureText1 = true;
   @override
   Widget build(BuildContext context) {
     return ChangeNotifierProvider(

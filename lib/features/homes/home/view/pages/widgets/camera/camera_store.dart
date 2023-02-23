@@ -14,6 +14,7 @@ import '../../../home_view.dart';
 import 'camera_ui.dart';
 
 class CameraPage extends StatefulWidget {
+  static const routeName = "/CameraPage";
   const CameraPage(
       {Key? key, required this.cLatitude, required this.cLongitude})
       : super(key: key);

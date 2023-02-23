@@ -6,6 +6,7 @@ import '../../model/list_absensi_model.dart';
 import '../../view_model/list_absensi_view_model.dart';
 
 class Riwayat extends StatefulWidget {
+  static const routeName = "/Riwayat";
   const Riwayat({Key? key}) : super(key: key);
 
   @override
