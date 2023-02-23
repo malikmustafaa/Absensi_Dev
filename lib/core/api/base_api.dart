@@ -128,13 +128,12 @@ abstract class BaseApi {
     }
     ihttp.Response response;
     var strLog = "";
-    String language = "";
     Map<String, String> headers = {};
     headers['content-type'] = "application/json";
-    headers['accept'] = "application/json";
+    // headers['accept'] = "application/json";
 
     headers['app_version'] = appVersion;
-    headers['language'] = language;
+    // headers['language'] = language;
     headers['latitude'] = '';
     headers['longitude'] = '';
 

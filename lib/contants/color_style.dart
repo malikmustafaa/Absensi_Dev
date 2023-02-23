@@ -1,4 +1,4 @@
-import 'package:flutter/cupertino.dart';
+import 'package:flutter/material.dart';
 
 // global colors
 const defaultColor = Color.fromRGBO(97, 6, 165, 1.0);
@@ -13,6 +13,28 @@ const black12Color = Color(0x1F000000);
 const redColor = Color(0xFFF44336);
 Color orangeColor = const Color(0xFFFF9800);
 const whiteColor = Color(0xFFF5F5F5);
+
+const thirdy = Color.fromRGBO(0, 130, 74, 1);
+const bgAlertOTP = Color.fromARGB(255, 205, 13, 13);
+const warning = Color.fromRGBO(242, 153, 74, 1);
+const silver2 = Color.fromARGB(77, 181, 166, 166);
+
+Color getDynamicColor(String status) {
+  if (status == '1') {
+    return thirdy;
+  }
+  if (status == '2') {
+    return bgAlertOTP;
+  }
+  if (status == '3') {
+    return warning;
+  }
+  if (status == '4') {
+    return silver2;
+  }
+  return blackColor; //default color.
+}
+
 var ttlStyle = const TextStyle(
     fontWeight: FontWeight.bold, color: blackColor, fontSize: 36);
 var accountStyle = const TextStyle(
@@ -112,3 +134,15 @@ var buttonDisable = const TextStyle(
     fontFamily: 'Ubuntu',
     fontSize: 12,
     fontWeight: FontWeight.w500);
+
+var textJamMasukStyle = const TextStyle(
+    fontFamily: 'Ubuntu',
+    color: default2Color,
+    fontSize: 16,
+    fontWeight: FontWeight.w600);
+
+var textTglMasukStyle = const TextStyle(
+    fontFamily: 'Ubuntu',
+    color: blackColor,
+    fontSize: 14,
+    fontWeight: FontWeight.w400);

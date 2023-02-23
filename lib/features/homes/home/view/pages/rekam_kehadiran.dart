@@ -1,7 +1,3 @@
-// ignore_for_file: library_private_types_in_public_api
-
-import 'dart:developer';
-
 import 'package:b7c_clean_architecture/contants/color_style.dart';
 import 'package:b7c_clean_architecture/features/homes/home/view/home_view.dart';
 import 'package:b7c_clean_architecture/features/homes/home/view/pages/widgets/camera/camera_store.dart';
@@ -17,6 +13,7 @@ class RekamKehadiran extends StatefulWidget {
   const RekamKehadiran({Key? key, required this.dt1}) : super(key: key);
   final String dt1;
   @override
+  // ignore: library_private_types_in_public_api
   _MyHomePageState createState() => _MyHomePageState();
 }
 
@@ -141,7 +138,6 @@ class _MyHomePageState extends State<RekamKehadiran> {
   }
 
   Widget _buildPage(BuildContext context) {
-    log('pppppppppppp===> $isLocation');
     double h = MediaQuery.of(context).size.height;
     double w = MediaQuery.of(context).size.width;
     return Scaffold(
