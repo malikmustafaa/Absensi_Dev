@@ -1,6 +1,5 @@
 import 'dart:developer';
 
-import 'package:b7c_clean_architecture/testing/crop_gambar/main_page.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:b7c_clean_architecture/core/route/route.dart';

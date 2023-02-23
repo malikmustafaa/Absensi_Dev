@@ -1,5 +1,7 @@
 // ignore_for_file: library_private_types_in_public_api
 
+import 'dart:developer';
+
 import 'package:b7c_clean_architecture/contants/color_style.dart';
 import 'package:b7c_clean_architecture/features/homes/home/view/home_view.dart';
 import 'package:b7c_clean_architecture/features/homes/home/view/pages/widgets/camera/camera_store.dart';
@@ -29,6 +31,7 @@ class _MyHomePageState extends State<RekamKehadiran> {
   List<Marker> _markers = <Marker>[];
   List<Marker> allMarkers = <Marker>[];
 
+  bool isLocation = false;
   Set<Circle> circles = {
     Circle(
       circleId: const CircleId('currentCircle'),
@@ -83,7 +86,8 @@ class _MyHomePageState extends State<RekamKehadiran> {
         ),
       );
       setState(() {
-        _markers = _markers;
+        isLocation = true;
+        _markers = allMarkers;
         cLatitude = l.latitude.toString();
         cLongitude = l.longitude.toString();
       });
@@ -113,6 +117,7 @@ class _MyHomePageState extends State<RekamKehadiran> {
         infoWindow: const InfoWindow(title: 'Lokasi Anda saat ini')));
 
     setState(() {
+      isLocation = true;
       _markers = _markers;
       cLatitude = l!.latitude.toString();
       cLongitude = l.longitude.toString();
@@ -136,6 +141,7 @@ class _MyHomePageState extends State<RekamKehadiran> {
   }
 
   Widget _buildPage(BuildContext context) {
+    log('pppppppppppp===> $isLocation');
     double h = MediaQuery.of(context).size.height;
     double w = MediaQuery.of(context).size.width;
     return Scaffold(
@@ -147,6 +153,7 @@ class _MyHomePageState extends State<RekamKehadiran> {
           children: [
             IconButton(
               onPressed: () {
+                Navigator.of(context).pop();
                 Navigator.pushNamedAndRemoveUntil(
                     context, HomePage.routeName, ModalRoute.withName('/'));
               },
@@ -180,10 +187,8 @@ class _MyHomePageState extends State<RekamKehadiran> {
               zoom: 17.0,
             ),
             mapType: MapType.normal,
-
             onMapCreated: _onMapCreated,
             myLocationEnabled: false,
-            // markers: Set.from(allMarkers),
             markers: Set<Marker>.of(
               _markers,
             ),
@@ -251,23 +256,27 @@ class _MyHomePageState extends State<RekamKehadiran> {
                             height: h / 16 * 1.1,
                             child: ElevatedButton(
                               style: ElevatedButton.styleFrom(
-                                primary: default2Color,
+                                primary:
+                                    isLocation ? default2Color : Colors.grey,
                                 shape: RoundedRectangleBorder(
                                   borderRadius: BorderRadius.circular(25),
                                 ),
                               ),
                               onPressed: () {
-                                Navigator.of(context).push(
-                                  MaterialPageRoute(
-                                    builder: (context) => CameraPage(
-                                        cLatitude: cLatitude,
-                                        cLongitude: cLongitude),
-                                  ),
-                                );
+                                isLocation
+                                    ? Navigator.of(context).push(
+                                        MaterialPageRoute(
+                                          builder: (context) => CameraPage(
+                                              cLatitude: cLatitude,
+                                              cLongitude: cLongitude),
+                                        ),
+                                      )
+                                    : Container();
                               },
                               child: Text(
-                                'Ya',
-                                style: buttonYaStyle,
+                                isLocation ? 'Ya' : 'Mencari lokasi...',
+                                style:
+                                    isLocation ? buttonYaStyle : buttonDisable,
                               ),
                             ),
                           ),

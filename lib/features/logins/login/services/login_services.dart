@@ -17,7 +17,7 @@ class LoginServices extends Api implements LoginRepository {
       // ignore: use_build_context_synchronously
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(
-          content: Text('${res['message']} \nMohon periksa kembali!'),
+          content: const Text('Mohon periksa kembali!'),
           action: SnackBarAction(
             label: 'Ok',
             onPressed: () {},

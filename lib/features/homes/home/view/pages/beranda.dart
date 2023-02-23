@@ -1,12 +1,9 @@
-// ignore_for_file: use_build_context_synchronously
-
 import 'package:b7c_clean_architecture/features/homes/home/view/pages/widgets/carousel_slider.dart';
 import 'package:b7c_clean_architecture/features/homes/home/view_model/home_view_model.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import '../../../../../contants/color_style.dart';
-import '../../../../logins/login/view/login_view.dart';
 import '../../model/home_model.dart';
 import 'rekam_kehadiran.dart';
 import 'widgets/button.dart';

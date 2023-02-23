@@ -24,7 +24,6 @@ class CustomTextFieldWidget extends StatefulWidget {
 class _CustomTextFieldWidgetState extends State<CustomTextFieldWidget> {
   TextEditingController namapenggunaController = TextEditingController();
   bool obscureText = false;
-  final _text = TextEditingController();
   bool value = false;
   final _form = GlobalKey<FormState>();
 
