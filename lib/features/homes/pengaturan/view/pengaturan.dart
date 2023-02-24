@@ -131,7 +131,7 @@ class _PengaturanState extends State<Pengaturan> {
                       decoration: BoxDecoration(
                         border: Border.all(
                           color: default2Color,
-                          width: 2,
+                          width: 1,
                         ),
                         borderRadius: BorderRadius.circular(15),
                       ),
@@ -149,7 +149,7 @@ class _PengaturanState extends State<Pengaturan> {
                               Padding(
                                 padding: const EdgeInsets.only(left: 10),
                                 child: Text(
-                                  'Detail Profile',
+                                  'Profile',
                                   style: textDetailPrflepengaturanStyle,
                                 ),
                               ),
@@ -179,7 +179,7 @@ class _PengaturanState extends State<Pengaturan> {
                       decoration: BoxDecoration(
                         border: Border.all(
                           color: default2Color,
-                          width: 2,
+                          width: 1,
                         ),
                         borderRadius: BorderRadius.circular(15),
                       ),

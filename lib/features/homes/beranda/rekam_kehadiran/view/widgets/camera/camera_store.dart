@@ -9,7 +9,7 @@ import 'package:flutter_image_compress/flutter_image_compress.dart';
 import 'package:provider/provider.dart';
 
 import '../../../../../../../contants/color_style.dart';
-import '../../../../view/home_view.dart';
+import '../../../../../home_view.dart';
 import '../../../../view_model/beranda_view_model.dart';
 import 'camera_ui.dart';
 
