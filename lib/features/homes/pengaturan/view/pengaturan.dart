@@ -17,7 +17,7 @@ class _PengaturanState extends State<Pengaturan> {
   late SharedPreferences pref;
   String fullname = '';
   String email = '';
-  String noNis = '';
+  // String noNis = '';
   String username = '';
   @override
   void initState() {
@@ -30,12 +30,12 @@ class _PengaturanState extends State<Pengaturan> {
 
     fullname = pref.getString('fullname') ?? "";
     email = pref.getString('email') ?? "";
-    noNis = pref.getString('noNis') ?? "";
+    // noNis = pref.getString('noNis') ?? "";
     username = pref.getString('username') ?? "";
     setState(() {
       fullname = fullname;
       email = email;
-      noNis = noNis;
+      // noNis = noNis;
       username = username;
     });
   }
@@ -93,6 +93,9 @@ class _PengaturanState extends State<Pengaturan> {
                   email,
                   style: textEmailpengaturanStyle,
                 ),
+                // Consumer<PengaturanViewModel>(builder: (context, value, child) {
+                //   return Text('$n');
+                // },)
               ],
             ),
           ),
