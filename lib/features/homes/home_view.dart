@@ -47,7 +47,6 @@ class _HomePageState extends State<HomePage> {
 
   @override
   Widget build(BuildContext context) {
-    log('message=====> ${widget.indexPengaturan}');
     return Scaffold(
       body: tabs[currentTabIndex],
       bottomNavigationBar: Container(
