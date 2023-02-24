@@ -10,10 +10,12 @@ import 'package:shared_preferences/shared_preferences.dart';
 
 import '../../../../domain/entity/home/request_home_entity.dart';
 import '../services/beranda_services.dart';
+import '../view/widgets/dialog.dart';
 
 class HomeViewModel extends ChangeNotifier {
   HomeServices homeServices = HomeServices();
   late SharedPreferences pref;
+  String msg = 'Data absen Anda berhasil tersimpan';
   String noNis = '';
   Future pushDataKehadiran(BuildContext context, param) async {
     final pref = await SharedPreferences.getInstance();
@@ -45,5 +47,21 @@ class HomeViewModel extends ChangeNotifier {
 
   void goToLogin(BuildContext context) {
     goToNamed(context, routeName: LoginPage.routeName);
+  }
+
+  _showErrorMaxDate(BuildContext context, msg) {
+    const DialogBox().showImageDialog(
+        title: 'Sukses',
+        message: msg,
+        isError: true,
+        image: const Image(
+          image: AssetImage('assets/images/success.png'),
+        ),
+        buttonCancel: 'OK',
+        onOk: () {
+          Navigator.of(context).pop();
+          goToHome(context);
+        },
+        context: context);
   }
 }

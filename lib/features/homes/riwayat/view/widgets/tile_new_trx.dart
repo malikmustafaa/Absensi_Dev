@@ -62,46 +62,110 @@ class _TileNewTransaksiState extends State<TileNewTransaksi> {
                   borderRadius: BorderRadius.circular(20),
                 ),
           child: IntrinsicHeight(
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.start,
-              children: <Widget>[
-                const Icon(
-                  Icons.location_on,
-                  color: default2Color,
-                  size: 33,
+            child: Column(
+              children: [
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.start,
+                  children: <Widget>[
+                    const Icon(
+                      Icons.location_on,
+                      color: default2Color,
+                      size: 44,
+                    ),
+                    Expanded(
+                      child: RichText(
+                        text: TextSpan(children: [
+                          TextSpan(
+                              text: 'Jam Masuk\n', style: textJamMasukStyle),
+                          TextSpan(
+                            text: ' ${widget.tglAbsen!}\n',
+                            style: textTglMasukStyle,
+                          ),
+                          TextSpan(
+                            text: '${widget.jamMasuk!} ',
+                            style: textJmMasukStyle,
+                          ),
+                        ]),
+                      ),
+                    ),
+                    const VerticalDivider(
+                      color: default2Color,
+                      width: 10,
+                      thickness: 2,
+                      indent: 1,
+                      endIndent: 1,
+                    ),
+                    const Icon(
+                      Icons.location_on,
+                      color: default2Color,
+                      size: 44,
+                    ),
+                    Expanded(
+                      child: RichText(
+                        text: TextSpan(children: [
+                          TextSpan(
+                              text: 'Jam Keluar\n', style: textJamMasukStyle),
+                          TextSpan(
+                            text: ' ${widget.tglAbsen!}\n',
+                            style: textTglMasukStyle,
+                          ),
+                          TextSpan(
+                            text: '${widget.jamKeluar!} ',
+                            style: textJmMasukStyle,
+                          ),
+                        ]),
+                      ),
+                    ),
+                  ],
                 ),
-                Expanded(
-                  child: RichText(
-                    text: TextSpan(children: [
-                      TextSpan(text: 'Jam Masuk\n', style: textJamMasukStyle),
-                      TextSpan(
-                        text: '${widget.jamMasuk!} | ${widget.tglAbsen!}',
-                        style: textTglMasukStyle,
-                      )
-                    ]),
-                  ),
-                ),
-                const VerticalDivider(
-                  color: default2Color,
-                  width: 10,
-                  thickness: 2,
-                  indent: 1,
-                  endIndent: 1,
-                ),
-                const Icon(
-                  Icons.location_on,
-                  color: default2Color,
-                  size: 33,
-                ),
-                Expanded(
-                  child: RichText(
-                    text: TextSpan(children: [
-                      TextSpan(text: 'Jam Keluar\n', style: textJamMasukStyle),
-                      TextSpan(
-                        text: '${widget.jamKeluar!} | ${widget.tglAbsen!}',
-                        style: textTglMasukStyle,
-                      )
-                    ]),
+                Container(
+                  padding: const EdgeInsets.only(top: 8.0),
+                  child: Align(
+                    alignment: Alignment.bottomLeft,
+                    child: Row(
+                      children: [
+                        Padding(
+                          padding: const EdgeInsets.symmetric(horizontal: 8),
+                          child: Text(
+                            'Status : ',
+                            style: textTglMasukStyle,
+                          ),
+                        ),
+                        Container(
+                          decoration: BoxDecoration(
+                            color: const Color.fromARGB(255, 130, 15, 2),
+                            borderRadius: BorderRadius.circular(6),
+                          ),
+                          padding: const EdgeInsets.all(4),
+                          child: const Text(
+                            'TDA',
+                            style: TextStyle(
+                                color: whiteColor,
+                                fontSize: 10,
+                                fontWeight: FontWeight.w700,
+                                letterSpacing: 1.2),
+                          ),
+                        ),
+                        const SizedBox(
+                          width: 4,
+                        ),
+                        Container(
+                          decoration: BoxDecoration(
+                            color: const Color.fromARGB(255, 5, 145, 42),
+                            borderRadius: BorderRadius.circular(6),
+                          ),
+                          padding: const EdgeInsets.all(4),
+                          child: const Text(
+                            'TDA',
+                            style: TextStyle(
+                                color: whiteColor,
+                                fontSize: 10,
+                                fontWeight: FontWeight.w700,
+                                letterSpacing: 1.2),
+                          ),
+                        )
+                      ],
+                    ),
                   ),
                 ),
               ],
