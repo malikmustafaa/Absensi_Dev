@@ -36,7 +36,7 @@ class RegisterViewModel extends ChangeNotifier {
         pref.setString("fullname", res.fullName);
         pref.setString("noNis", res.noNis);
         pref.setString('email', res.email);
-        pref.setBool("isRegister", true);
+        pref.setBool("isLogin", true);
         goToHome(context);
         notifyListeners();
       }
