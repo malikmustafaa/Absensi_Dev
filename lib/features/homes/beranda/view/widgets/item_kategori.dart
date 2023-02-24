@@ -4,8 +4,8 @@ import 'package:flutter/material.dart';
 import '../../../../../../contants/color_style.dart';
 
 // ignore: must_be_immutable
-class ItemKategori extends StatelessWidget {
-  ItemKategori({
+class ItemKategoriBeranda extends StatelessWidget {
+  ItemKategoriBeranda({
     required this.icon,
     required this.title,
     required this.onTap,

@@ -1,4 +1,4 @@
-import 'dart:developer';
+// ignore_for_file: library_private_types_in_public_api
 
 import 'package:b7c_clean_architecture/contants/color_style.dart';
 import 'package:flutter/material.dart';
@@ -37,7 +37,6 @@ class TileNewTransaksi extends StatefulWidget {
   )? callback;
 
   @override
-  // ignore: library_private_types_in_public_api
   _TileNewTransaksiState createState() => _TileNewTransaksiState();
 }
 
@@ -110,9 +109,7 @@ class _TileNewTransaksiState extends State<TileNewTransaksi> {
           ),
         ),
       ),
-      onTap: () {
-        log('message ========>');
-      },
+      onTap: () {},
     );
   }
 }

@@ -2,15 +2,14 @@
 
 import 'dart:developer';
 
-import 'package:b7c_clean_architecture/features/homes/home/view/home_view.dart';
+import 'package:b7c_clean_architecture/features/homes/beranda/view/home_view.dart';
 import 'package:b7c_clean_architecture/features/logins/login/view/login_view.dart';
 import 'package:flutter/material.dart';
 import 'package:b7c_clean_architecture/core/route/route.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 import '../../../../domain/entity/home/request_home_entity.dart';
-
-import '../services/home_services.dart';
+import '../services/beranda_services.dart';
 
 class HomeViewModel extends ChangeNotifier {
   HomeServices homeServices = HomeServices();

@@ -1,12 +1,12 @@
 import 'package:b7c_clean_architecture/contants/color_style.dart';
-import 'package:b7c_clean_architecture/features/homes/home/view/home_view.dart';
-import 'package:b7c_clean_architecture/features/homes/home/view/pages/widgets/camera/camera_store.dart';
+import 'package:b7c_clean_architecture/features/homes/beranda/rekam_kehadiran/view/widgets/camera/camera_store.dart';
+import 'package:b7c_clean_architecture/features/homes/beranda/view/home_view.dart';
 import 'package:flutter/material.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:location/location.dart';
 import 'package:provider/provider.dart';
 
-import '../../view_model/home_view_model.dart';
+import '../../view_model/beranda_view_model.dart';
 
 class RekamKehadiran extends StatefulWidget {
   static const routeName = "/RekamKehadiran";
@@ -271,8 +271,6 @@ class _MyHomePageState extends State<RekamKehadiran> {
                               },
                               child: Text(
                                 isLocation ? 'Ya' : 'Mencari lokasi...',
-                                style:
-                                    isLocation ? buttonYaStyle : buttonDisable,
                               ),
                             ),
                           ),

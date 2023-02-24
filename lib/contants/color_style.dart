@@ -146,3 +146,25 @@ var textTglMasukStyle = const TextStyle(
     color: blackColor,
     fontSize: 14,
     fontWeight: FontWeight.w400);
+var textfllnamepengaturanStyle = const TextStyle(
+    fontFamily: 'Ubuntu',
+    color: default2Color,
+    fontSize: 16,
+    fontWeight: FontWeight.w600);
+var textEmailpengaturanStyle = const TextStyle(
+    fontFamily: 'Ubuntu',
+    color: Colors.grey,
+    fontSize: 16,
+    fontWeight: FontWeight.w400);
+
+var textEmailDetailProfileStyle = const TextStyle(
+    fontFamily: 'Ubuntu',
+    color: blackColor,
+    fontSize: 20,
+    fontWeight: FontWeight.w600);
+
+var textDetailPrflepengaturanStyle = const TextStyle(
+    fontFamily: 'Ubuntu',
+    color: default2Color,
+    fontSize: 16,
+    fontWeight: FontWeight.w600);

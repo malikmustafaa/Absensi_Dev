@@ -2,7 +2,6 @@
 
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-
 import '../../../../domain/entity/absensi/request_absensi_entity.dart';
 import '../services/absensi_services.dart';
 
@@ -19,5 +18,11 @@ class ListAbsensiViewModel extends ChangeNotifier {
 
     var res = await listAbsensiServices.listAbsensi(context,
         requestListAbsensiEntity: requestListAbsensiEntity);
+
+    if (res == null) {}
   }
+
+  // void goToLogin(BuildContext context) {
+  //   goToNamed(context, routeName: LoginPage.routeName);
+  // }
 }

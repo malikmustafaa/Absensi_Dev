@@ -1,11 +1,11 @@
 // ignore_for_file: prefer_const_constructors
 
-import 'package:b7c_clean_architecture/features/homes/home/view/pages/beranda.dart';
-import 'package:b7c_clean_architecture/features/homes/home/view/pages/pengaturan.dart';
-import 'package:b7c_clean_architecture/features/homes/home/view/pages/riwayat.dart';
+import 'package:b7c_clean_architecture/features/homes/beranda/view/beranda.dart';
+import 'package:b7c_clean_architecture/features/homes/pengaturan/view/pengaturan.dart';
 import 'package:flutter/material.dart';
 
 import '../../../../contants/color_style.dart';
+import '../../riwayat/view/riwayat.dart';
 
 class HomePage extends StatefulWidget {
   static const routeName = "/HomePage";
@@ -48,8 +48,6 @@ class _HomePageState extends State<HomePage> {
             )
           ],
         ),
-        // color: Colors.red,
-        // height: 70,
         child: Stack(
           children: [
             Container(
@@ -59,7 +57,6 @@ class _HomePageState extends State<HomePage> {
                 backgroundColor: Colors.transparent,
                 type: BottomNavigationBarType.fixed,
                 elevation: 0.0,
-                // elevation: 7,
                 selectedLabelStyle: const TextStyle(
                   fontFamily: 'Ubuntu',
                 ),
@@ -67,7 +64,6 @@ class _HomePageState extends State<HomePage> {
                   fontFamily: 'Ubuntu',
                 ),
                 fixedColor: default2Color,
-                // type: BottomNavigationBarType.fixed,
                 onTap: onTapped,
                 currentIndex: currentTabIndex,
                 items: const [

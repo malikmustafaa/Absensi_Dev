@@ -1,12 +1,14 @@
+// ignore_for_file: use_build_context_synchronously, unused_field
+
 import 'dart:developer';
 
-import 'package:b7c_clean_architecture/features/homes/home/view/pages/widgets/dialog.dart';
+import 'package:b7c_clean_architecture/features/homes/beranda/view/widgets/dialog.dart';
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-import '../../../../../contants/color_style.dart';
-import '../../../../../domain/entity/absensi/request_absensi_entity.dart';
-import '../../../riwayat/services/riwayat_services.dart';
-import '../../../riwayat/view/widget/tile_new_trx.dart';
+import '../../../../contants/color_style.dart';
+import '../../../../domain/entity/absensi/request_absensi_entity.dart';
+import '../services/riwayat_services.dart';
+import 'widgets/tile_new_trx.dart';
 import 'package:intl/intl.dart';
 
 class Riwayat extends StatefulWidget {
@@ -25,7 +27,6 @@ class _RiwayatState extends State<Riwayat> {
   DateTime? untilDate;
   DateFormat f = DateFormat('dd-MMM-yyyy');
   final fParam = DateFormat('yyyy-MM-dd');
-  // ignore: unused_field
   final _oneDay = 60 * 60 * 24 * 1000;
   List<TileNewTransaksi> listHistoriTrx = [];
   List<TileNewTransaksi> listFilteredTransfer = [];
@@ -66,8 +67,6 @@ class _RiwayatState extends State<Riwayat> {
       var requestRiwayatAbsensiEntity = RequestListAbsensiEntity(
         noNis: noNis,
       );
-
-      // ignore: use_build_context_synchronously
       var resp = await riwayatServices.apiRiwayatServices(context,
           requestRiwayatAbsensiEntity: requestRiwayatAbsensiEntity);
 
@@ -107,7 +106,6 @@ class _RiwayatState extends State<Riwayat> {
         title: 'Input data belum sesuai',
         message: msg,
         isError: true,
-        // image: AssetLocations.imageLocation('smk1'),
         image: const Image(
           image: AssetImage('assets/images/smk1.png'),
         ),
@@ -227,7 +225,6 @@ class _RiwayatState extends State<Riwayat> {
       noNis: noNis,
     );
 
-    // ignore: use_build_context_synchronously
     var resp = await riwayatServices.apiRiwayatServices(context,
         requestRiwayatAbsensiEntity: requestRiwayatAbsensiEntity);
 
@@ -296,18 +293,6 @@ class _RiwayatState extends State<Riwayat> {
               : SliverList(
                   delegate: SliverChildBuilderDelegate(
                     (BuildContext context, int index) {
-                      // return GestureDetector(
-                      //   child: const TileNewTransaksi(
-                      //     colorLabel: '1',
-                      //     isResendTrx: false, // pake
-                      //     isActive: true,
-                      //     idAbsen: '1',
-                      //     jamKeluar: '17:22',
-                      //     jamMasuk: '08:00',
-                      //     tglAbsen: '23 Feb 2023',
-                      //   ),
-                      // );
-
                       return GestureDetector(
                         child: TileNewTransaksi(
                           idAbsen: listHistoriTrx[index].idAbsen,
@@ -364,7 +349,6 @@ class _RiwayatState extends State<Riwayat> {
       children: [
         Container(
           height: 42,
-          // color: Colors.green,
           padding: const EdgeInsets.symmetric(vertical: 2),
           child: Row(
             children: <Widget>[
