@@ -3,7 +3,7 @@
 import 'dart:developer';
 import 'package:b7c_clean_architecture/core/route/route.dart';
 import 'package:b7c_clean_architecture/domain/entity/register/request_register_entity.dart';
-import 'package:b7c_clean_architecture/features/homes/beranda/view/home_view.dart';
+import 'package:b7c_clean_architecture/features/homes/home_view.dart';
 import 'package:b7c_clean_architecture/features/registers/register/services/register_services.dart';
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';

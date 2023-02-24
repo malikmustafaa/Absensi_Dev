@@ -1,6 +1,6 @@
 import 'package:b7c_clean_architecture/contants/color_style.dart';
 import 'package:b7c_clean_architecture/features/homes/beranda/rekam_kehadiran/view/widgets/camera/camera_store.dart';
-import 'package:b7c_clean_architecture/features/homes/beranda/view/home_view.dart';
+import 'package:b7c_clean_architecture/features/homes/home_view.dart';
 import 'package:flutter/material.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:location/location.dart';

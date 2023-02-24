@@ -1,5 +1,5 @@
 import 'package:b7c_clean_architecture/contants/color_style.dart';
-import 'package:b7c_clean_architecture/features/homes/beranda/view/home_view.dart';
+import 'package:b7c_clean_architecture/features/homes/home_view.dart';
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
@@ -53,8 +53,15 @@ class _DetailProfilePageState extends State<DetailProfilePage> {
           children: [
             IconButton(
                 onPressed: () {
-                  Navigator.pushNamedAndRemoveUntil(context, HomePage.routeName,
-                      ModalRoute.withName('/HomePage'));
+                  int index = 2;
+
+                  Navigator.of(context).push(
+                    MaterialPageRoute(
+                      builder: (context) => HomePage(
+                        indexPengaturan: index,
+                      ),
+                    ),
+                  );
                 },
                 icon: const Icon(
                   Icons.arrow_back,

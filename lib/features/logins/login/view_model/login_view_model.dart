@@ -6,7 +6,7 @@ import 'package:b7c_clean_architecture/features/registers/register/view/register
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import '../../../../domain/entity/login/request_login_entity.dart';
-import '../../../homes/beranda/view/home_view.dart';
+import '../../../homes/home_view.dart';
 
 class LoginViewModel extends ChangeNotifier {
   LoginServices loginServices = LoginServices();

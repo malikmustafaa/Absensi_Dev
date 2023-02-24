@@ -1,16 +1,20 @@
 // ignore_for_file: prefer_const_constructors
 
+import 'dart:developer';
+
 import 'package:b7c_clean_architecture/features/homes/beranda/view/beranda.dart';
 import 'package:b7c_clean_architecture/features/homes/pengaturan/view/pengaturan.dart';
 import 'package:flutter/material.dart';
 
-import '../../../../contants/color_style.dart';
-import '../../riwayat/view/riwayat.dart';
+import '../../contants/color_style.dart';
+import 'riwayat/view/riwayat.dart';
 
 class HomePage extends StatefulWidget {
   static const routeName = "/HomePage";
 
-  const HomePage({Key? key}) : super(key: key);
+  final int indexPengaturan;
+
+  const HomePage({Key? key, required this.indexPengaturan}) : super(key: key);
 
   @override
   // ignore: library_private_types_in_public_api
@@ -19,11 +23,23 @@ class HomePage extends StatefulWidget {
 
 class _HomePageState extends State<HomePage> {
   int currentTabIndex = 0;
+
   List<Widget> tabs = [
     const Beranda(),
     const Riwayat(),
     const Pengaturan(),
   ];
+
+  @override
+  void initState() {
+    super.initState();
+    if (widget.indexPengaturan != null) {
+      setState(() {
+        currentTabIndex = widget.indexPengaturan;
+      });
+    }
+  }
+
   onTapped(int index) {
     currentTabIndex = index;
     setState(() {});
