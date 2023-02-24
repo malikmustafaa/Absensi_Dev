@@ -1,13 +1,13 @@
-import 'package:b7c_clean_architecture/features/homes/home/view/pages/widgets/carousel_slider.dart';
-import 'package:b7c_clean_architecture/features/homes/home/view_model/home_view_model.dart';
+import 'package:b7c_clean_architecture/features/homes/beranda/view/widgets/carousel_slider.dart';
+import 'package:b7c_clean_architecture/features/homes/beranda/view/widgets/item_kategori.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-import '../../../../../contants/color_style.dart';
-import '../../model/home_model.dart';
-import 'rekam_kehadiran.dart';
+import '../../../../contants/color_style.dart';
+import '../model/beranda_model.dart';
+import '../rekam_kehadiran/view/rekam_kehadiran.dart';
+import '../view_model/beranda_view_model.dart';
 import 'widgets/button.dart';
-import 'widgets/item_kategori.dart';
 import 'widgets/list_tile.dart';
 
 class Beranda extends StatefulWidget {
@@ -199,27 +199,27 @@ class _BerandaState extends State<Beranda> {
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.spaceAround,
                     children: [
-                      ItemKategori(
+                      ItemKategoriBeranda(
                         onTap: () {},
                         icon: const Icon(
                           Icons.language,
                         ),
                         title: 'Internet',
                       ),
-                      ItemKategori(
+                      ItemKategoriBeranda(
                           onTap: () {},
                           icon: const Icon(
                             Icons.shopify_sharp,
                             color: whiteColor,
                           ),
                           title: 'Belanja'),
-                      ItemKategori(
+                      ItemKategoriBeranda(
                           onTap: () {},
                           icon: const Icon(
                             Icons.event,
                           ),
                           title: 'Event'),
-                      ItemKategori(
+                      ItemKategoriBeranda(
                         onTap: () {},
                         icon: const Icon(Icons.alarm),
                         title: 'Jadwal\n Shalat',
@@ -230,7 +230,7 @@ class _BerandaState extends State<Beranda> {
                 const SizedBox(
                   height: 20,
                 ),
-                CarouselSliderWidget(
+                CarouselSliderBeranda(
                   icon: '',
                 ),
                 Container(

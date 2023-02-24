@@ -1,7 +1,8 @@
 import 'package:b7c_clean_architecture/contants/color_style.dart';
-import 'package:b7c_clean_architecture/features/homes/home/view_model/home_view_model.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+
+import '../../view_model/beranda_view_model.dart';
 
 class ListTileWidget extends StatelessWidget {
   final String fullname;

@@ -5,15 +5,15 @@ import 'package:flutter/material.dart';
 
 import '../../../../../../contants/color_style.dart';
 
-class CarouselSliderWidget extends StatefulWidget {
+class CarouselSliderBeranda extends StatefulWidget {
   String icon = '';
-  CarouselSliderWidget({required this.icon, Key? key}) : super(key: key);
+  CarouselSliderBeranda({required this.icon, Key? key}) : super(key: key);
 
   @override
-  State<CarouselSliderWidget> createState() => _CarouselSliderWidgetState();
+  State<CarouselSliderBeranda> createState() => _CarouselSliderBerandaState();
 }
 
-class _CarouselSliderWidgetState extends State<CarouselSliderWidget> {
+class _CarouselSliderBerandaState extends State<CarouselSliderBeranda> {
   List cardList = [
     ImageSliderWidget(
       icon: 'assets/images/smkn1.png',

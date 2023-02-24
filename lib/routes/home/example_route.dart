@@ -1,6 +1,6 @@
 import 'package:b7c_clean_architecture/core/route/base_route.dart';
 
-import '../../features/homes/home/view/home_view.dart';
+import '../../features/homes/beranda/view/home_view.dart';
 
 class HomeRoute {
   static List<BaseRoute> listRoute = [

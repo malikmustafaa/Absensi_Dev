@@ -1,8 +1,8 @@
-import 'package:b7c_clean_architecture/features/homes/home/view/pages/widgets/camera/style_shape.dart';
 import 'package:camera/camera.dart';
 import 'package:flutter/material.dart';
 
 import 'model.dart';
+import 'style_shape.dart';
 
 typedef XFileCallback = void Function(XFile file);
 
