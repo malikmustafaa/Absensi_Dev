@@ -2,6 +2,7 @@ import 'package:b7c_clean_architecture/features/homes/home/view/pages/widgets/li
 import 'package:flutter/material.dart';
 import '../../../../../contants/color_style.dart';
 import '../../model/list_absensi_model.dart';
+import '../home_view.dart';
 
 class Riwayat extends StatefulWidget {
   static const routeName = "/Riwayat";
@@ -26,25 +27,42 @@ class _RiwayatState extends State<Riwayat> {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: greyBgColor,
-      body: SafeArea(
-        child: SizedBox(
-          child: Container(
-            width: MediaQuery.of(context).size.width,
-            decoration: BoxDecoration(
-              color: Colors.white,
-              borderRadius: BorderRadius.circular(
-                15,
-              ),
+      appBar: AppBar(
+        backgroundColor: default2Color,
+        automaticallyImplyLeading: false,
+        title: Row(
+          children: [
+            IconButton(
+              onPressed: () {
+                Navigator.of(context).pop();
+                Navigator.pushNamedAndRemoveUntil(
+                    context, HomePage.routeName, ModalRoute.withName('/'));
+              },
+              icon: const Icon(Icons.arrow_back),
             ),
-            child: ListView.builder(
-              itemCount: listOther.length,
-              itemBuilder: (BuildContext context, int index) =>
-                  ListAbsensiWidget(
-                fullname: listOther[index].fullname,
-                jabatan: listOther[index].fullname,
-                tanggal: listOther[index].tanggal,
-                jam: listOther[index].jam,
-              ),
+            Text(
+              'Riwayat Absensi',
+              style: fullnameStyle,
+            ),
+          ],
+        ),
+      ),
+      body: SizedBox(
+        child: Container(
+          width: MediaQuery.of(context).size.width,
+          decoration: BoxDecoration(
+            color: Colors.white,
+            borderRadius: BorderRadius.circular(
+              15,
+            ),
+          ),
+          child: ListView.builder(
+            itemCount: listOther.length,
+            itemBuilder: (BuildContext context, int index) => ListAbsensiWidget(
+              fullname: listOther[index].fullname,
+              jabatan: listOther[index].fullname,
+              tanggal: listOther[index].tanggal,
+              jam: listOther[index].jam,
             ),
           ),
         ),

@@ -275,8 +275,6 @@ class _MyHomePageState extends State<RekamKehadiran> {
                               },
                               child: Text(
                                 isLocation ? 'Ya' : 'Mencari lokasi...',
-                                style:
-                                    isLocation ? buttonYaStyle : buttonDisable,
                               ),
                             ),
                           ),

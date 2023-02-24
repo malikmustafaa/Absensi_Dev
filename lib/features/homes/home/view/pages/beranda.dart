@@ -155,10 +155,6 @@ class _BerandaState extends State<Beranda> {
               Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  // Text(
-                  //   'Halo,',
-                  //   style: mobileStyle,
-                  // ),
                   Consumer<HomeViewModel>(
                     builder: (context, value, child) => Text(
                       'Halo, $fullname',
@@ -224,9 +220,10 @@ class _BerandaState extends State<Beranda> {
                           ),
                           title: 'Event'),
                       ItemKategori(
-                          onTap: () {},
-                          icon: const Icon(Icons.alarm),
-                          title: 'Jadwal\nShalat'),
+                        onTap: () {},
+                        icon: const Icon(Icons.alarm),
+                        title: 'Jadwal\n Shalat',
+                      ),
                     ],
                   ),
                 ),
