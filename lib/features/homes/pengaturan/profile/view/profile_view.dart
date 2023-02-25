@@ -1,9 +1,13 @@
+import 'dart:convert';
 import 'dart:io';
 import 'package:b7c_clean_architecture/contants/color_style.dart';
 import 'package:b7c_clean_architecture/features/homes/home_view.dart';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+
+import '../view_model/profile_view_model.dart';
 
 class DetailProfilePage extends StatefulWidget {
   static const routeName = "/DetailProfilePage";
@@ -30,9 +34,15 @@ class _DetailProfilePageState extends State<DetailProfilePage> {
     super.initState();
   }
 
+  @override
+  void dispose() {
+    super.dispose();
+  }
+
   File? selectedImage;
 
-  Future<void> chooseImage(type) async {
+  Future<void> chooseImage(context, providerVM, String type) async {
+    // Future chooseImage(providerVM, type) async {
     // ignore: prefer_typing_uninitialized_variables
     var image;
     if (type == "camera") {
@@ -47,6 +57,17 @@ class _DetailProfilePageState extends State<DetailProfilePage> {
       );
     }
     if (image != null) {
+      Navigator.of(context).pop();
+
+      final bytes = File(image.path).readAsBytesSync();
+      String img64 = base64Encode(bytes);
+
+      Map<String, Object> param = {};
+      param['fotoProfile'] = img64;
+      param['fullName'] = '-';
+      param['email'] = '-';
+      providerVM.updateProfile(context, param);
+
       setState(() {
         selectedImage = File(image.path);
       });
@@ -70,6 +91,16 @@ class _DetailProfilePageState extends State<DetailProfilePage> {
 
   @override
   Widget build(BuildContext context) {
+    return ChangeNotifierProvider(
+      create: (BuildContext context) => ProfileViewModel(),
+      builder: (context, child) => _buildPage(context),
+    );
+  }
+
+  Widget _buildPage(BuildContext context) {
+    // final providerVM = context.read<ProfileViewModel>();
+    final providerVM = Provider.of<ProfileViewModel>(context, listen: false);
+
     return Scaffold(
       body: Column(
         children: [
@@ -179,7 +210,8 @@ class _DetailProfilePageState extends State<DetailProfilePage> {
                                   color: Colors.transparent,
                                   child: InkWell(
                                     onTap: () async {
-                                      await chooseImage('Galeri');
+                                      await chooseImage(
+                                          context, providerVM, 'Galeri');
                                     },
                                     child: SizedBox(
                                       height: 40,
@@ -216,7 +248,8 @@ class _DetailProfilePageState extends State<DetailProfilePage> {
                                   color: Colors.transparent,
                                   child: InkWell(
                                     onTap: () async {
-                                      await chooseImage('camera');
+                                      await chooseImage(
+                                          context, providerVM, 'camera');
                                     },
                                     child: SizedBox(
                                       height: 40,
@@ -299,7 +332,7 @@ class _DetailProfilePageState extends State<DetailProfilePage> {
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
                                 Text(
-                                  'Nama',
+                                  'Nama lengkap',
                                   style: textDetailPrflepengaturanStyle,
                                 ),
                                 Text(

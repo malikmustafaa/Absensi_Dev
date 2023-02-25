@@ -31,7 +31,6 @@ class RegisterViewModel extends ChangeNotifier {
       var res = await registerServices.apiRegister(context,
           requestRegisterEntity: requestRegisterEntity);
       if (res != null) {
-        log('============>jjX>  ${res.noNis}');
         pref = await SharedPreferences.getInstance();
         pref.setString("fullname", res.fullName);
         pref.setString("noNis", res.noNis);

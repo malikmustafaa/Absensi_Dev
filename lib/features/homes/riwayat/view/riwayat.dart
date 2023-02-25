@@ -1,3 +1,5 @@
+// ignore_for_file: use_build_context_synchronously
+
 import 'dart:developer';
 
 import 'package:b7c_clean_architecture/features/homes/beranda/view/widgets/dialog.dart';
