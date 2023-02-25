@@ -1,5 +1,3 @@
-// ignore_for_file: use_build_context_synchronously, unused_field
-
 import 'dart:developer';
 
 import 'package:b7c_clean_architecture/features/homes/beranda/view/widgets/dialog.dart';
@@ -27,6 +25,7 @@ class _RiwayatState extends State<Riwayat> {
   DateTime? untilDate;
   DateFormat f = DateFormat('dd-MMM-yyyy');
   final fParam = DateFormat('yyyy-MM-dd');
+  // ignore: unused_field
   final _oneDay = 60 * 60 * 24 * 1000;
   List<TileNewTransaksi> listHistoriTrx = [];
   List<TileNewTransaksi> listFilteredTransfer = [];

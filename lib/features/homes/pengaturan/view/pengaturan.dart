@@ -1,4 +1,4 @@
-import 'package:b7c_clean_architecture/features/homes/pengaturan/detail_profile/view/detail_profile_view.dart';
+import 'package:b7c_clean_architecture/features/homes/pengaturan/profile/view/profile_view.dart';
 import 'package:b7c_clean_architecture/features/homes/pengaturan/view_model/pengaturan_view_model.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -17,7 +17,7 @@ class _PengaturanState extends State<Pengaturan> {
   late SharedPreferences pref;
   String fullname = '';
   String email = '';
-  String noNis = '';
+  // String noNis = '';
   String username = '';
   @override
   void initState() {
@@ -30,12 +30,12 @@ class _PengaturanState extends State<Pengaturan> {
 
     fullname = pref.getString('fullname') ?? "";
     email = pref.getString('email') ?? "";
-    noNis = pref.getString('noNis') ?? "";
+    // noNis = pref.getString('noNis') ?? "";
     username = pref.getString('username') ?? "";
     setState(() {
       fullname = fullname;
       email = email;
-      noNis = noNis;
+      // noNis = noNis;
       username = username;
     });
   }
@@ -70,11 +70,9 @@ class _PengaturanState extends State<Pengaturan> {
                 right: 20,
                 child: Column(
                   children: [
-                    Center(
-                      child: Text(
-                        'Pengaturan',
-                        style: styleTitleAppBarBlack,
-                      ),
+                    Text(
+                      'Pengaturan',
+                      style: styleTitleAppBarBlack,
                     ),
                     const SizedBox(
                       height: 28,
@@ -82,7 +80,9 @@ class _PengaturanState extends State<Pengaturan> {
                     const CircleAvatar(
                       backgroundColor: default2Color,
                       radius: 60,
-                      backgroundImage: AssetImage('assets/images/orang.png'),
+                      backgroundImage: AssetImage(
+                        'assets/images/orang.png',
+                      ),
                     ),
                     const SizedBox(
                       height: 6,
@@ -117,12 +117,11 @@ class _PengaturanState extends State<Pengaturan> {
                   color: Colors.transparent,
                   child: InkWell(
                     onTap: () {
-                      Navigator.pushAndRemoveUntil(
-                          context,
-                          MaterialPageRoute(
-                              builder: (BuildContext context) =>
-                                  const DetailProfilePage()),
-                          ModalRoute.withName('/'));
+                      Navigator.of(context).push(
+                        MaterialPageRoute(
+                          builder: (context) => const DetailProfilePage(),
+                        ),
+                      );
                     },
                     child: Container(
                       padding: const EdgeInsets.symmetric(
