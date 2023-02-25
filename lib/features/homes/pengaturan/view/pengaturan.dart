@@ -80,7 +80,9 @@ class _PengaturanState extends State<Pengaturan> {
                     const CircleAvatar(
                       backgroundColor: default2Color,
                       radius: 60,
-                      backgroundImage: AssetImage('assets/images/orang.png'),
+                      backgroundImage: AssetImage(
+                        'assets/images/orang.png',
+                      ),
                     ),
                     const SizedBox(
                       height: 6,
@@ -115,12 +117,11 @@ class _PengaturanState extends State<Pengaturan> {
                   color: Colors.transparent,
                   child: InkWell(
                     onTap: () {
-                      Navigator.pushAndRemoveUntil(
-                          context,
-                          MaterialPageRoute(
-                              builder: (BuildContext context) =>
-                                  const DetailProfilePage()),
-                          ModalRoute.withName('/'));
+                      Navigator.of(context).push(
+                        MaterialPageRoute(
+                          builder: (context) => const DetailProfilePage(),
+                        ),
+                      );
                     },
                     child: Container(
                       padding: const EdgeInsets.symmetric(

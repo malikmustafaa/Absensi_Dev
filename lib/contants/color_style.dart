@@ -186,3 +186,14 @@ var styleTitleAppBarBlack = const TextStyle(
     fontFamily: 'Ubuntu',
     fontSize: 22,
     fontWeight: FontWeight.w600);
+var styleTxtprofile = const TextStyle(
+    color: blackColor,
+    fontFamily: 'Ubuntu',
+    fontSize: 14,
+    fontWeight: FontWeight.w500);
+
+var styleTxtfotoprofile = const TextStyle(
+    color: blackColor,
+    fontFamily: 'Ubuntu',
+    fontSize: 16,
+    fontWeight: FontWeight.w700);
