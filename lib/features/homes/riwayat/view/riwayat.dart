@@ -317,15 +317,11 @@ class _RiwayatState extends State<Riwayat> {
   Widget buildHeader() {
     return Column(
       children: [
-        const Align(
+        Align(
           alignment: Alignment.topLeft,
           child: Text(
             'Riwayat Absensi',
-            style: TextStyle(
-                color: whiteColor,
-                fontFamily: 'Ubuntu',
-                fontSize: 22,
-                fontWeight: FontWeight.w600),
+            style: styleTitleAppBar,
           ),
         ),
         Container(

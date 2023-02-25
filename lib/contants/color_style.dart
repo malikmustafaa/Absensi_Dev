@@ -168,3 +168,15 @@ var textDetailPrflepengaturanStyle = const TextStyle(
     color: default2Color,
     fontSize: 16,
     fontWeight: FontWeight.w600);
+
+var styleTitleAppBar = const TextStyle(
+    color: whiteColor,
+    fontFamily: 'Ubuntu',
+    fontSize: 22,
+    fontWeight: FontWeight.w600);
+
+var styleTitleAppBarBlack = const TextStyle(
+    color: default2Color,
+    fontFamily: 'Ubuntu',
+    fontSize: 22,
+    fontWeight: FontWeight.w600);

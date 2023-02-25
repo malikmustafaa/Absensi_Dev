@@ -2,7 +2,7 @@
 
 import 'dart:developer';
 
-import 'package:b7c_clean_architecture/features/homes/beranda/view/home_view.dart';
+import 'package:b7c_clean_architecture/features/homes/home_view.dart';
 import 'package:b7c_clean_architecture/features/logins/login/view/login_view.dart';
 import 'package:flutter/material.dart';
 import 'package:b7c_clean_architecture/core/route/route.dart';

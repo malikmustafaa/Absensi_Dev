@@ -1,4 +1,4 @@
-import 'package:b7c_clean_architecture/features/homes/pengaturan/detail_profile/view/detail_profile_view.dart';
+import 'package:b7c_clean_architecture/features/homes/pengaturan/profile/view/profile_view.dart';
 import 'package:b7c_clean_architecture/features/homes/pengaturan/view_model/pengaturan_view_model.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -51,58 +51,60 @@ class _PengaturanState extends State<Pengaturan> {
   Widget _buildPage(BuildContext context) {
     return Scaffold(
       backgroundColor: whiteColor,
-      // appBar: AppBar(
-      //   backgroundColor: default2Color,
-      //   automaticallyImplyLeading: false,
-      //   title: const Text(
-      //     'Pengaturan',
-      //     style: TextStyle(
-      //         color: whiteColor,
-      //         fontFamily: 'Ubuntu',
-      //         fontSize: 22,
-      //         fontWeight: FontWeight.w600),
-      //   ),
-      // ),
       body: Column(
         children: [
-          const Align(
-              alignment: Alignment.topLeft,
-              child: Text(
-                'Profile',
-              )),
-          Align(
-            alignment: Alignment.topLeft,
-            child: Image.asset(
-              'assets/images/header_login.png',
-            ),
+          Stack(
+            children: [
+              Align(
+                alignment: Alignment.topLeft,
+                child: Image.asset(
+                  'assets/images/header_login.png',
+                ),
+              ),
+              Container(
+                height: 280,
+              ),
+              Positioned(
+                top: 56,
+                left: 20,
+                right: 20,
+                child: Column(
+                  children: [
+                    Text(
+                      'Pengaturan',
+                      style: styleTitleAppBarBlack,
+                    ),
+                    const SizedBox(
+                      height: 28,
+                    ),
+                    const CircleAvatar(
+                      backgroundColor: default2Color,
+                      radius: 60,
+                      backgroundImage: AssetImage('assets/images/orang.png'),
+                    ),
+                    const SizedBox(
+                      height: 6,
+                    ),
+                    Text(
+                      fullname,
+                      style: textfllnamepengaturanStyle,
+                    ),
+                    const SizedBox(
+                      height: 3,
+                    ),
+                    Text(
+                      email,
+                      style: textTglMasukStyle,
+                    ),
+                  ],
+                ),
+              ),
+            ],
           ),
-          Align(
-            alignment: Alignment.center,
-            child: Column(
-              children: [
-                const CircleAvatar(
-                  backgroundColor: default2Color,
-                  radius: 30,
-                  backgroundImage: AssetImage('assets/images/orang.png'),
-                ),
-                Text(
-                  fullname,
-                  style: textfllnamepengaturanStyle,
-                ),
-                Text(
-                  email,
-                  style: textEmailpengaturanStyle,
-                ),
-                // Consumer<PengaturanViewModel>(builder: (context, value, child) {
-                //   return Text('$n');
-                // },)
-              ],
-            ),
-          ),
-          Padding(
+          Container(
             padding: const EdgeInsets.symmetric(
               horizontal: 15,
-              vertical: 10,
+              vertical: 2,
             ),
             child: Column(
               children: [
@@ -127,7 +129,7 @@ class _PengaturanState extends State<Pengaturan> {
                       decoration: BoxDecoration(
                         border: Border.all(
                           color: default2Color,
-                          width: 2,
+                          width: 1,
                         ),
                         borderRadius: BorderRadius.circular(15),
                       ),
@@ -145,7 +147,7 @@ class _PengaturanState extends State<Pengaturan> {
                               Padding(
                                 padding: const EdgeInsets.only(left: 10),
                                 child: Text(
-                                  'Detail Profile',
+                                  'Profile',
                                   style: textDetailPrflepengaturanStyle,
                                 ),
                               ),
@@ -175,7 +177,7 @@ class _PengaturanState extends State<Pengaturan> {
                       decoration: BoxDecoration(
                         border: Border.all(
                           color: default2Color,
-                          width: 2,
+                          width: 1,
                         ),
                         borderRadius: BorderRadius.circular(15),
                       ),
