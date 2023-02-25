@@ -1,6 +1,4 @@
-// ignore_for_file: prefer_const_constructors
-
-import 'dart:developer';
+// ignore_for_file: prefer_const_constructors, unnecessary_null_comparison
 
 import 'package:b7c_clean_architecture/features/homes/beranda/view/beranda.dart';
 import 'package:b7c_clean_architecture/features/homes/pengaturan/view/pengaturan.dart';

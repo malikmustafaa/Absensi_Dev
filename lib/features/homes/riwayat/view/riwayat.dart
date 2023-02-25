@@ -75,6 +75,16 @@ class _RiwayatState extends State<Riwayat> {
         List<dynamic> listRespDyn = (listResp);
         List<TileNewTransaksi> listparam = [];
         for (var item in listRespDyn) {
+          List<ListLabelItem> listLabel = [];
+          List<dynamic> listMap = item['labelItem'];
+          for (var itemLabel in listMap) {
+            ListLabelItem itemParam = ListLabelItem(
+              title: itemLabel['title'],
+              value: itemLabel['value'],
+              color: itemLabel['color'],
+            );
+            listLabel.add(itemParam);
+          }
           TileNewTransaksi trx = TileNewTransaksi(
             idAbsen: item['idAbsen'],
             jamKeluar: item['jamKeluar'],
@@ -83,8 +93,9 @@ class _RiwayatState extends State<Riwayat> {
             colorLabel: item['colorLabel'],
             isResendTrx: item['isResendTrx'],
             isActive: item['isActive'],
+            items: listLabel,
             callback: (idAbsen, jamKeluar, jamMasuk, tglAbsen, colorLabel,
-                isResendTrx, isActive) {},
+                isResendTrx, isActiv, items) {},
           );
           listparam.add(trx);
         }
@@ -235,6 +246,17 @@ class _RiwayatState extends State<Riwayat> {
       // ignore: unnecessary_null_comparison
       if (listRespDyn != null) {
         for (var item in listRespDyn) {
+          List<ListLabelItem> listLabel = [];
+          List<dynamic> listMap = item['labelItem'];
+          for (var itemLabel in listMap) {
+            ListLabelItem itemParam = ListLabelItem(
+              title: itemLabel['title'],
+              value: itemLabel['value'],
+              color: itemLabel['color'],
+            );
+            listLabel.add(itemParam);
+          }
+
           TileNewTransaksi trx = TileNewTransaksi(
             idAbsen: item['idAbsen'],
             jamKeluar: item['jamKeluar'],
@@ -243,8 +265,9 @@ class _RiwayatState extends State<Riwayat> {
             colorLabel: item['colorLabel'],
             isResendTrx: item['isResendTrx'],
             isActive: item['isActive'],
+            items: listLabel,
             callback: (idAbsen, jamKeluar, jamMasuk, tglAbsen, colorLabel,
-                isResendTrx, isActive) {
+                isResendTrx, isActive, items) {
               _getRiwayatTrx();
             },
           );
@@ -301,6 +324,7 @@ class _RiwayatState extends State<Riwayat> {
                           colorLabel: listHistoriTrx[index].colorLabel,
                           isResendTrx: listHistoriTrx[index].isResendTrx,
                           isActive: listHistoriTrx[index].isActive,
+                          items: listHistoriTrx[index].items,
                         ),
                       );
                     },
