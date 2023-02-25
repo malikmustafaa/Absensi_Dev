@@ -147,6 +147,8 @@ class _CameraPageState extends State<CameraPage> {
                         children: [
                           IconButton(
                             onPressed: () {
+                              Navigator.of(context).pop();
+
                               Navigator.pushNamedAndRemoveUntil(context,
                                   HomePage.routeName, ModalRoute.withName('/'));
                             },

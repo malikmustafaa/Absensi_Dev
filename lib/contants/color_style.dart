@@ -145,7 +145,13 @@ var textTglMasukStyle = const TextStyle(
     fontFamily: 'Ubuntu',
     color: blackColor,
     fontSize: 14,
-    fontWeight: FontWeight.w400);
+    fontWeight: FontWeight.w700);
+
+var textJmMasukStyle = const TextStyle(
+    fontFamily: 'Ubuntu',
+    color: blackColor,
+    fontSize: 22,
+    fontWeight: FontWeight.w700);
 var textfllnamepengaturanStyle = const TextStyle(
     fontFamily: 'Ubuntu',
     color: default2Color,
