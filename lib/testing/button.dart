@@ -7,11 +7,11 @@ class MyStatelessWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     return Center(
       child: TextButton.icon(
-        icon: Icon(
+        icon: const Icon(
           Icons.add,
           color: Colors.blue,
         ),
-        label: Text(
+        label: const Text(
           'Add',
           style: TextStyle(
             color: Colors.blue,
@@ -36,7 +36,7 @@ class MyStatelessWidget extends StatelessWidget {
                           child: TextFormField(
                             maxLines: 2,
                             minLines: 2,
-                            decoration: InputDecoration(
+                            decoration: const InputDecoration(
                                 hintText: "Add Note", border: InputBorder.none),
                           ),
                         ),

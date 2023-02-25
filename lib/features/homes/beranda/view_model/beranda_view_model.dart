@@ -1,7 +1,5 @@
 // ignore_for_file: use_build_context_synchronously, unused_element
 
-import 'dart:developer';
-
 import 'package:b7c_clean_architecture/features/homes/home_view.dart';
 import 'package:b7c_clean_architecture/features/logins/login/view/login_view.dart';
 import 'package:flutter/material.dart';
@@ -36,7 +34,6 @@ class HomeViewModel extends ChangeNotifier {
         requestHomeEntity: requestHomeEntity);
 
     if (res != null) {
-      log('=========view modell>$res');
       goToHome(context);
     }
   }

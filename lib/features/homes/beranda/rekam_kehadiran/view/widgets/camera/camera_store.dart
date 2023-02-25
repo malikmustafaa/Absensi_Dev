@@ -1,5 +1,3 @@
-// ignore_for_file: use_build_context_synchronously
-
 import 'dart:convert';
 import 'dart:io';
 
@@ -67,7 +65,7 @@ class _CameraPageState extends State<CameraPage> {
     return result;
   }
 
-  Future _nextStep(providerVM, file) async {
+  Future _nextStep(context, providerVM, file) async {
     final dir = await path_provider.getTemporaryDirectory();
     final targetPath = '${dir.absolute.path}/malik.jpg';
     final imgFile = await testCompressAndGetFile(file, targetPath);
@@ -254,7 +252,8 @@ class _CameraPageState extends State<CameraPage> {
                                         ),
                                       ),
                                       onPressed: () {
-                                        _nextStep(providerVM, File(file.path));
+                                        _nextStep(context, providerVM,
+                                            File(file.path));
                                       },
                                       child: const Text(
                                         'Lanjut',
