@@ -6,7 +6,7 @@ import 'package:b7c_clean_architecture/core/route/route.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 import '../../../../domain/entity/pengaturan/request_pengaturan_entity.dart';
-import '../detail_profile/view/detail_profile_view.dart';
+import '../profile/view/profile_view.dart';
 import '../services/pengaturan_services.dart';
 
 class PengaturanViewModel extends ChangeNotifier {
