@@ -25,8 +25,7 @@ class UpdateProfileServices extends Api {
     Map<String, dynamic> reqBody = requestUpdateProfileEntity.toMap();
     var res = await post(context, path, reqBody, cookies: false);
 
-    log('message=====> $res');
-    if (res != null && res['status'] != "01" && res['status'] == "1") {
+    if (res != null && res['status'] == "1") {
       return res;
       // return ResponsePengaturanEntity.fromJson(res);
     } else {

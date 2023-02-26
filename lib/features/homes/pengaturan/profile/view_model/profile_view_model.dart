@@ -29,7 +29,9 @@ class ProfileViewModel extends ChangeNotifier {
     var res = await updateProfileServices.apiUpdateProfile(context,
         requestUpdateProfileEntity: requestUpdateProfileEntity);
 
-    // if (res == null) {}
+    if (res != null) {
+      Navigator.of(context).pop();
+    }
   }
 
   // void goToLogin(BuildContext context) {
