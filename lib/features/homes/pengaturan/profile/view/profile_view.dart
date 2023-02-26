@@ -1,3 +1,5 @@
+// ignore_for_file: prefer_typing_uninitialized_variables
+
 import 'dart:io';
 import 'package:b7c_clean_architecture/contants/color_style.dart';
 import 'package:b7c_clean_architecture/features/homes/home_view.dart';
@@ -32,18 +34,17 @@ class _DetailProfilePageState extends State<DetailProfilePage> {
 
   File? selectedImage;
 
-  Future<void> chooseImage(type) async {
-    // ignore: prefer_typing_uninitialized_variables
+  Future chooseImage(type) async {
     var image;
     if (type == "camera") {
       image = await ImagePicker().pickImage(
         source: ImageSource.camera,
-        imageQuality: 10,
+        imageQuality: 25,
       );
     } else {
       image = await ImagePicker().pickImage(
         source: ImageSource.gallery,
-        imageQuality: 10,
+        imageQuality: 25,
       );
     }
     if (image != null) {
