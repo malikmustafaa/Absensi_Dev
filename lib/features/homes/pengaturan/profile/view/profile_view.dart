@@ -1,3 +1,5 @@
+// ignore_for_file: prefer_typing_uninitialized_variables, unused_local_variable
+
 import 'dart:convert';
 import 'dart:io';
 import 'package:b7c_clean_architecture/contants/color_style.dart';
@@ -20,13 +22,13 @@ class DetailProfilePage extends StatefulWidget {
 class _DetailProfilePageState extends State<DetailProfilePage> {
   late SharedPreferences pref;
 
+  var controllerFullname = TextEditingController();
+  var controllerEmail = TextEditingController();
   String fullname = '';
 
   String email = '';
 
   String noNis = '';
-
-  String username = '';
 
   @override
   void initState() {
@@ -42,34 +44,53 @@ class _DetailProfilePageState extends State<DetailProfilePage> {
   File? selectedImage;
 
   Future<void> chooseImage(context, providerVM, String type) async {
-    // Future chooseImage(providerVM, type) async {
-    // ignore: prefer_typing_uninitialized_variables
     var image;
     if (type == "camera") {
       image = await ImagePicker().pickImage(
         source: ImageSource.camera,
-        imageQuality: 10,
+        imageQuality: 25,
       );
     } else {
       image = await ImagePicker().pickImage(
         source: ImageSource.gallery,
-        imageQuality: 10,
+        imageQuality: 25,
       );
     }
     if (image != null) {
       final bytes = File(image.path).readAsBytesSync();
       String img64 = base64Encode(bytes);
-
       Map<String, Object> param = {};
       param['fotoProfile'] = img64;
       param['fullName'] = '-';
       param['email'] = '-';
       providerVM.updateProfile(context, param);
-
       setState(() {
         selectedImage = File(image.path);
       });
     }
+  }
+
+  Future<void> setFullname(context, providerVM) async {
+    Map<String, Object> param = {};
+    param['fotoProfile'] = '-';
+    param['fullName'] = controllerFullname.text;
+    param['email'] = '-';
+    providerVM.updateProfile(context, param);
+
+    setState(() {
+      fullname = controllerFullname.text;
+    });
+  }
+
+  Future<void> setEmail(context, providerVM) async {
+    Map<String, Object> param = {};
+    param['fotoProfile'] = '-';
+    param['fullName'] = '-';
+    param['email'] = controllerEmail.text;
+    providerVM.updateProfile(context, param);
+    setState(() {
+      email = controllerEmail.text;
+    });
   }
 
   getDataPref() async {
@@ -78,12 +99,10 @@ class _DetailProfilePageState extends State<DetailProfilePage> {
     fullname = pref.getString('fullname') ?? "";
     email = pref.getString('email') ?? "";
     noNis = pref.getString('noNis') ?? "";
-    username = pref.getString('username') ?? "";
     setState(() {
       fullname = fullname;
       email = email;
       noNis = noNis;
-      username = username;
     });
   }
 
@@ -96,6 +115,8 @@ class _DetailProfilePageState extends State<DetailProfilePage> {
   }
 
   Widget _buildPage(BuildContext context) {
+    double h = MediaQuery.of(context).size.height;
+    double w = MediaQuery.of(context).size.width;
     final providerVM = Provider.of<ProfileViewModel>(context, listen: false);
 
     return Scaffold(
@@ -113,7 +134,7 @@ class _DetailProfilePageState extends State<DetailProfilePage> {
                 height: 280,
               ),
               Positioned(
-                top: 56,
+                top: 50,
                 left: 20,
                 right: 20,
                 child: Column(
@@ -132,9 +153,22 @@ class _DetailProfilePageState extends State<DetailProfilePage> {
                                 ),
                               );
                             },
-                            icon: const Icon(
-                              Icons.arrow_back,
-                              color: default2Color,
+                            icon: Container(
+                              decoration: BoxDecoration(
+                                borderRadius: BorderRadius.circular(20),
+                                gradient: const LinearGradient(
+                                  colors: [Colors.purple, Colors.blueAccent],
+                                  begin: Alignment.bottomLeft,
+                                  end: Alignment.topRight,
+                                  stops: [0.2, 0.7],
+                                  tileMode: TileMode.repeated,
+                                ),
+                                color: whiteColor,
+                              ),
+                              child: const Icon(
+                                Icons.arrow_back,
+                                color: default2Color,
+                              ),
                             )),
                         Padding(
                           padding: const EdgeInsets.only(left: 65, right: 65),
@@ -341,8 +375,102 @@ class _DetailProfilePageState extends State<DetailProfilePage> {
                           ),
                         ],
                       ),
-                      Container(
-                        child: ubahNama(),
+                      IconButton(
+                        onPressed: () {
+                          showModalBottomSheet<void>(
+                            shape: const RoundedRectangleBorder(
+                              borderRadius: BorderRadius.only(
+                                topLeft: Radius.circular(20),
+                                topRight: Radius.circular(20),
+                              ),
+                            ),
+                            context: context,
+                            builder: (BuildContext context) {
+                              return Form(
+                                child: SingleChildScrollView(
+                                  child: Container(
+                                    padding: const EdgeInsets.symmetric(
+                                        horizontal: 15, vertical: 30),
+                                    child: AnimatedPadding(
+                                      padding:
+                                          MediaQuery.of(context).viewInsets,
+                                      duration:
+                                          const Duration(milliseconds: 100),
+                                      curve: Curves.decelerate,
+                                      child: Column(
+                                        crossAxisAlignment:
+                                            CrossAxisAlignment.start,
+                                        children: <Widget>[
+                                          Align(
+                                            alignment: Alignment.bottomLeft,
+                                            child: Text(
+                                              'Ubah Nama Lengkap',
+                                              style: textfllnamepengaturanStyle,
+                                            ),
+                                          ),
+                                          const SizedBox(
+                                            height: 12,
+                                          ),
+                                          TextField(
+                                            controller: controllerFullname,
+                                            decoration: InputDecoration(
+                                              prefixIcon: const Icon(
+                                                Icons.person_outline_outlined,
+                                              ),
+                                              hintText: fullname,
+                                              focusedBorder:
+                                                  const UnderlineInputBorder(
+                                                      borderSide: BorderSide(
+                                                          color:
+                                                              default2Color)),
+                                            ),
+                                          ),
+                                          const SizedBox(
+                                            height: 50,
+                                          ),
+                                          Row(
+                                            mainAxisAlignment:
+                                                MainAxisAlignment.center,
+                                            children: [
+                                              SizedBox(
+                                                width: w / 2.5,
+                                                height: h / 16 * 1.1,
+                                                child: ElevatedButton(
+                                                  style:
+                                                      ElevatedButton.styleFrom(
+                                                    primary: default2Color,
+                                                    shape:
+                                                        RoundedRectangleBorder(
+                                                      borderRadius:
+                                                          BorderRadius.circular(
+                                                              25),
+                                                    ),
+                                                  ),
+                                                  onPressed: () {
+                                                    setFullname(
+                                                        context, providerVM);
+                                                  },
+                                                  child: const Text(
+                                                    'OK',
+                                                  ),
+                                                ),
+                                              ),
+                                            ],
+                                          ),
+                                        ],
+                                      ),
+                                    ),
+                                  ),
+                                ),
+                              );
+                            },
+                          );
+                        },
+                        icon: const Icon(
+                          Icons.edit,
+                          color: default2Color,
+                          size: 20,
+                        ),
                       ),
                     ],
                   ),
@@ -391,8 +519,105 @@ class _DetailProfilePageState extends State<DetailProfilePage> {
                           ),
                         ],
                       ),
-                      Container(
-                        child: ubahEmail(),
+                      IconButton(
+                        onPressed: () {
+                          showModalBottomSheet<void>(
+                            shape: const RoundedRectangleBorder(
+                              borderRadius: BorderRadius.only(
+                                topLeft: Radius.circular(20),
+                                topRight: Radius.circular(20),
+                              ),
+                            ),
+                            context: context,
+                            builder: (BuildContext context) {
+                              return Form(
+                                child: SingleChildScrollView(
+                                  child: Container(
+                                    padding: const EdgeInsets.symmetric(
+                                        horizontal: 15, vertical: 30),
+                                    child: AnimatedPadding(
+                                      padding:
+                                          MediaQuery.of(context).viewInsets,
+                                      duration:
+                                          const Duration(milliseconds: 100),
+                                      curve: Curves.decelerate,
+                                      child: Column(
+                                        crossAxisAlignment:
+                                            CrossAxisAlignment.start,
+                                        children: <Widget>[
+                                          Align(
+                                            alignment: Alignment.bottomLeft,
+                                            child: Text(
+                                              'Ubah Email',
+                                              style: textfllnamepengaturanStyle,
+                                            ),
+                                          ),
+                                          const SizedBox(
+                                            height: 12,
+                                          ),
+                                          TextField(
+                                            // controller: controllerEmail,
+                                            decoration: InputDecoration(
+                                              prefixIcon: const Icon(
+                                                Icons.email_outlined,
+                                              ),
+                                              prefixIconColor: default2Color,
+                                              hintText: email,
+                                              focusedBorder:
+                                                  const UnderlineInputBorder(
+                                                      borderSide: BorderSide(
+                                                          color:
+                                                              default2Color)),
+                                            ),
+                                          ),
+                                          const SizedBox(
+                                            height: 50,
+                                          ),
+                                          Row(
+                                            mainAxisAlignment:
+                                                MainAxisAlignment.center,
+                                            children: [
+                                              SizedBox(
+                                                width: w / 2.5,
+                                                height: h / 16 * 1.1,
+                                                child: ElevatedButton(
+                                                  style:
+                                                      ElevatedButton.styleFrom(
+                                                    primary: default2Color,
+                                                    shape:
+                                                        RoundedRectangleBorder(
+                                                      borderRadius:
+                                                          BorderRadius.circular(
+                                                              25),
+                                                    ),
+                                                  ),
+                                                  onPressed: () {
+                                                    setEmail(
+                                                        context, providerVM);
+
+                                                    Navigator.of(context).pop();
+                                                  },
+                                                  child: const Text(
+                                                    'OK',
+                                                  ),
+                                                ),
+                                              ),
+                                            ],
+                                          ),
+                                        ],
+                                      ),
+                                    ),
+                                  ),
+                                ),
+                              );
+                            },
+                          );
+                        },
+                        icon: const Icon(
+                          Icons.edit,
+                          color: default2Color,
+                          size: 20,
+                        ),
                       ),
                     ],
                   ),
@@ -455,178 +680,6 @@ class _DetailProfilePageState extends State<DetailProfilePage> {
             ),
           ),
         ],
-      ),
-    );
-  }
-
-  Widget ubahNama() {
-    double h = MediaQuery.of(context).size.height;
-    double w = MediaQuery.of(context).size.width;
-    return IconButton(
-      onPressed: () {
-        showModalBottomSheet<void>(
-          shape: const RoundedRectangleBorder(
-            borderRadius: BorderRadius.only(
-              topLeft: Radius.circular(20),
-              topRight: Radius.circular(20),
-            ),
-          ),
-          context: context,
-          builder: (BuildContext context) {
-            return Form(
-              child: SingleChildScrollView(
-                child: Container(
-                  padding:
-                      const EdgeInsets.symmetric(horizontal: 15, vertical: 30),
-                  child: AnimatedPadding(
-                    padding: MediaQuery.of(context).viewInsets,
-                    duration: const Duration(milliseconds: 100),
-                    curve: Curves.decelerate,
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: <Widget>[
-                        Align(
-                          alignment: Alignment.bottomLeft,
-                          child: Text(
-                            'Ubah Nama ',
-                            style: textfllnamepengaturanStyle,
-                          ),
-                        ),
-                        const SizedBox(
-                          height: 12,
-                        ),
-                        TextField(
-                          decoration: InputDecoration(
-                            hintText: fullname,
-                            focusedBorder: const UnderlineInputBorder(
-                                borderSide: BorderSide(color: default2Color)),
-                          ),
-                        ),
-                        const SizedBox(
-                          height: 50,
-                        ),
-                        Row(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          children: [
-                            SizedBox(
-                              width: w / 2,
-                              height: h / 14 * 1.1,
-                              child: ElevatedButton(
-                                style: ElevatedButton.styleFrom(
-                                  primary: default2Color,
-                                  shape: RoundedRectangleBorder(
-                                    borderRadius: BorderRadius.circular(25),
-                                  ),
-                                ),
-                                onPressed: () {
-                                  Navigator.of(context).pop();
-                                },
-                                child: const Text(
-                                  'OK',
-                                ),
-                              ),
-                            ),
-                          ],
-                        ),
-                      ],
-                    ),
-                  ),
-                ),
-              ),
-            );
-          },
-        );
-      },
-      icon: const Icon(
-        Icons.edit,
-        color: default2Color,
-        size: 20,
-      ),
-    );
-  }
-
-  Widget ubahEmail() {
-    double h = MediaQuery.of(context).size.height;
-    double w = MediaQuery.of(context).size.width;
-    return IconButton(
-      onPressed: () {
-        showModalBottomSheet<void>(
-          shape: const RoundedRectangleBorder(
-            borderRadius: BorderRadius.only(
-              topLeft: Radius.circular(20),
-              topRight: Radius.circular(20),
-            ),
-          ),
-          context: context,
-          builder: (BuildContext context) {
-            return Form(
-              child: SingleChildScrollView(
-                child: Container(
-                  padding:
-                      const EdgeInsets.symmetric(horizontal: 15, vertical: 30),
-                  child: AnimatedPadding(
-                    padding: MediaQuery.of(context).viewInsets,
-                    duration: const Duration(milliseconds: 100),
-                    curve: Curves.decelerate,
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: <Widget>[
-                        Align(
-                          alignment: Alignment.bottomLeft,
-                          child: Text(
-                            'Ubah Email',
-                            style: textfllnamepengaturanStyle,
-                          ),
-                        ),
-                        const SizedBox(
-                          height: 12,
-                        ),
-                        TextField(
-                          decoration: InputDecoration(
-                            hintText: email,
-                            focusedBorder: const UnderlineInputBorder(
-                                borderSide: BorderSide(color: default2Color)),
-                          ),
-                        ),
-                        const SizedBox(
-                          height: 50,
-                        ),
-                        Row(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          children: [
-                            SizedBox(
-                              width: w / 2,
-                              height: h / 14 * 1.1,
-                              child: ElevatedButton(
-                                style: ElevatedButton.styleFrom(
-                                  primary: default2Color,
-                                  shape: RoundedRectangleBorder(
-                                    borderRadius: BorderRadius.circular(25),
-                                  ),
-                                ),
-                                onPressed: () {
-                                  Navigator.of(context).pop();
-                                },
-                                child: const Text(
-                                  'OK',
-                                ),
-                              ),
-                            ),
-                          ],
-                        ),
-                      ],
-                    ),
-                  ),
-                ),
-              ),
-            );
-          },
-        );
-      },
-      icon: const Icon(
-        Icons.edit,
-        color: default2Color,
-        size: 20,
       ),
     );
   }

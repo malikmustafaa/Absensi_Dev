@@ -12,10 +12,10 @@ class RequestUpdateProfileEntity {
 
   factory RequestUpdateProfileEntity.fromJson(Map<String, dynamic> json) =>
       RequestUpdateProfileEntity(
-          noNis: json["noNis"].toString(),
-          fullName: json["fullName"].toString(),
+          noNis: json["no_nis"].toString(),
+          fullName: json["full_name"].toString(),
           email: json["email"].toString(),
-          fotoProfile: json["fotoProfile"].toString());
+          fotoProfile: json["foto_profile"].toString());
 
   Map<String, dynamic> toMap() => {
         "no_nis": noNis,

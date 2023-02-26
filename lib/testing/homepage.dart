@@ -28,7 +28,7 @@ class _ImagePickerScreenState extends State<ImagePickerScreen> {
     if (image != null) {
       setState(() {
         selectedImage = File(image.path);
-        base64Image = base64Encode(selectedImage!.readAsBytesSync());
+
         // won't have any error now
       });
     }

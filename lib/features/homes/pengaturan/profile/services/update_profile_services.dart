@@ -22,6 +22,7 @@ class UpdateProfileServices extends Api {
       {String path = "/api/user/update/profile",
       required RequestUpdateProfileEntity requestUpdateProfileEntity}) async {
     Map<String, dynamic> reqBody = requestUpdateProfileEntity.toMap();
+
     var res = await post(context, path, reqBody, cookies: false);
 
     if (res != null && res['status'] == "1") {

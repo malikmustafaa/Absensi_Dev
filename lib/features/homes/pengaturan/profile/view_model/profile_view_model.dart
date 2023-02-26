@@ -12,10 +12,8 @@ class ProfileViewModel extends ChangeNotifier {
   UpdateProfileServices updateProfileServices = UpdateProfileServices();
   late SharedPreferences pref;
   String noNis = '';
-  // void updateProfile(BuildContext context, param) async {
 
-  Future updateProfile(BuildContext context, param) async {
-    log('updateProfile =====> $param');
+  Future updateProfile(context, param) async {
     final pref = await SharedPreferences.getInstance();
     noNis = pref.getString('noNis') ?? "";
 
@@ -30,11 +28,16 @@ class ProfileViewModel extends ChangeNotifier {
         requestUpdateProfileEntity: requestUpdateProfileEntity);
 
     if (res != null) {
+      log('===============masuk ===> ${param['email']}');
+      // klo yg di apdate fullname
+      if (param['fullName'] != '-') {
+        pref.setString("fullname", param['fullName'].toString());
+      }
+      //  klo yg di apdate email
+      if (param['email'] != '-') {
+        pref.setString("email", param['email'].toString());
+      }
       Navigator.of(context).pop();
     }
   }
-
-  // void goToLogin(BuildContext context) {
-  //   goToNamed(context, routeName: LoginPage.routeName);
-  // }
 }
