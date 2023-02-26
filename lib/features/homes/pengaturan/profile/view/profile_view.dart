@@ -519,106 +519,106 @@ class _DetailProfilePageState extends State<DetailProfilePage> {
                           ),
                         ],
                       ),
-                      IconButton(
-                        onPressed: () {
-                          showModalBottomSheet<void>(
-                            shape: const RoundedRectangleBorder(
-                              borderRadius: BorderRadius.only(
-                                topLeft: Radius.circular(20),
-                                topRight: Radius.circular(20),
-                              ),
-                            ),
-                            context: context,
-                            builder: (BuildContext context) {
-                              return Form(
-                                child: SingleChildScrollView(
-                                  child: Container(
-                                    padding: const EdgeInsets.symmetric(
-                                        horizontal: 15, vertical: 30),
-                                    child: AnimatedPadding(
-                                      padding:
-                                          MediaQuery.of(context).viewInsets,
-                                      duration:
-                                          const Duration(milliseconds: 100),
-                                      curve: Curves.decelerate,
-                                      child: Column(
-                                        crossAxisAlignment:
-                                            CrossAxisAlignment.start,
-                                        children: <Widget>[
-                                          Align(
-                                            alignment: Alignment.bottomLeft,
-                                            child: Text(
-                                              'Ubah Email',
-                                              style: textfllnamepengaturanStyle,
-                                            ),
-                                          ),
-                                          const SizedBox(
-                                            height: 12,
-                                          ),
-                                          TextField(
-                                            // controller: controllerEmail,
-                                            decoration: InputDecoration(
-                                              prefixIcon: const Icon(
-                                                Icons.email_outlined,
-                                              ),
-                                              prefixIconColor: default2Color,
-                                              hintText: email,
-                                              focusedBorder:
-                                                  const UnderlineInputBorder(
-                                                      borderSide: BorderSide(
-                                                          color:
-                                                              default2Color)),
-                                            ),
-                                          ),
-                                          const SizedBox(
-                                            height: 50,
-                                          ),
-                                          Row(
-                                            mainAxisAlignment:
-                                                MainAxisAlignment.center,
-                                            children: [
-                                              SizedBox(
-                                                width: w / 2.5,
-                                                height: h / 16 * 1.1,
-                                                child: ElevatedButton(
-                                                  style:
-                                                      ElevatedButton.styleFrom(
-                                                    primary: default2Color,
-                                                    shape:
-                                                        RoundedRectangleBorder(
-                                                      borderRadius:
-                                                          BorderRadius.circular(
-                                                              25),
-                                                    ),
-                                                  ),
-                                                  onPressed: () {
-                                                    setEmail(
-                                                        context, providerVM);
+                      // IconButton(
+                      //   onPressed: () {
+                      //     showModalBottomSheet<void>(
+                      //       shape: const RoundedRectangleBorder(
+                      //         borderRadius: BorderRadius.only(
+                      //           topLeft: Radius.circular(20),
+                      //           topRight: Radius.circular(20),
+                      //         ),
+                      //       ),
+                      //       context: context,
+                      //       builder: (BuildContext context) {
+                      //         return Form(
+                      //           child: SingleChildScrollView(
+                      //             child: Container(
+                      //               padding: const EdgeInsets.symmetric(
+                      //                   horizontal: 15, vertical: 30),
+                      //               child: AnimatedPadding(
+                      //                 padding:
+                      //                     MediaQuery.of(context).viewInsets,
+                      //                 duration:
+                      //                     const Duration(milliseconds: 100),
+                      //                 curve: Curves.decelerate,
+                      //                 child: Column(
+                      //                   crossAxisAlignment:
+                      //                       CrossAxisAlignment.start,
+                      //                   children: <Widget>[
+                      //                     Align(
+                      //                       alignment: Alignment.bottomLeft,
+                      //                       child: Text(
+                      //                         'Ubah Email',
+                      //                         style: textfllnamepengaturanStyle,
+                      //                       ),
+                      //                     ),
+                      //                     const SizedBox(
+                      //                       height: 12,
+                      //                     ),
 
-                                                    Navigator.of(context).pop();
-                                                  },
-                                                  child: const Text(
-                                                    'OK',
-                                                  ),
-                                                ),
-                                              ),
-                                            ],
-                                          ),
-                                        ],
-                                      ),
-                                    ),
-                                  ),
-                                ),
-                              );
-                            },
-                          );
-                        },
-                        icon: const Icon(
-                          Icons.edit,
-                          color: default2Color,
-                          size: 20,
-                        ),
-                      ),
+                      //                     TextField(
+                      //                       controller: controllerEmail,
+                      //                       decoration: InputDecoration(
+                      //                         prefixIcon: const Icon(
+                      //                           Icons.email_outlined,
+                      //                         ),
+                      //                         hintText: email,
+                      //                         focusedBorder:
+                      //                             const UnderlineInputBorder(
+                      //                                 borderSide: BorderSide(
+                      //                                     color:
+                      //                                         default2Color)),
+                      //                       ),
+                      //                     ),
+                      //                     const SizedBox(
+                      //                       height: 50,
+                      //                     ),
+                      //                     Row(
+                      //                       mainAxisAlignment:
+                      //                           MainAxisAlignment.center,
+                      //                       children: [
+                      //                         SizedBox(
+                      //                           width: w / 2.5,
+                      //                           height: h / 16 * 1.1,
+                      //                           child: ElevatedButton(
+                      //                             style:
+                      //                                 ElevatedButton.styleFrom(
+                      //                               primary: default2Color,
+                      //                               shape:
+                      //                                   RoundedRectangleBorder(
+                      //                                 borderRadius:
+                      //                                     BorderRadius.circular(
+                      //                                         25),
+                      //                               ),
+                      //                             ),
+                      //                             onPressed: () {
+                      //                               setEmail(
+                      //                                   context, providerVM);
+
+                      //                               Navigator.of(context).pop();
+                      //                             },
+                      //                             child: const Text(
+                      //                               'OK',
+                      //                             ),
+                      //                           ),
+                      //                         ),
+                      //                       ],
+                      //                     ),
+                      //                   ],
+                      //                 ),
+                      //               ),
+                      //             ),
+                      //           ),
+                      //         );
+                      //       },
+                      //     );
+                      //   },
+                      //   icon: const Icon(
+                      //     Icons.edit,
+                      //     color: default2Color,
+                      //     size: 20,
+                      //   ),
+                      // ),
                     ],
                   ),
                 ),

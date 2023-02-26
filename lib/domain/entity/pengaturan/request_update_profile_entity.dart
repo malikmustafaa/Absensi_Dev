@@ -2,25 +2,25 @@ class RequestUpdateProfileEntity {
   RequestUpdateProfileEntity(
       {required this.noNis,
       required this.fullName,
-      required this.email,
+      required this.updateEmail,
       required this.fotoProfile});
 
   String noNis;
   String fullName;
-  String email;
+  String updateEmail;
   String fotoProfile;
 
   factory RequestUpdateProfileEntity.fromJson(Map<String, dynamic> json) =>
       RequestUpdateProfileEntity(
           noNis: json["no_nis"].toString(),
           fullName: json["full_name"].toString(),
-          email: json["email"].toString(),
+          updateEmail: json["updateEmail"].toString(),
           fotoProfile: json["foto_profile"].toString());
 
   Map<String, dynamic> toMap() => {
         "no_nis": noNis,
         "full_name": fullName,
-        "email": email,
+        "updateEmail": updateEmail,
         "foto_profile": fotoProfile
       };
 }

@@ -215,8 +215,11 @@ abstract class BaseApi {
       strLog += "\t\n[Response Headers] : \n\t${response.headers.toString()}";
       strLog += "\t\n[Response Body Raw] : \n\t${response.body.toString()}";
       if (response.statusCode == 200) {
+        log('--------->  ${response.statusCode}');
+        log('--------->  ${response.body}');
         // ignore: unnecessary_null_comparison
         if (response.body != null) {
+          log('message body');
           var respBody = await postFetch(response.body);
           if (!_hideClearLog) {
             strLog += "\t\n[Response Body Clear] : \n\t$respBody";
