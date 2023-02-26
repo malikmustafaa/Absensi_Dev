@@ -1,9 +1,14 @@
+import 'dart:developer';
+
+import 'package:b7c_clean_architecture/features/homes/beranda/view/widgets/data_user_widget.dart';
 import 'package:b7c_clean_architecture/features/homes/pengaturan/profile/view/profile_view.dart';
 import 'package:b7c_clean_architecture/features/homes/pengaturan/view_model/pengaturan_view_model.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import '../../../../contants/color_style.dart';
+import '../../../../domain/entity/pengaturan/request_data_profile_entity.dart';
+import '../profile/services/update_profile_services.dart';
 
 class Pengaturan extends StatefulWidget {
   static const routeName = "/Pengaturan";
@@ -14,15 +19,78 @@ class Pengaturan extends StatefulWidget {
 }
 
 class _PengaturanState extends State<Pengaturan> {
+  UpdateProfileServices dataProfileServices = UpdateProfileServices();
+  List<DataUserWidget> listDataProfile = [];
   late SharedPreferences pref;
+  bool loading = false;
+  bool isDataUser = true;
   String fullname = '';
   String email = '';
-  // String noNis = '';
+  String noNis = '';
   String username = '';
   @override
   void initState() {
     getDataPref();
+    _getDataUser();
     super.initState();
+  }
+
+  _getDataUser() async {
+    pref = await SharedPreferences.getInstance();
+    noNis = pref.getString('noNis') ?? "";
+    if (listDataProfile.isEmpty) {
+      setState(() {
+        loading = true;
+      });
+    } else {
+      setState(() {
+        loading = false;
+      });
+    }
+    var requestDataProfileEntity = RequestDataProfileEntity(
+      noNis: noNis,
+    );
+
+    // ignore: use_build_context_synchronously
+    var resp = await dataProfileServices.apiDataProfile(context,
+        requestDataProfileEntity: requestDataProfileEntity);
+    if (resp != null && resp['status'] == '1') {
+      var dataProfile = resp['data_profile'];
+
+      log(' ==== > ${dataProfile.length}');
+      if (dataProfile.length > 0) {
+        List<DataUserWidget> listDataUserProfile = [];
+        List<dynamic> listMap = [dataProfile];
+
+        for (var itemDUser in listMap) {
+          DataUserWidget itemDataUser = DataUserWidget(
+            fullName: itemDUser['full_name'] ?? '',
+            email: itemDUser['email'] ?? '',
+            jurusan: itemDUser['jurusan'] ?? '',
+            kelas: itemDUser['kelas'] ?? '',
+            jenisKelamin: itemDUser['jenis_kelamin'] ?? '',
+            agama: itemDUser['agama'] ?? '',
+            fotoProfile: itemDUser['foto_profile'] ?? '',
+            isProfile: true,
+            callback: (fullName, email, jurusan, kelas, jenisKelamin, agama,
+                fotoProfile, isProfile) {
+              _getDataUser();
+            },
+          );
+          listDataUserProfile.add(itemDataUser);
+        }
+
+        setState(() {
+          listDataProfile = listDataUserProfile;
+          loading = false;
+        });
+      } else {
+        setState(() {
+          isDataUser = false;
+          loading = false;
+        });
+      }
+    }
   }
 
   getDataPref() async {
@@ -77,27 +145,7 @@ class _PengaturanState extends State<Pengaturan> {
                     const SizedBox(
                       height: 28,
                     ),
-                    const CircleAvatar(
-                      backgroundColor: default2Color,
-                      radius: 60,
-                      backgroundImage: AssetImage(
-                        'assets/images/orang.png',
-                      ),
-                    ),
-                    const SizedBox(
-                      height: 6,
-                    ),
-                    Text(
-                      fullname,
-                      style: textfllnamepengaturanStyle,
-                    ),
-                    const SizedBox(
-                      height: 3,
-                    ),
-                    Text(
-                      email,
-                      style: textTglMasukStyle,
-                    ),
+                    _listDataUser()
                   ],
                 ),
               ),
@@ -221,6 +269,59 @@ class _PengaturanState extends State<Pengaturan> {
         ],
       ),
     );
+  }
+
+  _listDataUser() {
+    return loading
+        ? const Center(
+            child: Text('Loading...'),
+          )
+        : isDataUser
+            ? ListView.separated(
+                padding: const EdgeInsets.only(top: 0, bottom: 8),
+                separatorBuilder: (context, index) =>
+                    const Divider(height: 2, color: Colors.grey),
+                primary: false,
+                shrinkWrap: true,
+                itemCount: isDataUser ? listDataProfile.length : 1,
+                itemBuilder: (BuildContext context, int index) {
+                  return DataUserWidget(
+                    agama: listDataProfile[index].agama,
+                    email: listDataProfile[index].email,
+                    fotoProfile: listDataProfile[index].fotoProfile,
+                    fullName: listDataProfile[index].fullName,
+                    jenisKelamin: listDataProfile[index].jenisKelamin,
+                    jurusan: listDataProfile[index].jurusan,
+                    kelas: listDataProfile[index].kelas,
+                    isProfile: true,
+                  );
+                },
+              )
+            : Column(
+                children: [
+                  const CircleAvatar(
+                    backgroundColor: default2Color,
+                    radius: 60,
+                    backgroundImage: AssetImage(
+                      'assets/images/orang.png',
+                    ),
+                  ),
+                  const SizedBox(
+                    height: 6,
+                  ),
+                  Text(
+                    fullname,
+                    style: textfllnamepengaturanStyle,
+                  ),
+                  const SizedBox(
+                    height: 3,
+                  ),
+                  Text(
+                    email,
+                    style: textTglMasukStyle,
+                  ),
+                ],
+              );
   }
 
   showAlert(BuildContext context) {
