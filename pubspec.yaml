@@ -45,7 +45,6 @@ flutter:
 
   assets:
     - assets/images/
-    - assets/img/
     - .env.dev
     - .env.prod
     - .env.uat
