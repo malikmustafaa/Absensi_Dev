@@ -1,14 +1,19 @@
+// ignore_for_file: avoid_init_to_null
+
 import 'package:b7c_clean_architecture/features/homes/beranda/view/widgets/carousel_slider.dart';
+import 'package:b7c_clean_architecture/features/homes/beranda/view/widgets/data_user_widget.dart';
 import 'package:b7c_clean_architecture/features/homes/beranda/view/widgets/item_kategori.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import '../../../../contants/color_style.dart';
+import '../../../../domain/entity/data_user/request_data_user_entity.dart';
+import '../../riwayat/view/widgets/tile_new_trx.dart';
 import '../model/beranda_model.dart';
 import '../rekam_kehadiran/view/rekam_kehadiran.dart';
+import '../services/data_user_services.dart';
 import '../view_model/beranda_view_model.dart';
 import 'widgets/button.dart';
-import 'widgets/list_tile.dart';
 
 class Beranda extends StatefulWidget {
   static const routeName = "/Beranda";
@@ -21,17 +26,112 @@ class Beranda extends StatefulWidget {
 }
 
 class _BerandaState extends State<Beranda> {
+  DataUserServices dataUserServices = DataUserServices();
   List<ModelClass> modelList = <ModelClass>[];
 
   late SharedPreferences pref;
+  List<TileNewTransaksi> listDataProfile = [];
+  List<DataUserWidget> listDataUser = [];
   String fullname = '';
   String username = '';
+  String noNis = '';
   bool? isLogin;
   bool? isRegister;
+  bool alertNotif = false;
+  bool loading = false;
+  var dataDecode = null;
   @override
   void initState() {
     getDataPref();
+    _getDataUser();
     super.initState();
+  }
+
+  _getDataUser() async {
+    final pref = await SharedPreferences.getInstance();
+
+    noNis = pref.getString('noNis') ?? "";
+    if (listDataProfile.isEmpty) {
+      setState(() {
+        loading = true;
+      });
+    } else {
+      setState(() {
+        loading = false;
+      });
+    }
+    var requestUserDataEntity = RequestDataUserEntity(
+      noNis: noNis,
+    );
+
+    // ignore: use_build_context_synchronously
+    var resp = await dataUserServices.apiDataUserServices(context,
+        requestUserDataEntity: requestUserDataEntity);
+    if (resp != null && resp['status'] == '1') {
+      var dataProfile = resp['data_profile'];
+
+      List<DataUserWidget> listDataUserProfile = [];
+      List<dynamic> listMap = [dataProfile];
+
+      for (var itemDUser in listMap) {
+        DataUserWidget itemDataUser = DataUserWidget(
+          fullName: itemDUser['full_name'] ?? '',
+          email: itemDUser['email'] ?? '',
+          jurusan: itemDUser['jurusan'] ?? '',
+          kelas: itemDUser['kelas'] ?? '',
+          jenisKelamin: itemDUser['jenis_kelamin'] ?? '',
+          agama: itemDUser['agama'] ?? '',
+          fotoProfile: itemDUser['foto_profile'] ?? '',
+          callback: (fullName, email, jurusan, kelas, jenisKelamin, agama,
+              fotoProfile) {
+            _getDataUser();
+          },
+        );
+        listDataUserProfile.add(itemDataUser);
+      }
+
+      var listResp = resp['data'];
+
+      List<dynamic> listRespDyn = (listResp);
+      List<TileNewTransaksi> listparam = [];
+      // ignore: unnecessary_null_comparison
+      if (listRespDyn != null) {
+        for (var item in listRespDyn) {
+          List<ListLabelItem> listLabel = [];
+          List<dynamic> listMap = item['labelItem'];
+          for (var itemLabel in listMap) {
+            ListLabelItem itemParam = ListLabelItem(
+              title: itemLabel['title'],
+              value: itemLabel['value'],
+              color: itemLabel['color'],
+            );
+            listLabel.add(itemParam);
+          }
+
+          TileNewTransaksi trx = TileNewTransaksi(
+            idAbsen: item['idAbsen'],
+            jamKeluar: item['jamKeluar'],
+            jamMasuk: item['jamMasuk'],
+            tglAbsen: item['tglAbsen'],
+            colorLabel: item['colorLabel'],
+            isResendTrx: item['isResendTrx'],
+            isActive: item['isActive'],
+            items: listLabel,
+            callback: (idAbsen, jamKeluar, jamMasuk, tglAbsen, colorLabel,
+                isResendTrx, isActive, items) {
+              _getDataUser();
+            },
+          );
+          listparam.add(trx);
+        }
+      }
+      setState(() {
+        dataDecode = dataProfile;
+        listDataUser = listDataUserProfile;
+        listDataProfile = listparam;
+        loading = false;
+      });
+    }
   }
 
   getDataPref() async {
@@ -138,40 +238,53 @@ class _BerandaState extends State<Beranda> {
               ),
             ],
           ),
-          const SizedBox(
-            height: 2,
-          ),
-          Row(
-            crossAxisAlignment: CrossAxisAlignment.center,
-            children: [
-              const CircleAvatar(
-                backgroundColor: blackColor,
-                radius: 40,
-                backgroundImage: AssetImage('assets/images/orang.png'),
+          _listDataUser()
+        ],
+      ),
+    );
+  }
+
+  Material appAlert() {
+    return Material(
+      elevation: 0.2,
+      color: getDynamicColor('6').withOpacity(0.8),
+      shadowColor: blackColor,
+      borderRadius: const BorderRadius.only(
+        topRight: Radius.circular(4.0),
+        topLeft: Radius.circular(4.0),
+        bottomLeft: Radius.circular(4.0),
+        bottomRight: Radius.circular(4.0),
+      ),
+      child: Row(
+        children: [
+          const Expanded(
+              flex: 4,
+              child: Padding(
+                padding: EdgeInsets.only(left: 18, top: 8, bottom: 8),
+                child: Text(
+                  "Peringatan: \nAnda belum absen hari ini",
+                  textAlign: TextAlign.left,
+                  style: TextStyle(
+                      fontSize: 14,
+                      fontWeight: FontWeight.w700,
+                      fontFamily: 'Ubuntu',
+                      color: black87Color),
+                ),
+              )),
+          Expanded(
+            flex: 1,
+            child: GestureDetector(
+              onTap: () {
+                setState(() {
+                  alertNotif = false;
+                });
+              },
+              child: Icon(
+                Icons.close,
+                color: getDynamicColor('2').withOpacity(0.9),
               ),
-              const SizedBox(
-                width: 10,
-              ),
-              Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Consumer<HomeViewModel>(
-                    builder: (context, value, child) => Text(
-                      'Halo, $fullname',
-                      style: fullnameStyle,
-                    ),
-                  ),
-                  const SizedBox(
-                    height: 2,
-                  ),
-                  Text(
-                    'XII - RPL',
-                    style: mobileStyle,
-                  ),
-                ],
-              ),
-            ],
-          ),
+            ),
+          )
         ],
       ),
     );
@@ -188,12 +301,14 @@ class _BerandaState extends State<Beranda> {
         context: context,
         child: SingleChildScrollView(
           child: Container(
-            padding: const EdgeInsets.symmetric(
-              horizontal: 10,
-              vertical: 20,
+            padding: const EdgeInsets.only(
+              left: 10,
+              right: 10,
+              bottom: 80,
             ),
             child: Column(
               children: [
+                alertNotif ? appAlert() : const SizedBox(),
                 SizedBox(
                   height: 120,
                   child: Row(
@@ -234,7 +349,8 @@ class _BerandaState extends State<Beranda> {
                   icon: '',
                 ),
                 Container(
-                  padding: const EdgeInsets.symmetric(horizontal: 15),
+                  padding:
+                      const EdgeInsets.symmetric(horizontal: 15, vertical: 6),
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: const [
@@ -266,22 +382,56 @@ class _BerandaState extends State<Beranda> {
     );
   }
 
-  Widget _listData() {
-    return ListView.separated(
-      separatorBuilder: (context, index) =>
-          const Divider(height: 2, color: Colors.grey),
-      shrinkWrap: true,
-      itemCount: listsmenu.length,
-      itemBuilder: (BuildContext context, int index) {
-        return Consumer<HomeViewModel>(
-          builder: (context, provider, child) => ListTileWidget(
-              fullname: listsmenu[index].fullname,
-              jabatan: listsmenu[index].jabatan,
-              tanggal: listsmenu[index].tanggal,
-              jam: listsmenu[index].jam),
-        );
-      },
-    );
+  _listDataUser() {
+    return loading
+        ? const Center(
+            child: Text('Loading...'),
+          )
+        : ListView.separated(
+            padding: const EdgeInsets.only(top: 0, bottom: 8),
+            separatorBuilder: (context, index) =>
+                const Divider(height: 2, color: Colors.grey),
+            primary: false,
+            shrinkWrap: true,
+            itemCount: listDataUser.length,
+            itemBuilder: (BuildContext context, int index) {
+              return DataUserWidget(
+                agama: listDataUser[index].agama,
+                email: listDataUser[index].email,
+                fotoProfile: listDataUser[index].fotoProfile,
+                fullName: listDataUser[index].fullName,
+                jenisKelamin: listDataUser[index].jenisKelamin,
+                jurusan: listDataUser[index].jurusan,
+                kelas: listDataUser[index].kelas,
+              );
+            },
+          );
+  }
+
+  _listData() {
+    return loading
+        ? const Center(
+            child: Text('Loading...'),
+          )
+        : ListView.separated(
+            separatorBuilder: (context, index) =>
+                const Divider(height: 2, color: Colors.grey),
+            primary: false,
+            shrinkWrap: true,
+            itemCount: listDataProfile.length,
+            itemBuilder: (BuildContext context, int index) {
+              return TileNewTransaksi(
+                idAbsen: listDataProfile[index].idAbsen,
+                jamKeluar: listDataProfile[index].jamKeluar,
+                jamMasuk: listDataProfile[index].jamMasuk,
+                tglAbsen: listDataProfile[index].tglAbsen,
+                colorLabel: listDataProfile[index].colorLabel,
+                isResendTrx: listDataProfile[index].isResendTrx,
+                isActive: listDataProfile[index].isActive,
+                items: listDataProfile[index].items,
+              );
+            },
+          );
   }
 
   buttonKehadiran() {

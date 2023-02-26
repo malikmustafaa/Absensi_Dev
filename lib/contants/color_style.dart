@@ -18,6 +18,7 @@ const thirdy = Color.fromRGBO(0, 130, 74, 1);
 const bgAlertOTP = Color.fromARGB(255, 205, 13, 13);
 const warning = Color.fromRGBO(231, 112, 8, 1);
 const silver2 = Color.fromARGB(77, 181, 166, 166);
+// const silver2 = Color.fromARGB(173, 255, 177, 59);
 
 Color getDynamicColor(String status) {
   if (status == '1') {
@@ -33,6 +34,12 @@ Color getDynamicColor(String status) {
     return silver2;
   }
   if (status == '5') {
+    return blackColor;
+  }
+  if (status == '6') {
+    return orangeColor;
+  }
+  if (status == '7') {
     return blackColor;
   }
   return blackColor; //default color.
