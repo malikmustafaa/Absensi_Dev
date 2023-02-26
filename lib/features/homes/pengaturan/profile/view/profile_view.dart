@@ -57,8 +57,6 @@ class _DetailProfilePageState extends State<DetailProfilePage> {
       );
     }
     if (image != null) {
-      Navigator.of(context).pop();
-
       final bytes = File(image.path).readAsBytesSync();
       String img64 = base64Encode(bytes);
 
@@ -95,6 +93,12 @@ class _DetailProfilePageState extends State<DetailProfilePage> {
       create: (BuildContext context) => ProfileViewModel(),
       builder: (context, child) => _buildPage(context),
     );
+
+    // return ChangeNotifierProvider(
+    //     create: (_) => ProfileViewModel(),
+    //     builder: (context, _) {
+    //       return home;
+    //     });
   }
 
   Widget _buildPage(BuildContext context) {
