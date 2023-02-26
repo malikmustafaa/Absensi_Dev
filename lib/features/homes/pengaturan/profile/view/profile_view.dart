@@ -93,16 +93,9 @@ class _DetailProfilePageState extends State<DetailProfilePage> {
       create: (BuildContext context) => ProfileViewModel(),
       builder: (context, child) => _buildPage(context),
     );
-
-    // return ChangeNotifierProvider(
-    //     create: (_) => ProfileViewModel(),
-    //     builder: (context, _) {
-    //       return home;
-    //     });
   }
 
   Widget _buildPage(BuildContext context) {
-    // final providerVM = context.read<ProfileViewModel>();
     final providerVM = Provider.of<ProfileViewModel>(context, listen: false);
 
     return Scaffold(
@@ -436,7 +429,7 @@ class _DetailProfilePageState extends State<DetailProfilePage> {
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
                                 Text(
-                                  'Nis',
+                                  'Nomor Induk Siswa/NIS',
                                   style: textDetailPrflepengaturanStyle,
                                 ),
                                 Text(

@@ -30,7 +30,7 @@ class _RiwayatState extends State<Riwayat> {
   // ignore: unused_field
   final _oneDay = 60 * 60 * 24 * 1000;
   List<TileNewTransaksi> listHistoriTrx = [];
-  List<TileNewTransaksi> listFilteredTransfer = [];
+  // List<TileNewTransaksi> listFilteredTransfer = [];
   bool miniStatement = true;
   bool isFilter = false;
   bool loading = false;
@@ -103,7 +103,7 @@ class _RiwayatState extends State<Riwayat> {
         }
         setState(() {
           listHistoriTrx = listparam;
-          listFilteredTransfer = listHistoriTrx;
+          // listFilteredTransfer = listHistoriTrx;
           loading = false;
         });
       }
@@ -278,7 +278,7 @@ class _RiwayatState extends State<Riwayat> {
       }
       setState(() {
         listHistoriTrx = listparam;
-        listFilteredTransfer = listHistoriTrx;
+        // listFilteredTransfer = listHistoriTrx;
         loading = false;
       });
     }
