@@ -654,7 +654,7 @@ class _DetailProfilePageState extends State<DetailProfilePage> {
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
                                 Text(
-                                  'Nis',
+                                  'Nomor Induk Siswa/NIS',
                                   style: textDetailPrflepengaturanStyle,
                                 ),
                                 Text(
