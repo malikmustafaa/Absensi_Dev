@@ -124,6 +124,7 @@ class _DetailProfilePageState extends State<DetailProfilePage> {
     );
   }
 
+/////
   Widget _buildPage(BuildContext context) {
     double h = MediaQuery.of(context).size.height;
     double w = MediaQuery.of(context).size.width;
