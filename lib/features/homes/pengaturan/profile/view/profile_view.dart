@@ -556,7 +556,7 @@ class _DetailProfilePageState extends State<DetailProfilePage> {
                                             height: 12,
                                           ),
                                           TextField(
-                                            // controller: controllerEmail,
+                                            controller: controllerEmail,
                                             decoration: InputDecoration(
                                               prefixIcon: const Icon(
                                                 Icons.email_outlined,

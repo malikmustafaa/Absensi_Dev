@@ -82,8 +82,15 @@ class _BerandaState extends State<Beranda> {
           jenisKelamin: itemDUser['jenis_kelamin'] ?? '',
           agama: itemDUser['agama'] ?? '',
           fotoProfile: itemDUser['foto_profile'] ?? '',
-          callback: (fullName, email, jurusan, kelas, jenisKelamin, agama,
-              fotoProfile) {
+          callback: (
+            fullName,
+            email,
+            jurusan,
+            kelas,
+            jenisKelamin,
+            agama,
+            fotoProfile,
+          ) {
             _getDataUser();
           },
         );
@@ -94,7 +101,6 @@ class _BerandaState extends State<Beranda> {
 
       List<dynamic> listRespDyn = (listResp);
       List<TileNewTransaksi> listparam = [];
-      // ignore: unnecessary_null_comparison
       if (listRespDyn != null) {
         for (var item in listRespDyn) {
           List<ListLabelItem> listLabel = [];

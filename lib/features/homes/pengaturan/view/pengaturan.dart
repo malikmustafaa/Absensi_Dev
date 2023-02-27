@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import '../../../../contants/color_style.dart';
+import '../../beranda/view/widgets/dialog.dart';
 
 class Pengaturan extends StatefulWidget {
   static const routeName = "/Pengaturan";
@@ -49,6 +50,7 @@ class _PengaturanState extends State<Pengaturan> {
   }
 
   Widget _buildPage(BuildContext context) {
+    final provider = Provider.of<PengaturanViewModel>(context, listen: false);
     return Scaffold(
       backgroundColor: whiteColor,
       body: Column(
@@ -171,7 +173,23 @@ class _PengaturanState extends State<Pengaturan> {
                   color: Colors.transparent,
                   child: InkWell(
                     onTap: () {
-                      showAlert(context);
+                      DialogBox().showImageDialog(
+                          message1: 'Apakah ingin keluar?',
+                          title: '',
+                          message: '',
+                          isError: true,
+                          // image: const Image(
+                          //   image: AssetImage('assets/images/smk1.png'),
+                          // ),
+                          buttonCancel: 'Batal',
+                          onCancel: () {
+                            Navigator.of(context).pop();
+                          },
+                          buttonOk: 'OK',
+                          onOk: () {
+                            provider.logout(context);
+                          },
+                          context: context);
                     },
                     child: Container(
                       padding: const EdgeInsets.symmetric(horizontal: 10),
@@ -223,8 +241,29 @@ class _PengaturanState extends State<Pengaturan> {
     );
   }
 
+  // _showErrorMaxDate(msg) {
+  //   final provider = Provider.of<PengaturanViewModel>(context, listen: false);
+
+  //   const DialogBox().showImageDialog(
+  //       title: 'Input data belum sesuai',
+  //       message: msg,
+  //       isError: true,
+  //       image: const Image(
+  //         image: AssetImage('assets/images/smk1.png'),
+  //       ),
+  //       buttonCancel: 'Batal',
+  //       onCancel: () {
+  //         Navigator.of(context).pop();
+  //       },
+  //       buttonOk: 'OK',
+  //       onOk: () {
+  //         provider.logout(context);
+  //       },
+  //       context: context);
+  // }
+
   showAlert(BuildContext context) {
-    final provider = context.read<PengaturanViewModel>();
+    final provider = Provider.of<PengaturanViewModel>(context, listen: false);
     Widget submitButton =
         Row(mainAxisAlignment: MainAxisAlignment.spaceBetween, children: [
       GestureDetector(
