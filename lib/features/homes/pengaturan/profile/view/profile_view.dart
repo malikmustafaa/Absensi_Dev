@@ -13,7 +13,17 @@ import '../view_model/profile_view_model.dart';
 
 class DetailProfilePage extends StatefulWidget {
   static const routeName = "/DetailProfilePage";
-  const DetailProfilePage({Key? key}) : super(key: key);
+
+  final String apiFullName;
+  final String apiEmail;
+  final String apifotoProfile;
+
+  const DetailProfilePage(
+      {Key? key,
+      required this.apiFullName,
+      required this.apiEmail,
+      required this.apifotoProfile})
+      : super(key: key);
 
   @override
   State<DetailProfilePage> createState() => _DetailProfilePageState();

@@ -26,7 +26,6 @@ class _MyHomePageState extends State<RekamKehadiran> {
   late final BitmapDescriptor iconSMKN1;
   late final BitmapDescriptor iconUser;
   List<Marker> _markers = <Marker>[];
-  List<Marker> allMarkers = <Marker>[];
 
   bool isLocation = false;
   Set<Circle> circles = {
@@ -84,7 +83,7 @@ class _MyHomePageState extends State<RekamKehadiran> {
       );
       setState(() {
         isLocation = true;
-        _markers = allMarkers;
+        _markers = _markers;
         cLatitude = l.latitude.toString();
         cLongitude = l.longitude.toString();
       });
