@@ -1,5 +1,7 @@
 // ignore_for_file: avoid_init_to_null
 
+import 'dart:developer';
+
 import 'package:b7c_clean_architecture/features/homes/beranda/view/widgets/carousel_slider.dart';
 import 'package:b7c_clean_architecture/features/homes/beranda/view/widgets/data_user_widget.dart';
 import 'package:b7c_clean_architecture/features/homes/beranda/view/widgets/item_kategori.dart';
@@ -37,6 +39,7 @@ class _BerandaState extends State<Beranda> {
   String noNis = '';
   bool? isLogin;
   bool? isRegister;
+  bool isDataUser = true;
   bool alertNotif = false;
   bool loading = false;
   var dataDecode = null;
@@ -69,74 +72,83 @@ class _BerandaState extends State<Beranda> {
         requestUserDataEntity: requestUserDataEntity);
     if (resp != null && resp['status'] == '1') {
       var dataProfile = resp['data_profile'];
+      log('message ======> ${dataProfile.length}');
 
-      List<DataUserWidget> listDataUserProfile = [];
-      List<dynamic> listMap = [dataProfile];
+      if (dataProfile.length > 0) {
+        List<DataUserWidget> listDataUserProfile = [];
+        List<dynamic> listMap = [dataProfile];
 
-      for (var itemDUser in listMap) {
-        DataUserWidget itemDataUser = DataUserWidget(
-          fullName: itemDUser['full_name'] ?? '',
-          email: itemDUser['email'] ?? '',
-          jurusan: itemDUser['jurusan'] ?? '',
-          kelas: itemDUser['kelas'] ?? '',
-          jenisKelamin: itemDUser['jenis_kelamin'] ?? '',
-          agama: itemDUser['agama'] ?? '',
-          fotoProfile: itemDUser['foto_profile'] ?? '',
-          callback: (
-            fullName,
-            email,
-            jurusan,
-            kelas,
-            jenisKelamin,
-            agama,
-            fotoProfile,
-          ) {
-            _getDataUser();
-          },
-        );
-        listDataUserProfile.add(itemDataUser);
-      }
-
-      var listResp = resp['data'];
-
-      List<dynamic> listRespDyn = (listResp);
-      List<TileNewTransaksi> listparam = [];
-      if (listRespDyn != null) {
-        for (var item in listRespDyn) {
-          List<ListLabelItem> listLabel = [];
-          List<dynamic> listMap = item['labelItem'];
-          for (var itemLabel in listMap) {
-            ListLabelItem itemParam = ListLabelItem(
-              title: itemLabel['title'],
-              value: itemLabel['value'],
-              color: itemLabel['color'],
-            );
-            listLabel.add(itemParam);
-          }
-
-          TileNewTransaksi trx = TileNewTransaksi(
-            idAbsen: item['idAbsen'],
-            jamKeluar: item['jamKeluar'],
-            jamMasuk: item['jamMasuk'],
-            tglAbsen: item['tglAbsen'],
-            colorLabel: item['colorLabel'],
-            isResendTrx: item['isResendTrx'],
-            isActive: item['isActive'],
-            items: listLabel,
-            callback: (idAbsen, jamKeluar, jamMasuk, tglAbsen, colorLabel,
-                isResendTrx, isActive, items) {
+        for (var itemDUser in listMap) {
+          DataUserWidget itemDataUser = DataUserWidget(
+            fullName: itemDUser['full_name'] ?? '',
+            email: itemDUser['email'] ?? '',
+            jurusan: itemDUser['jurusan'] ?? '',
+            kelas: itemDUser['kelas'] ?? '',
+            jenisKelamin: itemDUser['jenis_kelamin'] ?? '',
+            agama: itemDUser['agama'] ?? '',
+            fotoProfile: itemDUser['foto_profile'] ?? '',
+            isProfile: false,
+            callback: (fullName, email, jurusan, kelas, jenisKelamin, agama,
+                fotoProfile, isProfile) {
               _getDataUser();
             },
           );
-          listparam.add(trx);
+          listDataUserProfile.add(itemDataUser);
         }
+
+        setState(() {
+          dataDecode = dataProfile;
+          listDataUser = listDataUserProfile;
+          loading = false;
+        });
+      } else {
+        setState(() {
+          isDataUser = false;
+          loading = false;
+        });
       }
-      setState(() {
-        dataDecode = dataProfile;
-        listDataUser = listDataUserProfile;
-        listDataProfile = listparam;
-        loading = false;
-      });
+
+      var listResp = resp['data'];
+      if (listResp.length > 0) {
+        List<dynamic> listRespDyn = (listResp);
+        List<TileNewTransaksi> listparam = [];
+        // ignore: unnecessary_null_comparison
+        if (listRespDyn != null) {
+          for (var item in listRespDyn) {
+            List<ListLabelItem> listLabel = [];
+            List<dynamic> listMap = item['labelItem'];
+            for (var itemLabel in listMap) {
+              ListLabelItem itemParam = ListLabelItem(
+                title: itemLabel['title'],
+                value: itemLabel['value'],
+                color: itemLabel['color'],
+              );
+              listLabel.add(itemParam);
+            }
+
+            TileNewTransaksi trx = TileNewTransaksi(
+              idAbsen: item['idAbsen'],
+              jamKeluar: item['jamKeluar'],
+              jamMasuk: item['jamMasuk'],
+              tglAbsen: item['tglAbsen'],
+              colorLabel: item['colorLabel'],
+              isResendTrx: item['isResendTrx'],
+              isActive: item['isActive'],
+              items: listLabel,
+              callback: (idAbsen, jamKeluar, jamMasuk, tglAbsen, colorLabel,
+                  isResendTrx, isActive, items) {
+                _getDataUser();
+              },
+            );
+            listparam.add(trx);
+          }
+        }
+        setState(() {
+          dataDecode = dataProfile;
+          listDataProfile = listparam;
+          loading = false;
+        });
+      }
     }
   }
 
@@ -389,29 +401,64 @@ class _BerandaState extends State<Beranda> {
   }
 
   _listDataUser() {
+    log('======> $isDataUser');
+
     return loading
         ? const Center(
             child: Text('Loading...'),
           )
-        : ListView.separated(
-            padding: const EdgeInsets.only(top: 0, bottom: 8),
-            separatorBuilder: (context, index) =>
-                const Divider(height: 2, color: Colors.grey),
-            primary: false,
-            shrinkWrap: true,
-            itemCount: listDataUser.length,
-            itemBuilder: (BuildContext context, int index) {
-              return DataUserWidget(
-                agama: listDataUser[index].agama,
-                email: listDataUser[index].email,
-                fotoProfile: listDataUser[index].fotoProfile,
-                fullName: listDataUser[index].fullName,
-                jenisKelamin: listDataUser[index].jenisKelamin,
-                jurusan: listDataUser[index].jurusan,
-                kelas: listDataUser[index].kelas,
+        : isDataUser
+            ? ListView.separated(
+                padding: const EdgeInsets.only(top: 0, bottom: 8),
+                separatorBuilder: (context, index) =>
+                    const Divider(height: 2, color: Colors.grey),
+                primary: false,
+                shrinkWrap: true,
+                itemCount: isDataUser ? listDataUser.length : 1,
+                itemBuilder: (BuildContext context, int index) {
+                  return DataUserWidget(
+                    agama: listDataUser[index].agama,
+                    email: listDataUser[index].email,
+                    fotoProfile: listDataUser[index].fotoProfile,
+                    fullName: listDataUser[index].fullName,
+                    jenisKelamin: listDataUser[index].jenisKelamin,
+                    jurusan: listDataUser[index].jurusan,
+                    kelas: listDataUser[index].kelas,
+                    isProfile: false,
+                  );
+                },
+              )
+            : Row(
+                crossAxisAlignment: CrossAxisAlignment.center,
+                children: [
+                  const CircleAvatar(
+                    // backgroundColor: default2Color,
+                    radius: 40,
+                    backgroundImage: AssetImage(
+                      'assets/images/orang.png',
+                    ),
+                  ),
+                  const SizedBox(
+                    width: 10,
+                  ),
+                  Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text(
+                        'Halo, $fullname',
+                        style: fullnameStyle,
+                      ),
+                      const SizedBox(
+                        height: 2,
+                      ),
+                      Text(
+                        'XII - RPL',
+                        style: mobileStyle,
+                      ),
+                    ],
+                  ),
+                ],
               );
-            },
-          );
   }
 
   _listData() {

@@ -32,6 +32,7 @@ class _RiwayatState extends State<Riwayat> {
   List<TileNewTransaksi> listHistoriTrx = [];
   // List<TileNewTransaksi> listFilteredTransfer = [];
   bool miniStatement = true;
+  bool isDataUser = true;
   bool isFilter = false;
   bool loading = false;
   late SharedPreferences pref;
@@ -74,38 +75,45 @@ class _RiwayatState extends State<Riwayat> {
       if (resp != null && resp['status'] == '1') {
         var listResp = resp['data'];
 
-        List<dynamic> listRespDyn = (listResp);
-        List<TileNewTransaksi> listparam = [];
-        for (var item in listRespDyn) {
-          List<ListLabelItem> listLabel = [];
-          List<dynamic> listMap = item['labelItem'];
-          for (var itemLabel in listMap) {
-            ListLabelItem itemParam = ListLabelItem(
-              title: itemLabel['title'],
-              value: itemLabel['value'],
-              color: itemLabel['color'],
+        if (listResp.length > 0) {
+          List<dynamic> listRespDyn = (listResp);
+          List<TileNewTransaksi> listparam = [];
+          for (var item in listRespDyn) {
+            List<ListLabelItem> listLabel = [];
+            List<dynamic> listMap = item['labelItem'];
+            for (var itemLabel in listMap) {
+              ListLabelItem itemParam = ListLabelItem(
+                title: itemLabel['title'],
+                value: itemLabel['value'],
+                color: itemLabel['color'],
+              );
+              listLabel.add(itemParam);
+            }
+            TileNewTransaksi trx = TileNewTransaksi(
+              idAbsen: item['idAbsen'],
+              jamKeluar: item['jamKeluar'],
+              jamMasuk: item['jamMasuk'],
+              tglAbsen: item['tglAbsen'],
+              colorLabel: item['colorLabel'],
+              isResendTrx: item['isResendTrx'],
+              isActive: item['isActive'],
+              items: listLabel,
+              callback: (idAbsen, jamKeluar, jamMasuk, tglAbsen, colorLabel,
+                  isResendTrx, isActiv, items) {},
             );
-            listLabel.add(itemParam);
+            listparam.add(trx);
           }
-          TileNewTransaksi trx = TileNewTransaksi(
-            idAbsen: item['idAbsen'],
-            jamKeluar: item['jamKeluar'],
-            jamMasuk: item['jamMasuk'],
-            tglAbsen: item['tglAbsen'],
-            colorLabel: item['colorLabel'],
-            isResendTrx: item['isResendTrx'],
-            isActive: item['isActive'],
-            items: listLabel,
-            callback: (idAbsen, jamKeluar, jamMasuk, tglAbsen, colorLabel,
-                isResendTrx, isActiv, items) {},
-          );
-          listparam.add(trx);
+          setState(() {
+            listHistoriTrx = listparam;
+            // listFilteredTransfer = listHistoriTrx;
+            loading = false;
+          });
+        } else {
+          setState(() {
+            isDataUser = false;
+            loading = false;
+          });
         }
-        setState(() {
-          listHistoriTrx = listparam;
-          // listFilteredTransfer = listHistoriTrx;
-          loading = false;
-        });
       }
     } else {
       var msg = 'Periode mutasi hanya dapat dipilih 31 hari';
@@ -243,49 +251,60 @@ class _RiwayatState extends State<Riwayat> {
     if (resp != null && resp['status'] == '1') {
       var listResp = resp['data'];
 
-      List<dynamic> listRespDyn = (listResp);
-      List<TileNewTransaksi> listparam = [];
-      // ignore: unnecessary_null_comparison
-      if (listRespDyn != null) {
-        for (var item in listRespDyn) {
-          List<ListLabelItem> listLabel = [];
-          List<dynamic> listMap = item['labelItem'];
-          for (var itemLabel in listMap) {
-            ListLabelItem itemParam = ListLabelItem(
-              title: itemLabel['title'],
-              value: itemLabel['value'],
-              color: itemLabel['color'],
-            );
-            listLabel.add(itemParam);
-          }
+      log('message ====? ${listResp.length}');
 
-          TileNewTransaksi trx = TileNewTransaksi(
-            idAbsen: item['idAbsen'],
-            jamKeluar: item['jamKeluar'],
-            jamMasuk: item['jamMasuk'],
-            tglAbsen: item['tglAbsen'],
-            colorLabel: item['colorLabel'],
-            isResendTrx: item['isResendTrx'],
-            isActive: item['isActive'],
-            items: listLabel,
-            callback: (idAbsen, jamKeluar, jamMasuk, tglAbsen, colorLabel,
-                isResendTrx, isActive, items) {
-              _getRiwayatTrx();
-            },
-          );
-          listparam.add(trx);
+      if (listResp.length > 0) {
+        List<dynamic> listRespDyn = (listResp);
+        List<TileNewTransaksi> listparam = [];
+        // ignore: unnecessary_null_comparison
+        if (listRespDyn != null) {
+          for (var item in listRespDyn) {
+            List<ListLabelItem> listLabel = [];
+            List<dynamic> listMap = item['labelItem'];
+            for (var itemLabel in listMap) {
+              ListLabelItem itemParam = ListLabelItem(
+                title: itemLabel['title'],
+                value: itemLabel['value'],
+                color: itemLabel['color'],
+              );
+              listLabel.add(itemParam);
+            }
+
+            TileNewTransaksi trx = TileNewTransaksi(
+              idAbsen: item['idAbsen'],
+              jamKeluar: item['jamKeluar'],
+              jamMasuk: item['jamMasuk'],
+              tglAbsen: item['tglAbsen'],
+              colorLabel: item['colorLabel'],
+              isResendTrx: item['isResendTrx'],
+              isActive: item['isActive'],
+              items: listLabel,
+              callback: (idAbsen, jamKeluar, jamMasuk, tglAbsen, colorLabel,
+                  isResendTrx, isActive, items) {
+                _getRiwayatTrx();
+              },
+            );
+            listparam.add(trx);
+          }
         }
+        setState(() {
+          listHistoriTrx = listparam;
+          // listFilteredTransfer = listHistoriTrx;
+          loading = false;
+        });
+      } else {
+        log('message sini');
+        setState(() {
+          isDataUser = false;
+          loading = false;
+        });
       }
-      setState(() {
-        listHistoriTrx = listparam;
-        // listFilteredTransfer = listHistoriTrx;
-        loading = false;
-      });
     }
   }
 
   @override
   Widget build(BuildContext context) {
+    log('ddddddddd> $isDataUser');
     return Scaffold(
       backgroundColor: whiteColor,
       body: CustomScrollView(
