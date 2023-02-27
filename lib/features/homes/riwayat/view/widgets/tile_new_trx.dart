@@ -273,10 +273,15 @@ class _TileNewTransaksiState extends State<TileNewTransaksi> {
                       const SizedBox(
                         height: 22,
                       ),
+                      _jamNormal(),
+                      const SizedBox(
+                        height: 12,
+                      ),
                       Text(
                         'Keterangan Status',
                         style: textJamMasukStyle,
                       ),
+
                       const Divider(
                         thickness: 1,
                       ),
@@ -326,6 +331,76 @@ class _TileNewTransaksiState extends State<TileNewTransaksi> {
                     fontSize: 10,
                     fontWeight: FontWeight.w700,
                     letterSpacing: 1.5),
+              ),
+            ),
+          ],
+        ),
+        const Divider(
+          thickness: 1,
+        ),
+      ],
+    );
+  }
+
+  Widget _jamNormal() {
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Text(
+          'Normal Jam',
+          style: textJamMasukStyle,
+        ),
+        Row(
+          children: [
+            const Icon(
+              Icons.circle,
+              color: silver2,
+            ),
+            Padding(
+              padding: const EdgeInsets.only(left: 12, right: 6),
+              child: Text(
+                'Jam Masuk 07:30',
+                style: textTglMasukStyle,
+              ),
+            ),
+            Container(
+              padding: const EdgeInsets.symmetric(horizontal: 3, vertical: 1),
+              decoration: BoxDecoration(
+                color: getDynamicColor('1'),
+                borderRadius: BorderRadius.circular(6),
+              ),
+              child: const Icon(
+                Icons.check,
+                color: whiteColor,
+              ),
+            ),
+          ],
+        ),
+        const Divider(
+          thickness: 1,
+        ),
+        Row(
+          children: [
+            const Icon(
+              Icons.circle,
+              color: silver2,
+            ),
+            Padding(
+              padding: const EdgeInsets.only(left: 12, right: 6),
+              child: Text(
+                'Jam Keluar 13:30',
+                style: textTglMasukStyle,
+              ),
+            ),
+            Container(
+              padding: const EdgeInsets.symmetric(horizontal: 3, vertical: 1),
+              decoration: BoxDecoration(
+                color: getDynamicColor('1'),
+                borderRadius: BorderRadius.circular(6),
+              ),
+              child: const Icon(
+                Icons.check,
+                color: whiteColor,
               ),
             ),
           ],

@@ -25,10 +25,14 @@ class _PengaturanState extends State<Pengaturan> {
   late SharedPreferences pref;
   bool loading = false;
   bool isDataUser = true;
-  String fullname = '';
   String email = '';
   String noNis = '';
+  String fullname = '';
   String username = '';
+  String apifotoProfile = '';
+  String apiFullName = '';
+  String apiEmail = '';
+
   @override
   void initState() {
     getDataPref();
@@ -57,6 +61,10 @@ class _PengaturanState extends State<Pengaturan> {
         requestDataProfileEntity: requestDataProfileEntity);
     if (resp != null && resp['status'] == '1') {
       var dataProfile = resp['data_profile'];
+
+      apiFullName = resp['data_profile']['full_name'];
+      apiEmail = resp['data_profile']['email'];
+      apifotoProfile = resp['data_profile']['foto_profile'];
 
       log(' ==== > ${dataProfile.length}');
       if (dataProfile.length > 0) {
@@ -169,7 +177,10 @@ class _PengaturanState extends State<Pengaturan> {
                     onTap: () {
                       Navigator.of(context).push(
                         MaterialPageRoute(
-                          builder: (context) => const DetailProfilePage(),
+                          builder: (context) => DetailProfilePage(
+                              apiFullName: apiFullName,
+                              apiEmail: apiEmail,
+                              apifotoProfile: apifotoProfile),
                         ),
                       );
                     },
