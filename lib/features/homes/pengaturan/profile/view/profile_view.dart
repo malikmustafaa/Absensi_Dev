@@ -1,4 +1,4 @@
-// ignore_for_file: prefer_typing_uninitialized_variables, unused_local_variable
+// ignore_for_file: prefer_typing_uninitialized_variables
 
 import 'dart:convert';
 import 'dart:io';
@@ -13,7 +13,17 @@ import '../view_model/profile_view_model.dart';
 
 class DetailProfilePage extends StatefulWidget {
   static const routeName = "/DetailProfilePage";
-  const DetailProfilePage({Key? key}) : super(key: key);
+
+  final String apiFullName;
+  final String apiEmail;
+  final String apifotoProfile;
+
+  const DetailProfilePage(
+      {Key? key,
+      required this.apiFullName,
+      required this.apiEmail,
+      required this.apifotoProfile})
+      : super(key: key);
 
   @override
   State<DetailProfilePage> createState() => _DetailProfilePageState();
@@ -114,7 +124,6 @@ class _DetailProfilePageState extends State<DetailProfilePage> {
     );
   }
 
-/////
   Widget _buildPage(BuildContext context) {
     double h = MediaQuery.of(context).size.height;
     double w = MediaQuery.of(context).size.width;

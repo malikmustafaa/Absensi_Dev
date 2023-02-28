@@ -2,6 +2,7 @@
 
 import 'dart:developer';
 
+import 'package:b7c_clean_architecture/features/dummy/dummy.dart';
 import 'package:b7c_clean_architecture/features/homes/beranda/view/widgets/carousel_slider.dart';
 import 'package:b7c_clean_architecture/features/homes/beranda/view/widgets/data_user_widget.dart';
 import 'package:b7c_clean_architecture/features/homes/beranda/view/widgets/item_kategori.dart';
@@ -10,6 +11,7 @@ import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import '../../../../contants/color_style.dart';
 import '../../../../domain/entity/data_user/request_data_user_entity.dart';
+import '../../home_view.dart';
 import '../../riwayat/view/widgets/tile_new_trx.dart';
 import '../model/beranda_model.dart';
 import '../rekam_kehadiran/view/rekam_kehadiran.dart';
@@ -333,29 +335,79 @@ class _BerandaState extends State<Beranda> {
                     mainAxisAlignment: MainAxisAlignment.spaceAround,
                     children: [
                       ItemKategoriBeranda(
-                        onTap: () {},
+                        onTap: () {
+                          Navigator.of(context).push(
+                            MaterialPageRoute(
+                              builder: (context) {
+                                return const DummyWidget(
+                                    title: 'Internet',
+                                    subtitle:
+                                        'Fitur internet akan segera hadir!');
+                              },
+                            ),
+                          );
+                        },
                         icon: const Icon(
                           Icons.language,
+                          color: Colors.white,
                         ),
                         title: 'Internet',
                       ),
                       ItemKategoriBeranda(
-                          onTap: () {},
-                          icon: const Icon(
-                            Icons.shopify_sharp,
-                            color: whiteColor,
-                          ),
-                          title: 'Belanja'),
+                        onTap: () {
+                          Navigator.of(context).push(
+                            MaterialPageRoute(
+                              builder: (context) {
+                                return const DummyWidget(
+                                    title: 'Belanja',
+                                    subtitle:
+                                        'Fitur belanja akan segera hadir!');
+                              },
+                            ),
+                          );
+                        },
+                        icon: const Icon(
+                          Icons.shopify_sharp,
+                          color: Colors.white,
+                        ),
+                        title: 'Belanja',
+                      ),
                       ItemKategoriBeranda(
-                          onTap: () {},
-                          icon: const Icon(
-                            Icons.event,
-                          ),
-                          title: 'Event'),
+                        onTap: () {
+                          Navigator.of(context).push(
+                            MaterialPageRoute(
+                              builder: (context) {
+                                return const DummyWidget(
+                                    title: 'Event',
+                                    subtitle: 'Fitur event akan segera hadir!');
+                              },
+                            ),
+                          );
+                        },
+                        icon: const Icon(
+                          Icons.event,
+                          color: Colors.white,
+                        ),
+                        title: 'Event',
+                      ),
                       ItemKategoriBeranda(
-                        onTap: () {},
-                        icon: const Icon(Icons.alarm),
-                        title: 'Jadwal\n Shalat',
+                        onTap: () {
+                          Navigator.of(context).push(
+                            MaterialPageRoute(
+                              builder: (context) {
+                                return const DummyWidget(
+                                    title: 'Jadwal Shalat',
+                                    subtitle:
+                                        'Fitur jadwal shalat akan segera hadir!');
+                              },
+                            ),
+                          );
+                        },
+                        icon: const Icon(
+                          Icons.alarm,
+                          color: Colors.white,
+                        ),
+                        title: 'Jadwal\nShalat',
                       ),
                     ],
                   ),
@@ -371,8 +423,8 @@ class _BerandaState extends State<Beranda> {
                       const EdgeInsets.symmetric(horizontal: 15, vertical: 6),
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: const [
-                      Text(
+                    children: [
+                      const Text(
                         'Absen Terakhir',
                         style: TextStyle(
                           fontSize: 18,
@@ -380,13 +432,26 @@ class _BerandaState extends State<Beranda> {
                           fontFamily: 'Ubuntu',
                         ),
                       ),
-                      Text(
-                        'Lihat semua',
-                        style: TextStyle(
-                            fontSize: 14,
-                            fontWeight: FontWeight.w500,
-                            fontFamily: 'Ubuntu',
-                            color: default2Color),
+                      GestureDetector(
+                        onTap: () {
+                          int index = 1;
+
+                          Navigator.of(context).push(
+                            MaterialPageRoute(
+                              builder: (context) => HomePage(
+                                indexPengaturan: index,
+                              ),
+                            ),
+                          );
+                        },
+                        child: const Text(
+                          'Lihat semua',
+                          style: TextStyle(
+                              fontSize: 14,
+                              fontWeight: FontWeight.w500,
+                              fontFamily: 'Ubuntu',
+                              color: default2Color),
+                        ),
                       ),
                     ],
                   ),

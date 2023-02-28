@@ -34,26 +34,23 @@ class ItemKategoriBeranda extends StatelessWidget {
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [
               Container(
-                  height: 54,
-                  width: 54,
-                  decoration: BoxDecoration(
-                    border: Border.all(
-                        color: const Color.fromARGB(222, 244, 125, 180),
-                        width: 1.4),
-                    color: default2Color,
-                    borderRadius: BorderRadius.circular(12),
-                  ),
-                  child: IconButton(
-                    onPressed: () {},
-                    icon: icon,
-                    iconSize: 30,
-                    color: Colors.white,
-                  )),
+                height: 54,
+                width: 54,
+                decoration: BoxDecoration(
+                  border: Border.all(
+                      color: const Color.fromARGB(222, 244, 125, 180),
+                      width: 1.4),
+                  color: default2Color,
+                  borderRadius: BorderRadius.circular(12),
+                ),
+                child: icon,
+              ),
               const SizedBox(
                 height: 5,
               ),
               Text(
                 title,
+                textAlign: TextAlign.center,
                 style: const TextStyle(
                     fontFamily: 'Ubuntu',
                     fontSize: 12,

@@ -8,7 +8,6 @@ import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import '../../../../contants/color_style.dart';
 import '../../../../domain/entity/pengaturan/request_data_profile_entity.dart';
-import '../../beranda/view/widgets/dialog.dart';
 import '../profile/services/update_profile_services.dart';
 
 class Pengaturan extends StatefulWidget {
@@ -25,10 +24,14 @@ class _PengaturanState extends State<Pengaturan> {
   late SharedPreferences pref;
   bool loading = false;
   bool isDataUser = true;
-  String fullname = '';
   String email = '';
   String noNis = '';
+  String fullname = '';
   String username = '';
+  String apifotoProfile = '';
+  String apiFullName = '';
+  String apiEmail = '';
+
   @override
   void initState() {
     getDataPref();
@@ -57,6 +60,10 @@ class _PengaturanState extends State<Pengaturan> {
         requestDataProfileEntity: requestDataProfileEntity);
     if (resp != null && resp['status'] == '1') {
       var dataProfile = resp['data_profile'];
+
+      apiFullName = resp['data_profile']['full_name'];
+      apiEmail = resp['data_profile']['email'];
+      apifotoProfile = resp['data_profile']['foto_profile'];
 
       log(' ==== > ${dataProfile.length}');
       if (dataProfile.length > 0) {
@@ -118,7 +125,6 @@ class _PengaturanState extends State<Pengaturan> {
   }
 
   Widget _buildPage(BuildContext context) {
-    final provider = Provider.of<PengaturanViewModel>(context, listen: false);
     return Scaffold(
       backgroundColor: whiteColor,
       body: Column(
@@ -169,7 +175,10 @@ class _PengaturanState extends State<Pengaturan> {
                     onTap: () {
                       Navigator.of(context).push(
                         MaterialPageRoute(
-                          builder: (context) => const DetailProfilePage(),
+                          builder: (context) => DetailProfilePage(
+                              apiFullName: apiFullName,
+                              apiEmail: apiEmail,
+                              apifotoProfile: apifotoProfile),
                         ),
                       );
                     },
@@ -221,23 +230,7 @@ class _PengaturanState extends State<Pengaturan> {
                   color: Colors.transparent,
                   child: InkWell(
                     onTap: () {
-                      const DialogBox().showImageDialog(
-                          message1: 'Apakah ingin keluar?',
-                          title: '',
-                          message: '',
-                          isError: true,
-                          // image: const Image(
-                          //   image: AssetImage('assets/images/smk1.png'),
-                          // ),
-                          buttonCancel: 'Batal',
-                          onCancel: () {
-                            Navigator.of(context).pop();
-                          },
-                          buttonOk: 'OK',
-                          onOk: () {
-                            provider.logout(context);
-                          },
-                          context: context);
+                      showAlert(context);
                     },
                     child: Container(
                       padding: const EdgeInsets.symmetric(horizontal: 10),
@@ -343,7 +336,7 @@ class _PengaturanState extends State<Pengaturan> {
   }
 
   showAlert(BuildContext context) {
-    final provider = Provider.of<PengaturanViewModel>(context, listen: false);
+    final provider = context.read<PengaturanViewModel>();
     Widget submitButton =
         Row(mainAxisAlignment: MainAxisAlignment.spaceBetween, children: [
       GestureDetector(

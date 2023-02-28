@@ -4,6 +4,7 @@ import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
 
 import '../../../../../../contants/color_style.dart';
+import '../../../../dummy/dummy.dart';
 
 class CarouselSliderBeranda extends StatefulWidget {
   String icon = '';
@@ -16,16 +17,13 @@ class CarouselSliderBeranda extends StatefulWidget {
 class _CarouselSliderBerandaState extends State<CarouselSliderBeranda> {
   List cardList = [
     ImageSliderWidget(
-      icon: 'assets/images/smkn1.png',
+      icon: 'assets/images/slider_smk(1).png',
     ),
     ImageSliderWidget(
-      icon: 'assets/images/smkn1.png',
+      icon: 'assets/images/slider_smk(2).png',
     ),
     ImageSliderWidget(
-      icon: 'assets/images/smkn1.png',
-    ),
-    ImageSliderWidget(
-      icon: 'assets/images/smkn1.png',
+      icon: 'assets/images/slider_smk(3).png',
     )
   ];
 
@@ -43,32 +41,44 @@ class _CarouselSliderBerandaState extends State<CarouselSliderBeranda> {
       children: [
         Container(
           padding: const EdgeInsets.symmetric(horizontal: 15),
-          // color: defaultColor,
           child: Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: const [
-              Text(
-                'Event',
+            children: [
+              const Text(
+                'Info terkini',
                 style: TextStyle(
                   fontSize: 18,
                   fontWeight: FontWeight.w700,
                   fontFamily: 'Ubuntu',
                 ),
               ),
-              Text(
-                'Lihat semua',
-                style: TextStyle(
-                    fontSize: 14,
-                    fontWeight: FontWeight.w500,
-                    fontFamily: 'Ubuntu',
-                    color: default2Color),
+              GestureDetector(
+                onTap: () {
+                  Navigator.of(context).push(
+                    MaterialPageRoute(
+                      builder: (context) {
+                        return const DummyWidget(
+                            title: 'Info terkini',
+                            subtitle: 'Detail info terkini segera hadir!');
+                      },
+                    ),
+                  );
+                },
+                child: const Text(
+                  'Lihat semua',
+                  style: TextStyle(
+                      fontSize: 14,
+                      fontWeight: FontWeight.w500,
+                      fontFamily: 'Ubuntu',
+                      color: default2Color),
+                ),
               ),
             ],
           ),
         ),
         CarouselSlider(
           options: CarouselOptions(
-            height: 200,
+            height: 185,
             autoPlay: true,
             autoPlayInterval: const Duration(seconds: 3),
             autoPlayAnimationDuration: const Duration(milliseconds: 800),
@@ -81,7 +91,6 @@ class _CarouselSliderBerandaState extends State<CarouselSliderBeranda> {
           items: cardList.map((card) {
             return Builder(builder: (BuildContext context) {
               return SizedBox(
-                height: MediaQuery.of(context).size.height * 0.30,
                 child: card,
               );
             });
@@ -107,11 +116,10 @@ class ImageSliderWidget extends StatelessWidget {
     return Padding(
       padding: const EdgeInsets.all(10),
       child: Container(
-        width: 500,
         decoration: BoxDecoration(
-          borderRadius: BorderRadius.circular(15),
+          borderRadius: BorderRadius.circular(10),
           image: DecorationImage(
-            fit: BoxFit.fitHeight,
+            fit: BoxFit.cover,
             image: AssetImage(
               icon,
             ),
