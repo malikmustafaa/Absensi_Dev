@@ -1,4 +1,4 @@
-// ignore_for_file: prefer_typing_uninitialized_variables, unused_local_variable
+// ignore_for_file: prefer_typing_uninitialized_variables
 
 import 'dart:convert';
 import 'dart:io';
@@ -124,7 +124,6 @@ class _DetailProfilePageState extends State<DetailProfilePage> {
     );
   }
 
-/////
   Widget _buildPage(BuildContext context) {
     double h = MediaQuery.of(context).size.height;
     double w = MediaQuery.of(context).size.width;
