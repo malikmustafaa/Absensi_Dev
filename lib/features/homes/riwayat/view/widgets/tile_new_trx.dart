@@ -174,20 +174,22 @@ class _TileNewTransaksiState extends State<TileNewTransaksi> {
                             size: 44,
                           ),
                           Expanded(
-                            child: RichText(
-                              text: TextSpan(children: [
-                                TextSpan(
-                                    text: 'Jam Masuk\n',
-                                    style: textJamMasukStyle),
-                                TextSpan(
-                                  text: ' ${widget.tglAbsen!}\n',
-                                  style: textTglMasukStyle,
-                                ),
-                                TextSpan(
-                                  text: '${widget.jamMasuk!} ',
-                                  style: textJmMasukStyle,
-                                ),
-                              ]),
+                            child: Center(
+                              child: RichText(
+                                text: TextSpan(children: [
+                                  TextSpan(
+                                      text: 'Jam Masuk\n',
+                                      style: textJamMasukStyle),
+                                  TextSpan(
+                                    text: ' ${widget.tglAbsen!}\n',
+                                    style: textTglMasukStyle,
+                                  ),
+                                  TextSpan(
+                                    text: '${widget.jamMasuk!} ',
+                                    style: textJmMasukStyle,
+                                  ),
+                                ]),
+                              ),
                             ),
                           ),
                           const Icon(

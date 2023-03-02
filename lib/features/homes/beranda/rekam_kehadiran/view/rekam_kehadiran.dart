@@ -10,8 +10,10 @@ import '../../view_model/beranda_view_model.dart';
 
 class RekamKehadiran extends StatefulWidget {
   static const routeName = "/RekamKehadiran";
-  const RekamKehadiran({Key? key, required this.dt1}) : super(key: key);
-  final String dt1;
+  const RekamKehadiran(
+      {Key? key, required String title, required String subtitle})
+      : super(key: key);
+
   @override
   // ignore: library_private_types_in_public_api
   _MyHomePageState createState() => _MyHomePageState();

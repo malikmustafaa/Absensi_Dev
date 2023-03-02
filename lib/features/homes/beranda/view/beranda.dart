@@ -14,10 +14,10 @@ import '../../../../domain/entity/data_user/request_data_user_entity.dart';
 import '../../home_view.dart';
 import '../../riwayat/view/widgets/tile_new_trx.dart';
 import '../model/beranda_model.dart';
+import '../ppdb/view/ppbd_view.dart';
 import '../rekam_kehadiran/view/rekam_kehadiran.dart';
 import '../services/data_user_services.dart';
 import '../view_model/beranda_view_model.dart';
-import 'widgets/button.dart';
 
 class Beranda extends StatefulWidget {
   static const routeName = "/Beranda";
@@ -181,7 +181,7 @@ class _BerandaState extends State<Beranda> {
           _headSection(),
           dataUser(),
           _listBills(),
-          buttonKehadiran(),
+          // buttonKehadiran(),
         ],
       ),
     );
@@ -339,38 +339,36 @@ class _BerandaState extends State<Beranda> {
                           Navigator.of(context).push(
                             MaterialPageRoute(
                               builder: (context) {
-                                return const DummyWidget(
-                                    title: 'Internet',
-                                    subtitle:
-                                        'Fitur internet akan segera hadir!');
+                                return const RekamKehadiran(
+                                    title: 'ABSEN',
+                                    subtitle: 'Fitur absen akan segera hadir!');
                               },
                             ),
                           );
                         },
                         icon: const Icon(
-                          Icons.language,
+                          Icons.ads_click,
                           color: Colors.white,
                         ),
-                        title: 'Internet',
+                        title: 'REKAM\nABSEN',
                       ),
                       ItemKategoriBeranda(
                         onTap: () {
                           Navigator.of(context).push(
                             MaterialPageRoute(
                               builder: (context) {
-                                return const DummyWidget(
-                                    title: 'Belanja',
-                                    subtitle:
-                                        'Fitur belanja akan segera hadir!');
+                                return const PpdbPage(
+                                  title: 'Formulir Pendaftaran',
+                                );
                               },
                             ),
                           );
                         },
                         icon: const Icon(
-                          Icons.shopify_sharp,
+                          Icons.person_add,
                           color: Colors.white,
                         ),
-                        title: 'Belanja',
+                        title: 'PPBD',
                       ),
                       ItemKategoriBeranda(
                         onTap: () {
@@ -388,7 +386,7 @@ class _BerandaState extends State<Beranda> {
                           Icons.event,
                           color: Colors.white,
                         ),
-                        title: 'Event',
+                        title: 'EVENT',
                       ),
                       ItemKategoriBeranda(
                         onTap: () {
@@ -407,7 +405,7 @@ class _BerandaState extends State<Beranda> {
                           Icons.alarm,
                           color: Colors.white,
                         ),
-                        title: 'Jadwal\nShalat',
+                        title: 'JADWAL\nSHALAT',
                       ),
                     ],
                   ),
@@ -476,7 +474,7 @@ class _BerandaState extends State<Beranda> {
             ? ListView.separated(
                 padding: const EdgeInsets.only(top: 0, bottom: 8),
                 separatorBuilder: (context, index) =>
-                    const Divider(height: 2, color: Colors.grey),
+                    const Divider(height: 100, color: Colors.grey),
                 primary: false,
                 shrinkWrap: true,
                 itemCount: isDataUser ? listDataUser.length : 1,
@@ -531,9 +529,7 @@ class _BerandaState extends State<Beranda> {
         ? const Center(
             child: Text('Loading...'),
           )
-        : ListView.separated(
-            separatorBuilder: (context, index) =>
-                const Divider(height: 2, color: Colors.grey),
+        : ListView.builder(
             primary: false,
             shrinkWrap: true,
             itemCount: listDataProfile.length,
@@ -552,28 +548,28 @@ class _BerandaState extends State<Beranda> {
           );
   }
 
-  buttonKehadiran() {
-    return Positioned(
-      bottom: 30,
-      left: 5,
-      right: 5,
-      child: Padding(
-        padding: const EdgeInsets.symmetric(horizontal: 12),
-        child: ButtonWidget(
-          text: 'Absen Sekarang',
-          color: default2Color,
-          ontap: () {
-            var dt1 = "ini data 1";
-            Navigator.of(context).push(
-              MaterialPageRoute(
-                builder: (context) => RekamKehadiran(
-                  dt1: dt1,
-                ),
-              ),
-            );
-          },
-        ),
-      ),
-    );
-  }
+  // buttonKehadiran() {
+  //   return Positioned(
+  //     bottom: 30,
+  //     left: 5,
+  //     right: 5,
+  //     child: Padding(
+  //       padding: const EdgeInsets.symmetric(horizontal: 12),
+  //       child: ButtonWidget(
+  //         text: 'Absen Sekarang',
+  //         color: default2Color,
+  //         ontap: () {
+  //           var dt1 = "ini data 1";
+  //           Navigator.of(context).push(
+  //             MaterialPageRoute(
+  //               builder: (context) => RekamKehadiran(
+  //                 dt1: dt1,
+  //               ),
+  //             ),
+  //           );
+  //         },
+  //       ),
+  //     ),
+  //   );
+  // }
 }
