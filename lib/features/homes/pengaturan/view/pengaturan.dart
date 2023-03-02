@@ -1,3 +1,5 @@
+// ignore_for_file: use_build_context_synchronously
+
 import 'dart:developer';
 
 import 'package:b7c_clean_architecture/features/homes/beranda/view/widgets/data_user_widget.dart';
@@ -54,19 +56,15 @@ class _PengaturanState extends State<Pengaturan> {
     var requestDataProfileEntity = RequestDataProfileEntity(
       noNis: noNis,
     );
-
-    // ignore: use_build_context_synchronously
     var resp = await dataProfileServices.apiDataProfile(context,
         requestDataProfileEntity: requestDataProfileEntity);
     if (resp != null && resp['status'] == '1') {
       var dataProfile = resp['data_profile'];
 
-      apiFullName = resp['data_profile']['full_name'];
-      apiEmail = resp['data_profile']['email'];
-      apifotoProfile = resp['data_profile']['foto_profile'];
-
-      log(' ==== > ${dataProfile.length}');
       if (dataProfile.length > 0) {
+        apiFullName = resp['data_profile']['full_name'];
+        apiEmail = resp['data_profile']['email'];
+        apifotoProfile = resp['data_profile']['foto_profile'];
         List<DataUserWidget> listDataUserProfile = [];
         List<dynamic> listMap = [dataProfile];
 
