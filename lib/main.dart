@@ -1,7 +1,6 @@
 import 'dart:developer';
 
 import 'package:b7c_clean_architecture/contants/color_style.dart';
-import 'package:b7c_clean_architecture/testing/http/homepage.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:b7c_clean_architecture/core/route/route.dart';
@@ -26,7 +25,6 @@ class MyApp extends StatelessWidget {
     return _buildMaterial(context);
   }
 
-//
   Widget _buildMaterial(BuildContext context) {
     return MaterialApp(
       title: 'SMKN1 LSM',
