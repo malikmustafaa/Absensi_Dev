@@ -343,7 +343,7 @@ class PpdbPage extends StatelessWidget {
                       decoration: const InputDecoration(
                         enabledBorder: InputBorder.none,
                         focusedBorder: InputBorder.none,
-                      ),
+                      ), //
                       value: provider.chosenValue2,
                       style: styleDroa,
                       items: provider.dropdownItems2
