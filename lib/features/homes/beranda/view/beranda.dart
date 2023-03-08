@@ -3,6 +3,7 @@
 import 'dart:developer';
 
 import 'package:b7c_clean_architecture/features/dummy/dummy.dart';
+import 'package:b7c_clean_architecture/features/homes/beranda/ppdb/view/ppbd_view.dart';
 import 'package:b7c_clean_architecture/features/homes/beranda/view/widgets/carousel_slider.dart';
 import 'package:b7c_clean_architecture/features/homes/beranda/view/widgets/data_user_widget.dart';
 import 'package:b7c_clean_architecture/features/homes/beranda/view/widgets/item_kategori.dart';
@@ -14,7 +15,6 @@ import '../../../../domain/entity/data_user/request_data_user_entity.dart';
 import '../../home_view.dart';
 import '../../riwayat/view/widgets/tile_new_trx.dart';
 import '../model/beranda_model.dart';
-import '../ppdb/view/ppbd_view.dart';
 import '../rekam_kehadiran/view/rekam_kehadiran.dart';
 import '../services/data_user_services.dart';
 import '../view_model/beranda_view_model.dart';
@@ -32,7 +32,6 @@ class Beranda extends StatefulWidget {
 class _BerandaState extends State<Beranda> {
   DataUserServices dataUserServices = DataUserServices();
   List<ModelClass> modelList = <ModelClass>[];
-
   late SharedPreferences pref;
   List<TileNewTransaksi> listDataProfile = [];
   List<DataUserWidget> listDataUser = [];
@@ -357,9 +356,7 @@ class _BerandaState extends State<Beranda> {
                           Navigator.of(context).push(
                             MaterialPageRoute(
                               builder: (context) {
-                                return const PpdbPage(
-                                  title: 'Formulir Pendaftaran',
-                                );
+                                return const PpdbPage();
                               },
                             ),
                           );

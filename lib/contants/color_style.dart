@@ -207,3 +207,14 @@ var styleTxtfotoprofile = const TextStyle(
     fontFamily: 'Ubuntu',
     fontSize: 16,
     fontWeight: FontWeight.w700);
+var styleDropdown = const TextStyle(
+  color: blackColor,
+  fontWeight: FontWeight.w400,
+  fontFamily: 'Ubuntu',
+  fontSize: 16,
+);
+var styleDroa = const TextStyle(
+  fontWeight: FontWeight.w400,
+  fontFamily: 'Ubuntu',
+  fontSize: 12,
+);

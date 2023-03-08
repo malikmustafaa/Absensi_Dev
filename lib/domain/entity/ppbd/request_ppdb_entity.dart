@@ -12,6 +12,8 @@ class RequestPpdbEntity {
   String namaIbu;
   String notlpnSiswa;
   String notlpnOrtu;
+  String jurusanTeknologi;
+  String jurusanBisnismnjmn;
 
   RequestPpdbEntity({
     required this.email,
@@ -25,6 +27,8 @@ class RequestPpdbEntity {
     required this.namaIbu,
     required this.notlpnSiswa,
     required this.notlpnOrtu,
+    required this.jurusanTeknologi,
+    required this.jurusanBisnismnjmn,
   });
 
   Map<String, dynamic> toMap() => {
@@ -39,5 +43,7 @@ class RequestPpdbEntity {
         "namaIbu": namaIbu,
         "notlpnSiswa": notlpnSiswa,
         "notlpnOrtu": notlpnOrtu,
+        "jurusanTeknologi": jurusanTeknologi,
+        "jurusanBisnismnjmn": jurusanBisnismnjmn,
       };
 }

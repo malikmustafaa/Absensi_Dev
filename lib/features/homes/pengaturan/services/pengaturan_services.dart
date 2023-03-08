@@ -1,3 +1,5 @@
+// ignore_for_file: use_build_context_synchronously
+
 import 'package:flutter/material.dart';
 import 'package:b7c_clean_architecture/application/api/api.dart';
 
@@ -26,9 +28,7 @@ class PengaturanServices extends Api implements PengaturanRepository {
     var res = await post(context, path, reqBody, cookies: false);
     if (res != null && res['status'] != "01" && res['status'] == "1") {
       return res;
-      // return ResponsePengaturanEntity.fromJson(res);
     } else {
-      // ignore: use_build_context_synchronously
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(
           content: Text('${res['message']} \nMohon periksa kembali!'),

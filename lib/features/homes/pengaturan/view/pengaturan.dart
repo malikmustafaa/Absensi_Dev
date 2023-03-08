@@ -1,7 +1,5 @@
 // ignore_for_file: use_build_context_synchronously
 
-import 'dart:developer';
-
 import 'package:b7c_clean_architecture/features/homes/beranda/view/widgets/data_user_widget.dart';
 import 'package:b7c_clean_architecture/features/homes/pengaturan/profile/view/profile_view.dart';
 import 'package:b7c_clean_architecture/features/homes/pengaturan/view_model/pengaturan_view_model.dart';

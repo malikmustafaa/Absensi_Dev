@@ -7,8 +7,6 @@ class BgWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     double getSmallDiameter(BuildContext context) =>
         MediaQuery.of(context).size.width * 2 / 3;
-    double getBiglDiameter(BuildContext context) =>
-        MediaQuery.of(context).size.width * 7 / 8;
 
     return Stack(
       children: [

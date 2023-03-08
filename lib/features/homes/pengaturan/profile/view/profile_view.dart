@@ -143,7 +143,6 @@ class _DetailProfilePageState extends State<DetailProfilePage> {
             ),
             const SizedBox(
               height: 170,
-              // child: BgWidget(),
             ),
             Positioned(
               top: 50,
@@ -166,7 +165,7 @@ class _DetailProfilePageState extends State<DetailProfilePage> {
                     icon: Container(
                       decoration: BoxDecoration(
                         borderRadius: BorderRadius.circular(20),
-                        color: const Color.fromARGB(235, 192, 66, 57),
+                        color: whiteColor,
                       ),
                       child: const Icon(
                         Icons.arrow_back,
