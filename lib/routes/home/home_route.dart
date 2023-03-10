@@ -5,14 +5,10 @@ import '../../features/homes/home_view.dart';
 class HomeRoute {
   static List<BaseRoute> listRoute = [
     BaseRoute(
-      routeName: HomePage.routeName,
-      clazz: const HomePage(
+      routeName: HomeView.routeName,
+      clazz: const HomeView(
         indexPengaturan: 0,
       ),
     ),
-    // BaseRoute(
-    //   routeName: HomeDetailView.routeName,
-    //   clazz: const HomeDetailView(),
-    // )
   ];
 }

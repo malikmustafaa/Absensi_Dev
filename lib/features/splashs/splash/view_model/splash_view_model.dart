@@ -22,5 +22,5 @@ class SplashViewModel extends ChangeNotifier {
 // }
 
 void goToSignUp(BuildContext context) {
-  goToNamed(context, routeName: RegisterPage.routeName);
+  goToNamed(context, routeName: RegisterView.routeName);
 }

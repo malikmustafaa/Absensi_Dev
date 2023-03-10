@@ -4,8 +4,8 @@ import 'package:b7c_clean_architecture/features/logins/login/view/login_view.dar
 class LoginRoute {
   static List<BaseRoute> listRoute = [
     BaseRoute(
-      routeName: LoginPage.routeName,
-      clazz: const LoginPage(),
+      routeName: LoginView.routeName,
+      clazz: const LoginView(),
     ),
   ];
 }

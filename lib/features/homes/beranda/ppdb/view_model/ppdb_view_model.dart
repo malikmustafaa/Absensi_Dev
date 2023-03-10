@@ -1,5 +1,3 @@
-// ignore_for_file: use_build_context_synchronously
-
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import '../../../../../domain/entity/ppbd/request_ppdb_entity.dart';
@@ -7,11 +5,25 @@ import '../../../../../testing/get_data/get_data_siswa.dart';
 import '../services/ppdb_services.dart';
 
 class PpdbViewModel extends ChangeNotifier {
+  var controllerEmailF = TextEditingController();
+  var controllerNamalengkap = TextEditingController();
+  var controllerNisn = TextEditingController();
+  var controllerJeniskelamin = TextEditingController();
+  var controllerSekolahAsal = TextEditingController();
+  var controllerTempattggllahir = TextEditingController();
+  var controllerAlamat = TextEditingController();
+  var controllerAyah = TextEditingController();
+  var controllerIbu = TextEditingController();
+  var controllernotlpnSiswa = TextEditingController();
+  var controllernotlpnOrtu = TextEditingController();
+  var controllerjurusanTeknologi = TextEditingController();
+  var controllerjurusanBisnismnjmn = TextEditingController();
   PpdbServices ppdbServices = PpdbServices();
   String? chosenValue;
   String? chosenValue1;
   String? chosenValue2;
   int activeStepIndex = 0;
+  bool isPpdb = false;
   late SharedPreferences pref;
 
   String? validator(value) {
@@ -36,7 +48,6 @@ class PpdbViewModel extends ChangeNotifier {
     if (activeStepIndex >= 0) {
       activeStepIndex = activeStepIndex + 1;
       notifyListeners();
-      ppdbVM(context);
     }
   }
 
@@ -47,16 +58,42 @@ class PpdbViewModel extends ChangeNotifier {
     if (activeStepIndex >= 1) {
       activeStepIndex = activeStepIndex + 1;
       notifyListeners();
-      ppdbVM(context);
     }
   }
 
-  stepTree(context) {
+  stepTree(context) async {
     if (!formkeys[activeStepIndex].currentState!.validate()) {
       return;
     }
 
     if (activeStepIndex >= 2) {
+      pref = await SharedPreferences.getInstance();
+      String emailF = controllerEmailF.text;
+      String namaLengkap = controllerNamalengkap.text;
+      String nisn = controllerNisn.text;
+      String jenisKelamin = controllerJeniskelamin.text;
+      String sekolahAsal = controllerSekolahAsal.text;
+      String tempattgglLahir = controllerTempattggllahir.text;
+      String alamat = controllerAlamat.text;
+      String namaAyah = controllerAyah.text;
+      String namaIbu = controllerIbu.text;
+      String noSiswa = controllernotlpnSiswa.text;
+      String noOrtu = controllernotlpnOrtu.text;
+      String jurusanTeknologi = controllerjurusanTeknologi.text;
+      String jurusanbisnisManajemen = controllerjurusanBisnismnjmn.text;
+      pref.setString('emailF', emailF);
+      pref.setString('namaLengkap', namaLengkap);
+      pref.setString('nisn', nisn);
+      pref.setString('jenisKelamin', jenisKelamin);
+      pref.setString('sekolahAsal', sekolahAsal);
+      pref.setString('tempattgglLahir', tempattgglLahir);
+      pref.setString('alamat', alamat);
+      pref.setString('namaAyah', namaAyah);
+      pref.setString('namaIbu', namaIbu);
+      pref.setString('noSiswa', noSiswa);
+      pref.setString('noOrtu', noOrtu);
+      pref.setString('jurusanTeknologi', jurusanTeknologi);
+      pref.setString('jurusanbisnisManajemen', jurusanbisnisManajemen);
       goToStep(context);
       notifyListeners();
     }
@@ -106,23 +143,10 @@ class PpdbViewModel extends ChangeNotifier {
     'BD (Bisnis Digital)',
     'MPLB (Manajemen Perkantoran dan Layanan Bisnis)',
   ];
-  var controllerEmail = TextEditingController();
-  var controllerNamalengkap = TextEditingController();
-  var controllerNisn = TextEditingController();
-  var controllerJeniskelamin = TextEditingController();
-  var controllerSekolahAsal = TextEditingController();
-  var controllerTempattggllahir = TextEditingController();
-  var controllerAlamat = TextEditingController();
-  var controllerAyah = TextEditingController();
-  var controllerIbu = TextEditingController();
-  var controllernotlpnSiswa = TextEditingController();
-  var controllernotlpnOrtu = TextEditingController();
-  var controllerjurusanTeknologi = TextEditingController();
-  var controllerjurusanBisnismnjmn = TextEditingController();
 
-  Future ppdbVM(BuildContext context) async {
+  Future ppdbVM(context) async {
     var requestPpdbEntity = RequestPpdbEntity(
-      email: controllerEmail.text,
+      email: controllerEmailF.text,
       namaLengkap: controllerNamalengkap.text,
       nisn: controllerNisn.text,
       jenisKelamin: controllerJeniskelamin.text,
@@ -141,7 +165,6 @@ class PpdbViewModel extends ChangeNotifier {
         requestPpdbEntity: requestPpdbEntity);
 
     if (res != null) {
-      pref = await SharedPreferences.getInstance();
       pref.setString("email", res.email);
       pref.setString('namaLengkap', res.namaLengkap);
       pref.setString('nisn', res.nisn);

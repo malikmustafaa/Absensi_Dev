@@ -1,12 +1,18 @@
 import 'dart:developer';
-
+import 'package:b7c_clean_architecture/routes/beranda/beranda_route.dart';
 import 'package:b7c_clean_architecture/routes/example/example_route.dart';
 import 'package:b7c_clean_architecture/routes/login/login_route.dart';
 import 'package:b7c_clean_architecture/routes/register/register_route.dart';
 import 'package:b7c_clean_architecture/routes/splash/splash_route.dart';
-
 import '../core/route/base_route.dart';
-import 'home/example_route.dart';
+import 'event/event_route.dart';
+import 'home/home_route.dart';
+import 'jadwal_shalat/jadwal_shalat_route.dart';
+import 'pengaturan/pengaturan_route.dart';
+import 'ppdb/ppdb_route.dart';
+import 'profile/profile_route.dart';
+import 'rekam_kehadiran/rekam_kehadiran_route.dart';
+import 'riwayat/riwayat_route.dart';
 
 class AllRoute {
   static Map<String, BaseRoute> allRouteMap = {};
@@ -17,6 +23,14 @@ class AllRoute {
     ...LoginRoute.listRoute,
     ...RegisterRoute.listRoute,
     ...HomeRoute.listRoute,
+    ...BerandaRoute.listRoute,
+    ...RiwayatRoute.listRoute,
+    ...PengaturanRoute.listRoute,
+    ...RekamKehadiranRoute.listRoute,
+    ...PpdbRoute.listRoute,
+    ...EventRoute.listRoute,
+    ...JadwalShalatRoute.listRoute,
+    ...ProfileRoute.listRoute,
   ];
 
   void getKey() {

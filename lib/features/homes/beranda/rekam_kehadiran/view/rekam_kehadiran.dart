@@ -8,9 +8,9 @@ import 'package:provider/provider.dart';
 
 import '../../view_model/beranda_view_model.dart';
 
-class RekamKehadiran extends StatefulWidget {
-  static const routeName = "/RekamKehadiran";
-  const RekamKehadiran(
+class RekamKehadiranView extends StatefulWidget {
+  static const routeName = "/RekamKehadiranView";
+  const RekamKehadiranView(
       {Key? key, required String title, required String subtitle})
       : super(key: key);
 
@@ -19,7 +19,7 @@ class RekamKehadiran extends StatefulWidget {
   _MyHomePageState createState() => _MyHomePageState();
 }
 
-class _MyHomePageState extends State<RekamKehadiran> {
+class _MyHomePageState extends State<RekamKehadiranView> {
   LatLng initialcameraposition = const LatLng(5.194904, 97.140724);
   late GoogleMapController controller;
   Location location = Location();
@@ -152,7 +152,7 @@ class _MyHomePageState extends State<RekamKehadiran> {
               onPressed: () {
                 Navigator.of(context).pop();
                 Navigator.pushNamedAndRemoveUntil(
-                    context, HomePage.routeName, ModalRoute.withName('/'));
+                    context, HomeView.routeName, ModalRoute.withName('/'));
               },
               icon: const Icon(Icons.arrow_back),
             ),

@@ -1,12 +1,9 @@
 // ignore_for_file: avoid_init_to_null
-
+import 'package:badges/badges.dart';
 import 'dart:developer';
-
-import 'package:b7c_clean_architecture/features/dummy/dummy.dart';
 import 'package:b7c_clean_architecture/features/homes/beranda/ppdb/view/ppbd_view.dart';
 import 'package:b7c_clean_architecture/features/homes/beranda/view/widgets/carousel_slider.dart';
 import 'package:b7c_clean_architecture/features/homes/beranda/view/widgets/data_user_widget.dart';
-import 'package:b7c_clean_architecture/features/homes/beranda/view/widgets/item_kategori.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -14,22 +11,25 @@ import '../../../../contants/color_style.dart';
 import '../../../../domain/entity/data_user/request_data_user_entity.dart';
 import '../../home_view.dart';
 import '../../riwayat/view/widgets/tile_new_trx.dart';
+import '../event/view/event_view.dart';
+import '../jadwal_shalat/view/jadwal_shalat_view.dart';
 import '../model/beranda_model.dart';
 import '../rekam_kehadiran/view/rekam_kehadiran.dart';
 import '../services/data_user_services.dart';
 import '../view_model/beranda_view_model.dart';
+import 'widgets/item_kategori.dart';
 
-class Beranda extends StatefulWidget {
-  static const routeName = "/Beranda";
-  const Beranda({
+class BerandaView extends StatefulWidget {
+  static const routeName = "/BerandaView";
+  const BerandaView({
     Key? key,
   }) : super(key: key);
 
   @override
-  State<Beranda> createState() => _BerandaState();
+  State<BerandaView> createState() => _BerandaViewState();
 }
 
-class _BerandaState extends State<Beranda> {
+class _BerandaViewState extends State<BerandaView> {
   DataUserServices dataUserServices = DataUserServices();
   List<ModelClass> modelList = <ModelClass>[];
   late SharedPreferences pref;
@@ -50,6 +50,8 @@ class _BerandaState extends State<Beranda> {
     _getDataUser();
     super.initState();
   }
+
+  bool invisibility = false;
 
   _getDataUser() async {
     final pref = await SharedPreferences.getInstance();
@@ -218,49 +220,62 @@ class _BerandaState extends State<Beranda> {
   }
 
   Widget dataUser() {
-    return Positioned(
-      left: 25,
-      top: 40,
-      right: 15,
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
-              Row(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Container(
-                    height: 30,
-                    width: 30,
-                    decoration: const BoxDecoration(
-                        image: DecorationImage(
-                      image: AssetImage('assets/images/smk1.png'),
-                    )),
-                  ),
-                  Consumer<HomeViewModel>(
-                    builder: (context, value, child) => Text(
-                      'SMKN1 LHOKSEUMAWE',
-                      style: fullnameStyle,
+    return Consumer<HomeViewModel>(builder: (context, provider, child) {
+      return Positioned(
+        left: 25,
+        top: 40,
+        right: 15,
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                Row(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Container(
+                      height: 30,
+                      width: 30,
+                      decoration: const BoxDecoration(
+                          image: DecorationImage(
+                        image: AssetImage('assets/images/smk1.png'),
+                      )),
+                    ),
+                    Consumer<HomeViewModel>(
+                      builder: (context, value, child) => Text(
+                        'SMKN1 LHOKSEUMAWE',
+                        style: fullnameStyle,
+                      ),
+                    ),
+                  ],
+                ),
+                Badge(
+                  badgeContent: Text(provider.index.toString()),
+                  child: Material(
+                    borderRadius: BorderRadius.circular(15),
+                    color: Colors.transparent,
+                    child: InkWell(
+                      onTap: () {
+                        provider.klik(context);
+                      },
+                      child: Icon(
+                        invisibility
+                            ? Icons.notifications
+                            : Icons.notifications_off,
+                        size: 30,
+                        color: whiteColor,
+                      ),
                     ),
                   ),
-                ],
-              ),
-              IconButton(
-                onPressed: () {},
-                icon: const Icon(
-                  Icons.notifications,
-                  size: 25,
-                  color: whiteColor,
                 ),
-              ),
-            ],
-          ),
-          _listDataUser()
-        ],
-      ),
-    );
+              ],
+            ),
+            _listDataUser()
+          ],
+        ),
+      );
+    });
   }
 
   Material appAlert() {
@@ -318,141 +333,147 @@ class _BerandaState extends State<Beranda> {
       child: MediaQuery.removePadding(
         removeTop: true,
         context: context,
-        child: SingleChildScrollView(
-          child: Container(
-            padding: const EdgeInsets.only(
-              left: 10,
-              right: 10,
-              bottom: 80,
-            ),
-            child: Column(
-              children: [
-                alertNotif ? appAlert() : const SizedBox(),
-                SizedBox(
-                  height: 120,
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceAround,
-                    children: [
-                      ItemKategoriBeranda(
-                        onTap: () {
-                          Navigator.of(context).push(
-                            MaterialPageRoute(
-                              builder: (context) {
-                                return const RekamKehadiran(
-                                    title: 'ABSEN',
-                                    subtitle: 'Fitur absen akan segera hadir!');
-                              },
-                            ),
-                          );
-                        },
-                        icon: const Icon(
-                          Icons.ads_click,
-                          color: Colors.white,
-                        ),
-                        title: 'REKAM\nABSEN',
-                      ),
-                      ItemKategoriBeranda(
-                        onTap: () {
-                          Navigator.of(context).push(
-                            MaterialPageRoute(
-                              builder: (context) {
-                                return const PpdbPage();
-                              },
-                            ),
-                          );
-                        },
-                        icon: const Icon(
-                          Icons.person_add,
-                          color: Colors.white,
-                        ),
-                        title: 'PPBD',
-                      ),
-                      ItemKategoriBeranda(
-                        onTap: () {
-                          Navigator.of(context).push(
-                            MaterialPageRoute(
-                              builder: (context) {
-                                return const DummyWidget(
-                                    title: 'Event',
-                                    subtitle: 'Fitur event akan segera hadir!');
-                              },
-                            ),
-                          );
-                        },
-                        icon: const Icon(
-                          Icons.event,
-                          color: Colors.white,
-                        ),
-                        title: 'EVENT',
-                      ),
-                      ItemKategoriBeranda(
-                        onTap: () {
-                          Navigator.of(context).push(
-                            MaterialPageRoute(
-                              builder: (context) {
-                                return const DummyWidget(
-                                    title: 'Jadwal Shalat',
-                                    subtitle:
-                                        'Fitur jadwal shalat akan segera hadir!');
-                              },
-                            ),
-                          );
-                        },
-                        icon: const Icon(
-                          Icons.alarm,
-                          color: Colors.white,
-                        ),
-                        title: 'JADWAL\nSHALAT',
-                      ),
-                    ],
-                  ),
-                ),
-                const SizedBox(
-                  height: 20,
-                ),
-                CarouselSliderBeranda(
-                  icon: '',
-                ),
-                Container(
-                  padding:
-                      const EdgeInsets.symmetric(horizontal: 15, vertical: 6),
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      const Text(
-                        'Absen Terakhir',
-                        style: TextStyle(
-                          fontSize: 18,
-                          fontWeight: FontWeight.w700,
-                          fontFamily: 'Ubuntu',
-                        ),
-                      ),
-                      GestureDetector(
-                        onTap: () {
-                          int index = 1;
-
-                          Navigator.of(context).push(
-                            MaterialPageRoute(
-                              builder: (context) => HomePage(
-                                indexPengaturan: index,
+        child: ScrollConfiguration(
+          behavior: const ScrollBehavior().copyWith(overscroll: false),
+          child: SingleChildScrollView(
+            physics: const PageScrollPhysics(),
+            child: Container(
+              padding: const EdgeInsets.only(
+                left: 10,
+                right: 10,
+                bottom: 80,
+              ),
+              child: Column(
+                children: [
+                  alertNotif ? appAlert() : const SizedBox(),
+                  SizedBox(
+                    height: 120,
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceAround,
+                      children: [
+                        ItemKategoriBeranda(
+                          onTap: () {
+                            Navigator.of(context).push(
+                              MaterialPageRoute(
+                                builder: (context) {
+                                  return const RekamKehadiranView(
+                                      title: 'ABSEN',
+                                      subtitle:
+                                          'Fitur absen akan segera hadir!');
+                                },
                               ),
-                            ),
-                          );
-                        },
-                        child: const Text(
-                          'Lihat semua',
-                          style: TextStyle(
-                              fontSize: 14,
-                              fontWeight: FontWeight.w500,
-                              fontFamily: 'Ubuntu',
-                              color: default2Color),
+                            );
+                          },
+                          icon: const Icon(
+                            Icons.ads_click,
+                            color: Colors.white,
+                          ),
+                          title: 'REKAM\nABSEN',
                         ),
-                      ),
-                    ],
+                        ItemKategoriBeranda(
+                          onTap: () {
+                            Navigator.of(context).push(
+                              MaterialPageRoute(
+                                builder: (context) {
+                                  return const PpdbView();
+                                },
+                              ),
+                            );
+                          },
+                          icon: const Icon(
+                            Icons.person_add,
+                            color: Colors.white,
+                          ),
+                          title: 'PPBD',
+                        ),
+                        ItemKategoriBeranda(
+                          onTap: () {
+                            Navigator.of(context).push(
+                              MaterialPageRoute(
+                                builder: (context) {
+                                  return const EventView(
+                                      title: 'Event',
+                                      subtitle:
+                                          'Fitur event akan segera hadir!');
+                                },
+                              ),
+                            );
+                          },
+                          icon: const Icon(
+                            Icons.event,
+                            color: Colors.white,
+                          ),
+                          title: 'EVENT',
+                        ),
+                        ItemKategoriBeranda(
+                          onTap: () {
+                            Navigator.of(context).push(
+                              MaterialPageRoute(
+                                builder: (context) {
+                                  return const JadwalShalatView(
+                                      title: 'Jadwal Shalat',
+                                      subtitle:
+                                          'Fitur jadwal shalat akan segera hadir!');
+                                },
+                              ),
+                            );
+                          },
+                          icon: const Icon(
+                            Icons.alarm,
+                            color: Colors.white,
+                          ),
+                          title: 'JADWAL\nSHALAT',
+                        ),
+                      ],
+                    ),
                   ),
-                ),
-                _listData(),
-              ],
+                  const SizedBox(
+                    height: 20,
+                  ),
+                  CarouselSliderBeranda(
+                    icon: '',
+                  ),
+                  Container(
+                    padding:
+                        const EdgeInsets.symmetric(horizontal: 15, vertical: 6),
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        const Text(
+                          'Absen Terakhir',
+                          style: TextStyle(
+                            fontSize: 18,
+                            fontWeight: FontWeight.w700,
+                            fontFamily: 'Ubuntu',
+                          ),
+                        ),
+                        GestureDetector(
+                          onTap: () {
+                            int index = 1;
+
+                            Navigator.of(context).push(
+                              MaterialPageRoute(
+                                builder: (context) => HomeView(
+                                  indexPengaturan: index,
+                                ),
+                              ),
+                            );
+                          },
+                          child: const Text(
+                            'Lihat semua',
+                            style: TextStyle(
+                                fontSize: 14,
+                                fontWeight: FontWeight.w500,
+                                fontFamily: 'Ubuntu',
+                                color: default2Color),
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+                  _listData(),
+                ],
+              ),
             ),
           ),
         ),
@@ -492,7 +513,7 @@ class _BerandaState extends State<Beranda> {
                 crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
                   const CircleAvatar(
-                    // backgroundColor: default2Color,
+                    backgroundColor: default2Color,
                     radius: 40,
                     backgroundImage: AssetImage(
                       'assets/images/orang.png',

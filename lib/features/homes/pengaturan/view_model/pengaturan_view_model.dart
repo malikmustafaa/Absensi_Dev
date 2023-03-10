@@ -31,10 +31,10 @@ class PengaturanViewModel extends ChangeNotifier {
   }
 
   void goToLogin(BuildContext context) {
-    goToNamed(context, routeName: LoginPage.routeName);
+    goToNamed(context, routeName: LoginView.routeName);
   }
 
   void goToDetailProfile(BuildContext context) {
-    goToNamed(context, routeName: DetailProfilePage.routeName);
+    goToNamed(context, routeName: ProfileView.routeName);
   }
 }

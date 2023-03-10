@@ -5,16 +5,16 @@ import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import '../../../homes/home_view.dart';
 
-class SplashPage extends StatefulWidget {
-  static const routeName = "/SplashPage";
+class SplashView extends StatefulWidget {
+  static const routeName = "/SplashView";
 
-  const SplashPage({super.key});
+  const SplashView({super.key});
 
   @override
-  State<SplashPage> createState() => _SplashPageState();
+  State<SplashView> createState() => _SplashViewState();
 }
 
-class _SplashPageState extends State<SplashPage> {
+class _SplashViewState extends State<SplashView> {
   bool isLogin = false;
   late SharedPreferences pref;
   @override
@@ -35,11 +35,11 @@ class _SplashPageState extends State<SplashPage> {
       // ignore: use_build_context_synchronously
       // ignore: use_build_context_synchronously
       Navigator.pushNamedAndRemoveUntil(
-          context, HomePage.routeName, ModalRoute.withName('/'));
+          context, HomeView.routeName, ModalRoute.withName('/'));
     } else {
       // ignore: use_build_context_synchronously
       Navigator.pushNamedAndRemoveUntil(
-          context, LoginPage.routeName, ModalRoute.withName('/'));
+          context, LoginView.routeName, ModalRoute.withName('/'));
     }
   }
 

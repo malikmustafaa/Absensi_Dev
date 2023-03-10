@@ -35,10 +35,10 @@ class LoginViewModel extends ChangeNotifier {
   }
 
   void goToHome(BuildContext context) {
-    goToNamed(context, routeName: HomePage.routeName);
+    goToNamed(context, routeName: HomeView.routeName);
   }
 
   void goToSignUp(BuildContext context) {
-    goToNamed(context, routeName: RegisterPage.routeName);
+    goToNamed(context, routeName: RegisterView.routeName);
   }
 }

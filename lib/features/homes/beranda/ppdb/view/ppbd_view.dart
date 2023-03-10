@@ -6,9 +6,9 @@ import '../view_model/ppdb_view_model.dart';
 import 'widgets/button_batal.dart';
 import 'widgets/button_lanjut.dart';
 
-class PpdbPage extends StatelessWidget {
-  static const routeName = "/PpdbPage";
-  const PpdbPage({Key? key}) : super(key: key);
+class PpdbView extends StatelessWidget {
+  static const routeName = "/PpdbView";
+  const PpdbView({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -19,33 +19,39 @@ class PpdbPage extends StatelessWidget {
   }
 
   Widget _buildPage(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        backgroundColor: default2Color,
-        title: Row(
-          children: [
-            IconButton(
-              onPressed: () {
-                Navigator.pushNamedAndRemoveUntil(context, HomePage.routeName,
-                    ModalRoute.withName('/HomePage'));
-              },
-              icon: const Icon(Icons.arrow_back),
-            ),
-            const Text('Formulir Pendaftaran'),
-          ],
+    return WillPopScope(
+      onWillPop: () async => false,
+      child: Scaffold(
+        appBar: AppBar(
+          backgroundColor: default2Color,
+          title: Row(
+            children: [
+              IconButton(
+                onPressed: () {
+                  Navigator.pushNamedAndRemoveUntil(context, HomeView.routeName,
+                      ModalRoute.withName('/HomePage'));
+                },
+                icon: const Icon(Icons.arrow_back),
+              ),
+              const Text('Formulir Pendaftaran'),
+            ],
+          ),
+          automaticallyImplyLeading: false,
         ),
-        automaticallyImplyLeading: false,
-      ),
-      body: Consumer<PpdbViewModel>(
-        builder: (context, provider, child) => Stepper(
-          elevation: 01,
-          controlsBuilder: (context, controller) {
-            return const SizedBox.shrink();
-          },
-          type: StepperType.horizontal,
-          currentStep: provider.activeStepIndex,
-          steps: stepList(provider),
-          onStepTapped: provider.onStepTapped,
+        body: ScrollConfiguration(
+          behavior: const ScrollBehavior().copyWith(overscroll: false),
+          child: Consumer<PpdbViewModel>(
+            builder: (context, provider, child) => Stepper(
+              elevation: 01,
+              controlsBuilder: (context, controller) {
+                return const SizedBox.shrink();
+              },
+              type: StepperType.horizontal,
+              currentStep: provider.activeStepIndex,
+              steps: stepList(provider),
+              onStepTapped: provider.onStepTapped,
+            ),
+          ),
         ),
       ),
     );
@@ -80,7 +86,7 @@ class PpdbPage extends StatelessWidget {
                   Consumer<PpdbViewModel>(
                     builder: (context, provider, child) => TextFormField(
                       validator: provider.validator,
-                      controller: provider.controllerEmail,
+                      controller: provider.controllerEmailF,
                       decoration: const InputDecoration(
                         hintText: 'Masukkan email',
                         labelText: 'Email',

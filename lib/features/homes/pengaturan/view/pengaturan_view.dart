@@ -8,17 +8,19 @@ import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import '../../../../contants/color_style.dart';
 import '../../../../domain/entity/pengaturan/request_data_profile_entity.dart';
-import '../profile/services/update_profile_services.dart';
 
-class Pengaturan extends StatefulWidget {
-  static const routeName = "/Pengaturan";
-  const Pengaturan({Key? key}) : super(key: key);
+import '../profile/services/update_profile_services.dart';
+import 'widgets/dialog.dart';
+
+class PengaturanView extends StatefulWidget {
+  static const routeName = "/PengaturanView";
+  const PengaturanView({Key? key}) : super(key: key);
 
   @override
-  State<Pengaturan> createState() => _PengaturanState();
+  State<PengaturanView> createState() => _PengaturanViewState();
 }
 
-class _PengaturanState extends State<Pengaturan> {
+class _PengaturanViewState extends State<PengaturanView> {
   UpdateProfileServices dataProfileServices = UpdateProfileServices();
   List<DataUserWidget> listDataProfile = [];
   late SharedPreferences pref;
@@ -102,13 +104,9 @@ class _PengaturanState extends State<Pengaturan> {
 
     fullname = pref.getString('fullname') ?? "";
     email = pref.getString('email') ?? "";
-    // noNis = pref.getString('noNis') ?? "";
-    username = pref.getString('username') ?? "";
     setState(() {
       fullname = fullname;
       email = email;
-      // noNis = noNis;
-      username = username;
     });
   }
 
@@ -121,159 +119,180 @@ class _PengaturanState extends State<Pengaturan> {
   }
 
   Widget _buildPage(BuildContext context) {
+    final provider = Provider.of<PengaturanViewModel>(listen: false, context);
+
     return Scaffold(
       backgroundColor: whiteColor,
-      body: Column(
-        children: [
-          Stack(
-            children: [
-              Align(
-                alignment: Alignment.topLeft,
-                child: Image.asset(
-                  'assets/images/header_login.png',
-                ),
-              ),
-              Container(
-                height: 280,
-              ),
-              Positioned(
-                top: 56,
-                left: 20,
-                right: 20,
-                child: Column(
-                  children: [
-                    Text(
-                      'Pengaturan',
-                      style: styleTitleAppBarBlack,
-                    ),
-                    const SizedBox(
-                      height: 28,
-                    ),
-                    _listDataUser()
-                  ],
-                ),
-              ),
-            ],
-          ),
-          Container(
-            padding: const EdgeInsets.symmetric(
-              horizontal: 15,
-              vertical: 2,
-            ),
-            child: Column(
+      body: ScrollConfiguration(
+        behavior: const ScrollBehavior().copyWith(overscroll: false),
+        child: Column(
+          children: [
+            Stack(
               children: [
-                const SizedBox(
-                  height: 10,
-                ),
-                Material(
-                  color: Colors.transparent,
-                  child: InkWell(
-                    onTap: () {
-                      Navigator.of(context).push(
-                        MaterialPageRoute(
-                          builder: (context) => DetailProfilePage(
-                              apiFullName: apiFullName,
-                              apiEmail: apiEmail,
-                              apifotoProfile: apifotoProfile),
-                        ),
-                      );
-                    },
-                    child: Container(
-                      padding: const EdgeInsets.symmetric(
-                        horizontal: 10,
-                      ),
-                      decoration: BoxDecoration(
-                        border: Border.all(
-                          color: default2Color,
-                          width: 1,
-                        ),
-                        borderRadius: BorderRadius.circular(15),
-                      ),
-                      height: 55,
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: [
-                          Row(
-                            children: [
-                              const Icon(
-                                Icons.person,
-                                color: default2Color,
-                                size: 25,
-                              ),
-                              Padding(
-                                padding: const EdgeInsets.only(left: 10),
-                                child: Text(
-                                  'Profile',
-                                  style: textDetailPrflepengaturanStyle,
-                                ),
-                              ),
-                            ],
-                          ),
-                          const Icon(
-                            Icons.arrow_forward_ios_rounded,
-                            color: default2Color,
-                            size: 20,
-                          )
-                        ],
-                      ),
-                    ),
+                Align(
+                  alignment: Alignment.topLeft,
+                  child: Image.asset(
+                    'assets/images/header_login.png',
                   ),
                 ),
-                const SizedBox(
-                  height: 10,
+                Container(
+                  height: 280,
                 ),
-                Material(
-                  color: Colors.transparent,
-                  child: InkWell(
-                    onTap: () {
-                      showAlert(context);
-                    },
-                    child: Container(
-                      padding: const EdgeInsets.symmetric(horizontal: 10),
-                      decoration: BoxDecoration(
-                        border: Border.all(
-                          color: default2Color,
-                          width: 1,
-                        ),
-                        borderRadius: BorderRadius.circular(15),
+                Positioned(
+                  top: 56,
+                  left: 20,
+                  right: 20,
+                  child: Column(
+                    children: [
+                      Text(
+                        'Pengaturan',
+                        style: styleTitleAppBarBlack,
                       ),
-                      height: 55,
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: [
-                          Row(
-                            children: [
-                              const Icon(
-                                Icons.logout,
-                                color: default2Color,
-                                size: 25,
-                              ),
-                              Padding(
-                                padding: const EdgeInsets.only(left: 10),
-                                child: Text(
-                                  'Keluar',
-                                  style: textDetailPrflepengaturanStyle,
-                                ),
-                              ),
-                            ],
-                          ),
-                          const Icon(
-                            Icons.arrow_forward_ios_rounded,
-                            color: default2Color,
-                            size: 20,
-                          )
-                        ],
+                      const SizedBox(
+                        height: 28,
                       ),
-                    ),
+                      _listDataUser()
+                    ],
                   ),
-                ),
-                const SizedBox(
-                  height: 10,
                 ),
               ],
             ),
-          ),
-        ],
+            Container(
+              padding: const EdgeInsets.symmetric(
+                horizontal: 15,
+                vertical: 2,
+              ),
+              child: Column(
+                children: [
+                  const SizedBox(
+                    height: 10,
+                  ),
+                  Material(
+                    color: Colors.transparent,
+                    child: InkWell(
+                      onTap: () {
+                        Navigator.of(context).push(
+                          MaterialPageRoute(
+                            builder: (context) => ProfileView(
+                                apiFullName: apiFullName,
+                                apiEmail: apiEmail,
+                                apifotoProfile: apifotoProfile),
+                          ),
+                        );
+                      },
+                      child: Container(
+                        padding: const EdgeInsets.symmetric(
+                          horizontal: 10,
+                        ),
+                        decoration: BoxDecoration(
+                          border: Border.all(
+                            color: default2Color,
+                            width: 1,
+                          ),
+                          borderRadius: BorderRadius.circular(15),
+                        ),
+                        height: 55,
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            Row(
+                              children: [
+                                const Icon(
+                                  Icons.person,
+                                  color: default2Color,
+                                  size: 25,
+                                ),
+                                Padding(
+                                  padding: const EdgeInsets.only(left: 10),
+                                  child: Text(
+                                    'Profile',
+                                    style: textDetailPrflepengaturanStyle,
+                                  ),
+                                ),
+                              ],
+                            ),
+                            const Icon(
+                              Icons.arrow_forward_ios_rounded,
+                              color: default2Color,
+                              size: 20,
+                            )
+                          ],
+                        ),
+                      ),
+                    ),
+                  ),
+                  const SizedBox(
+                    height: 10,
+                  ),
+                  Material(
+                    color: Colors.transparent,
+                    child: InkWell(
+                      onTap: () {
+                        const DialogWidget().showImageDialog(
+                            title: '',
+                            message: 'Apakah Anda ingin keluar?',
+                            isError: true,
+                            image: const Image(
+                              image: AssetImage('assets/images/logo.png'),
+                            ),
+                            buttonCancel: 'Batal',
+                            onCancel: () {
+                              Navigator.pop(context);
+                            },
+                            buttonOk: 'Ya',
+                            onOk: () {
+                              provider.logout(context);
+                            },
+                            context: context);
+                        // showErrorMaxDate(context);
+                      },
+                      child: Container(
+                        padding: const EdgeInsets.symmetric(horizontal: 10),
+                        decoration: BoxDecoration(
+                          border: Border.all(
+                            color: default2Color,
+                            width: 1,
+                          ),
+                          borderRadius: BorderRadius.circular(15),
+                        ),
+                        height: 55,
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            Row(
+                              children: [
+                                const Icon(
+                                  Icons.logout,
+                                  color: default2Color,
+                                  size: 25,
+                                ),
+                                Padding(
+                                  padding: const EdgeInsets.only(left: 10),
+                                  child: Text(
+                                    'Keluar',
+                                    style: textDetailPrflepengaturanStyle,
+                                  ),
+                                ),
+                              ],
+                            ),
+                            const Icon(
+                              Icons.arrow_forward_ios_rounded,
+                              color: default2Color,
+                              size: 20,
+                            )
+                          ],
+                        ),
+                      ),
+                    ),
+                  ),
+                  const SizedBox(
+                    height: 10,
+                  ),
+                ],
+              ),
+            ),
+          ],
+        ),
       ),
     );
   }

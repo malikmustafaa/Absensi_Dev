@@ -1,5 +1,3 @@
-// ignore_for_file: use_build_context_synchronously, unused_element
-
 import 'package:b7c_clean_architecture/features/homes/home_view.dart';
 import 'package:b7c_clean_architecture/features/logins/login/view/login_view.dart';
 import 'package:flutter/material.dart';
@@ -11,11 +9,18 @@ import '../services/beranda_services.dart';
 import '../view/widgets/dialog.dart';
 
 class HomeViewModel extends ChangeNotifier {
+  int index = 0;
   HomeServices homeServices = HomeServices();
   late SharedPreferences pref;
   String msg = 'Data absen Anda berhasil tersimpan';
   String noNis = '';
-  Future pushDataKehadiran(BuildContext context, param) async {
+
+  klik(context) {
+    index++;
+    notifyListeners();
+  }
+
+  Future pushDataKehadiran(context, param) async {
     final pref = await SharedPreferences.getInstance();
 
     noNis = pref.getString('noNis') ?? "";
@@ -39,14 +44,14 @@ class HomeViewModel extends ChangeNotifier {
   }
 
   void goToHome(BuildContext context) {
-    goToNamed(context, routeName: HomePage.routeName);
+    goToNamed(context, routeName: HomeView.routeName);
   }
 
-  void goToLogin(BuildContext context) {
-    goToNamed(context, routeName: LoginPage.routeName);
+  void goToLogin(context) {
+    goToNamed(context, routeName: LoginView.routeName);
   }
 
-  _showErrorMaxDate(BuildContext context, msg) {
+  showErrorMaxDate(BuildContext context, msg) {
     const DialogBox().showImageDialog(
         title: 'Sukses',
         message: msg,

@@ -11,15 +11,15 @@ import '../services/riwayat_services.dart';
 import 'widgets/tile_new_trx.dart';
 import 'package:intl/intl.dart';
 
-class Riwayat extends StatefulWidget {
-  static const routeName = "/Riwayat";
-  const Riwayat({Key? key}) : super(key: key);
+class RiwayatView extends StatefulWidget {
+  static const routeName = "/RiwayatView";
+  const RiwayatView({Key? key}) : super(key: key);
 
   @override
-  State<Riwayat> createState() => _RiwayatState();
+  State<RiwayatView> createState() => _RiwayatState();
 }
 
-class _RiwayatState extends State<Riwayat> {
+class _RiwayatState extends State<RiwayatView> {
   RiwayatServices riwayatServices = RiwayatServices();
   TextEditingController fromDateController = TextEditingController();
   TextEditingController untilDateController = TextEditingController();
@@ -307,53 +307,56 @@ class _RiwayatState extends State<Riwayat> {
     log('ddddddddd> $isDataUser');
     return Scaffold(
       backgroundColor: whiteColor,
-      body: CustomScrollView(
-        slivers: [
-          SliverAppBar(
-            automaticallyImplyLeading: false,
-            shape: const ContinuousRectangleBorder(
-              borderRadius: BorderRadius.only(
-                bottomLeft: Radius.circular(45),
-                bottomRight: Radius.circular(45),
+      body: ScrollConfiguration(
+        behavior: const ScrollBehavior().copyWith(overscroll: false),
+        child: CustomScrollView(
+          slivers: [
+            SliverAppBar(
+              automaticallyImplyLeading: false,
+              shape: const ContinuousRectangleBorder(
+                borderRadius: BorderRadius.only(
+                  bottomLeft: Radius.circular(45),
+                  bottomRight: Radius.circular(45),
+                ),
+              ),
+              backgroundColor: default2Color,
+              floating: true,
+              pinned: true,
+              snap: false,
+              centerTitle: false,
+              title: buildHeader(),
+              bottom: AppBar(
+                automaticallyImplyLeading: false,
+                backgroundColor: default2Color,
+                title: buildDateRange(),
               ),
             ),
-            backgroundColor: default2Color,
-            floating: true,
-            pinned: true,
-            snap: false,
-            centerTitle: false,
-            title: buildHeader(),
-            bottom: AppBar(
-              automaticallyImplyLeading: false,
-              backgroundColor: default2Color,
-              title: buildDateRange(),
-            ),
-          ),
-          loading
-              ? const SliverFillRemaining(
-                  child: Center(child: Text('Loading...')),
-                )
-              : SliverList(
-                  delegate: SliverChildBuilderDelegate(
-                    (BuildContext context, int index) {
-                      return GestureDetector(
-                        child: TileNewTransaksi(
-                          idAbsen: listHistoriTrx[index].idAbsen,
-                          jamKeluar: listHistoriTrx[index].jamKeluar,
-                          jamMasuk: listHistoriTrx[index].jamMasuk,
-                          tglAbsen: listHistoriTrx[index].tglAbsen,
-                          colorLabel: listHistoriTrx[index].colorLabel,
-                          isResendTrx: listHistoriTrx[index].isResendTrx,
-                          isActive: listHistoriTrx[index].isActive,
-                          items: listHistoriTrx[index].items,
-                        ),
-                      );
-                    },
-                    // childCount: 10,
-                    childCount: listHistoriTrx.length,
+            loading
+                ? const SliverFillRemaining(
+                    child: Center(child: Text('Loading...')),
+                  )
+                : SliverList(
+                    delegate: SliverChildBuilderDelegate(
+                      (BuildContext context, int index) {
+                        return GestureDetector(
+                          child: TileNewTransaksi(
+                            idAbsen: listHistoriTrx[index].idAbsen,
+                            jamKeluar: listHistoriTrx[index].jamKeluar,
+                            jamMasuk: listHistoriTrx[index].jamMasuk,
+                            tglAbsen: listHistoriTrx[index].tglAbsen,
+                            colorLabel: listHistoriTrx[index].colorLabel,
+                            isResendTrx: listHistoriTrx[index].isResendTrx,
+                            isActive: listHistoriTrx[index].isActive,
+                            items: listHistoriTrx[index].items,
+                          ),
+                        );
+                      },
+                      // childCount: 10,
+                      childCount: listHistoriTrx.length,
+                    ),
                   ),
-                ),
-        ],
+          ],
+        ),
       ),
     );
   }
@@ -364,7 +367,7 @@ class _RiwayatState extends State<Riwayat> {
         Align(
           alignment: Alignment.topLeft,
           child: Text(
-            'Riwayat Absensi',
+            'RiwayatView Absensi',
             style: styleTitleAppBar,
           ),
         ),
