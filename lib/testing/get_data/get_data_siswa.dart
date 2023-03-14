@@ -1,4 +1,4 @@
-import 'package:b7c_clean_architecture/features/homes/beranda/ppdb/view/ppbd_view.dart';
+import 'package:b7c_clean_architecture/features/homes/beranda/ppdb/daftar_ppdb/view/daftar_ppdb_view.dart';
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
@@ -16,7 +16,7 @@ class HasilPengisiFormpndaftrn extends StatefulWidget {
 class _HasilPengisiFormpndaftrnState extends State<HasilPengisiFormpndaftrn> {
   late SharedPreferences getdataPpdb;
   bool? isSetData;
-  String email = '';
+  String emailF = '';
   String namaLengkap = '';
   String nisn = '';
   String jenisKelamin = '';
@@ -38,7 +38,7 @@ class _HasilPengisiFormpndaftrnState extends State<HasilPengisiFormpndaftrn> {
   void initial() async {
     getdataPpdb = await SharedPreferences.getInstance();
     setState(() {
-      email = getdataPpdb.getString('email').toString();
+      emailF = getdataPpdb.getString('emailF').toString();
       namaLengkap = getdataPpdb.getString('namaLengkap').toString();
       nisn = getdataPpdb.getString('nisn').toString();
       jenisKelamin = getdataPpdb.getString('jenisKelamin').toString();
@@ -70,55 +70,52 @@ class _HasilPengisiFormpndaftrnState extends State<HasilPengisiFormpndaftrn> {
         ),
         body: Padding(
           padding: const EdgeInsets.all(26.0),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: <Widget>[
-              const Align(
-                child: Text(
-                  'Formulir Pendaftaran',
-                  style: TextStyle(fontSize: 20, fontWeight: FontWeight.w600),
+          child: Expanded(
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: <Widget>[
+                const Align(
+                  child: Text(
+                    'Formulir Pendaftaran',
+                    style: TextStyle(fontSize: 20, fontWeight: FontWeight.w600),
+                  ),
                 ),
-              ),
-              Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Row(
+                Expanded(
+                  child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      const Text(
-                        'Email\nNama Lengkap\nNisn\nJenis Kelamin\nSekolah Asal\nTempat/TanggalLahir\nAlamat',
-                        style: TextStyle(height: 2),
-                      ),
-                      Expanded(
-                        child: Column(
-                          children: [
-                            Text(
-                              '  :$email\n  :$namaLengkap\n  :$nisn\n  :$jenisKelamin\n  :$sekolahAsal\n  :$tempattgglLahir\n  :$alamat',
-                              style: const TextStyle(
-                                  fontWeight: FontWeight.w500, height: 2),
-                            ),
-                          ],
-                        ),
-                      )
+                      Text('emailF: $emailF'),
+                      Text('NamaLengkap: $namaLengkap'),
+                      Text('Nisn: $nisn'),
+                      Text('JenisKelamin: $jenisKelamin'),
+                      Text('Sekolah Asal: $sekolahAsal'),
+                      Text('Tempat/TanggalLahir: $tempattgglLahir'),
+                      Text('Alamat: $alamat'),
+                      Text('NamaAyah: $namaAyah'),
+                      Text('NamaIbu: $namaIbu'),
+                      Text('NoSiswa $noSiswa'),
+                      Text("NoOrtu $noOrtu"),
+                      Text("Jurusan Tknlgi: $jurusanTeknologi"),
+                      Text('JurusanBsnsMnjmn: $jurusanbisnisManajemen'),
                     ],
                   ),
-                ],
-              ),
-              Center(
-                child: OutlinedButton(
-                  onPressed: () {
-                    getdataPpdb.setBool('login', true);
-                    Navigator.pushReplacement(
-                      context,
-                      MaterialPageRoute(
-                        builder: (context) => const PpdbPage(),
-                      ),
-                    );
-                  },
-                  child: const Text('Simpan'),
                 ),
-              ),
-            ],
+                Center(
+                  child: OutlinedButton(
+                    onPressed: () {
+                      getdataPpdb.setBool('login', true);
+                      Navigator.pushReplacement(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) => const DaftarPpdbView(),
+                        ),
+                      );
+                    },
+                    child: const Text('Simpan'),
+                  ),
+                ),
+              ],
+            ),
           ),
         ),
       ),

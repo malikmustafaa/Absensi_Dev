@@ -4,8 +4,7 @@ import 'package:b7c_clean_architecture/routes/all_route.dart';
 
 enum RouteType { push, pushReplace, pushRemove }
 
-const initialRoute = SplashPage.routeName;
-// const initialRoute = ExamplePage.routeName;
+const initialRoute = SplashView.routeName;
 
 //====GENERATE ROUTES====
 Route<dynamic>? generateRoutes(RouteSettings settings) {

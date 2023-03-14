@@ -1,31 +1,30 @@
-// ignore_for_file: prefer_const_constructors, unnecessary_null_comparison
+// ignore_for_file: unnecessary_null_comparison
 
-import 'package:b7c_clean_architecture/features/homes/beranda/view/beranda.dart';
-import 'package:b7c_clean_architecture/features/homes/pengaturan/view/pengaturan.dart';
+import 'package:b7c_clean_architecture/features/homes/beranda/view/beranda_view.dart';
+import 'package:b7c_clean_architecture/features/homes/pengaturan/view/pengaturan_view.dart';
 import 'package:flutter/material.dart';
 
 import '../../contants/color_style.dart';
-import 'riwayat/view/riwayat.dart';
+import 'riwayat/view/riwayat_view.dart';
 
-class HomePage extends StatefulWidget {
-  static const routeName = "/HomePage";
+class HomeView extends StatefulWidget {
+  static const routeName = "/HomeView";
 
   final int indexPengaturan;
 
-  const HomePage({Key? key, required this.indexPengaturan}) : super(key: key);
+  const HomeView({Key? key, required this.indexPengaturan}) : super(key: key);
 
   @override
-  // ignore: library_private_types_in_public_api
-  _HomePageState createState() => _HomePageState();
+  HomeViewState createState() => HomeViewState();
 }
 
-class _HomePageState extends State<HomePage> {
+class HomeViewState extends State<HomeView> {
   int currentTabIndex = 0;
 
   List<Widget> tabs = [
-    const Beranda(),
-    const Riwayat(),
-    const Pengaturan(),
+    const BerandaView(),
+    const RiwayatView(),
+    const PengaturanView(),
   ];
 
   @override
@@ -49,7 +48,7 @@ class _HomePageState extends State<HomePage> {
       body: tabs[currentTabIndex],
       bottomNavigationBar: Container(
         decoration: BoxDecoration(
-          borderRadius: BorderRadius.only(
+          borderRadius: const BorderRadius.only(
             topLeft: Radius.circular(18),
             topRight: Radius.circular(18),
           ),

@@ -9,7 +9,6 @@ import 'package:flutter_image_compress/flutter_image_compress.dart';
 import 'package:provider/provider.dart';
 
 import '../../../../../../../contants/color_style.dart';
-import '../../../../../home_view.dart';
 import '../../../../view_model/beranda_view_model.dart';
 import 'camera_ui.dart';
 
@@ -23,11 +22,10 @@ class CameraPage extends StatefulWidget {
   final String cLongitude;
 
   @override
-  // ignore: library_private_types_in_public_api
-  _CameraPageState createState() => _CameraPageState();
+  CameraPageState createState() => CameraPageState();
 }
 
-class _CameraPageState extends State<CameraPage> {
+class CameraPageState extends State<CameraPage> {
   FharFormat format = FharFormat.formatSwafoto;
   String long = '';
   String lat = '';
@@ -115,181 +113,175 @@ class _CameraPageState extends State<CameraPage> {
     Size size = MediaQuery.of(context).size;
     final providerVM = context.read<HomeViewModel>();
 
-    return Scaffold(
-      backgroundColor: Colors.white,
-      body: FutureBuilder<List<CameraDescription>>(
-        future: availableCameras(),
-        builder: (context, snapshot) {
-          if (snapshot.hasData) {
-            if (snapshot.data == null) {
-              return const Align(
-                alignment: Alignment.center,
-                child: Text(
-                  'Kamera tidak ditemukan',
-                  style: TextStyle(color: Colors.black),
-                ),
-              );
-            }
-            return KameraUI(
-              snapshot.data!.last,
-              CardFhar.byFormat(format),
-              (XFile file) => showDialog(
-                context: context,
-                builder: (context) {
-                  CardFhar fhar = CardFhar.byFormat(format);
+    return WillPopScope(
+      onWillPop: () async => false,
+      child: Scaffold(
+        backgroundColor: Colors.white,
+        body: FutureBuilder<List<CameraDescription>>(
+          future: availableCameras(),
+          builder: (context, snapshot) {
+            if (snapshot.hasData) {
+              if (snapshot.data == null) {
+                return const Align(
+                  alignment: Alignment.center,
+                  child: Text(
+                    'Kamera tidak ditemukan',
+                    style: TextStyle(color: Colors.black),
+                  ),
+                );
+              }
+              return KameraUI(
+                snapshot.data!.last,
+                CardFhar.byFormat(format),
+                (XFile file) => showDialog(
+                  context: context,
+                  builder: (context) {
+                    CardFhar fhar = CardFhar.byFormat(format);
 
-                  return Scaffold(
-                    appBar: AppBar(
-                      backgroundColor: default2Color,
-                      centerTitle: true,
-                      automaticallyImplyLeading: false,
-                      elevation: 0,
-                      title: Row(
-                        children: [
-                          IconButton(
-                            onPressed: () {
-                              Navigator.of(context).pop();
-
-                              Navigator.pushNamedAndRemoveUntil(context,
-                                  HomePage.routeName, ModalRoute.withName('/'));
-                            },
-                            icon: const Icon(Icons.arrow_back),
-                          ),
-                          Text(
+                    return WillPopScope(
+                      onWillPop: () async => false,
+                      child: Scaffold(
+                        appBar: AppBar(
+                          backgroundColor: default2Color,
+                          centerTitle: true,
+                          automaticallyImplyLeading: false,
+                          elevation: 0,
+                          title: Text(
                             'Rekam Kehadiran',
                             style: fullnameStyle,
                           ),
-                        ],
-                      ),
-                    ),
-                    backgroundColor: Colors.white,
-                    body: SingleChildScrollView(
-                      child: Column(children: <Widget>[
-                        Padding(
-                          padding: const EdgeInsets.all(16.0),
-                          child: Column(
-                            crossAxisAlignment: CrossAxisAlignment.center,
-                            children: [
-                              Container(
-                                alignment: Alignment.center,
-                                child: const Text(
-                                  "Wajah kamu harus sepenuhya\nberada didalam bingkai foto dan terlihat \njelas (tidak buram/blur)",
-                                  textAlign: TextAlign.center,
-                                  style: TextStyle(
-                                      color: Colors.black, fontSize: 14),
-                                ),
-                              ),
-                              const SizedBox(
-                                height: 10,
-                              ),
-                              const Text(
-                                'BERIKAN SENYUM TERBAIK KAMU',
-                                textAlign: TextAlign.center,
-                                style: TextStyle(
-                                    color: Colors.black, fontSize: 14),
-                              ),
-                              const SizedBox(
-                                height: 15,
-                              ),
-                              SizedBox(
-                                  width: double.infinity,
-                                  height: h / 1.8,
-                                  child: AspectRatio(
-                                    aspectRatio: fhar.ratio!,
-                                    child: Container(
-                                      decoration: BoxDecoration(
-                                          borderRadius:
-                                              BorderRadiusDirectional.circular(
-                                                  10),
-                                          image: DecorationImage(
-                                            fit: BoxFit.fill,
-                                            alignment: FractionalOffset.center,
-                                            image: FileImage(
-                                              File(file.path),
-                                            ),
-                                          )),
-                                    ),
-                                  )),
-                              SizedBox(
-                                height: size.height * 0.04,
-                              ),
-                              Row(
-                                mainAxisAlignment:
-                                    MainAxisAlignment.spaceEvenly,
+                        ),
+                        backgroundColor: Colors.white,
+                        body: SingleChildScrollView(
+                          child: Column(children: <Widget>[
+                            Padding(
+                              padding: const EdgeInsets.all(16.0),
+                              child: Column(
+                                crossAxisAlignment: CrossAxisAlignment.center,
                                 children: [
-                                  SizedBox(
-                                    width: w / 2.5,
-                                    height: h / 16 * 1.1,
-                                    child: OutlinedButton(
-                                      style: ElevatedButton.styleFrom(
-                                        shape: RoundedRectangleBorder(
-                                          borderRadius:
-                                              BorderRadius.circular(25),
-                                        ),
-                                      ),
-                                      onPressed: () {
-                                        Navigator.of(context).pop();
-                                      },
-                                      child: const Text(
-                                        'Ulangi ',
-                                        style: TextStyle(
-                                            fontFamily: 'Ubuntu',
-                                            fontSize: 16,
-                                            color: default2Color,
-                                            fontWeight: FontWeight.w600),
-                                      ),
+                                  Container(
+                                    alignment: Alignment.center,
+                                    child: const Text(
+                                      "Wajah kamu harus sepenuhya\nberada didalam bingkai foto dan terlihat \njelas (tidak buram/blur)",
+                                      textAlign: TextAlign.center,
+                                      style: TextStyle(
+                                          color: Colors.black, fontSize: 14),
                                     ),
                                   ),
+                                  const SizedBox(
+                                    height: 10,
+                                  ),
+                                  const Text(
+                                    'BERIKAN SENYUM TERBAIK KAMU',
+                                    textAlign: TextAlign.center,
+                                    style: TextStyle(
+                                        color: Colors.black, fontSize: 14),
+                                  ),
+                                  const SizedBox(
+                                    height: 15,
+                                  ),
                                   SizedBox(
-                                    width: w / 2.5,
-                                    height: h / 16 * 1.1,
-                                    child: ElevatedButton(
-                                      style: ElevatedButton.styleFrom(
-                                        primary: default2Color,
-                                        shape: RoundedRectangleBorder(
-                                          borderRadius:
-                                              BorderRadius.circular(25),
+                                      width: double.infinity,
+                                      height: h / 1.8,
+                                      child: AspectRatio(
+                                        aspectRatio: fhar.ratio!,
+                                        child: Container(
+                                          decoration: BoxDecoration(
+                                              borderRadius:
+                                                  BorderRadiusDirectional
+                                                      .circular(10),
+                                              image: DecorationImage(
+                                                fit: BoxFit.fill,
+                                                alignment:
+                                                    FractionalOffset.center,
+                                                image: FileImage(
+                                                  File(file.path),
+                                                ),
+                                              )),
+                                        ),
+                                      )),
+                                  SizedBox(
+                                    height: size.height * 0.04,
+                                  ),
+                                  Row(
+                                    mainAxisAlignment:
+                                        MainAxisAlignment.spaceEvenly,
+                                    children: [
+                                      SizedBox(
+                                        width: w / 2.5,
+                                        height: h / 16 * 1.1,
+                                        child: OutlinedButton(
+                                          style: ElevatedButton.styleFrom(
+                                            shape: RoundedRectangleBorder(
+                                              borderRadius:
+                                                  BorderRadius.circular(25),
+                                            ),
+                                          ),
+                                          onPressed: () {
+                                            Navigator.of(context).pop();
+                                          },
+                                          child: const Text(
+                                            'Ulangi ',
+                                            style: TextStyle(
+                                                fontFamily: 'Ubuntu',
+                                                fontSize: 16,
+                                                color: default2Color,
+                                                fontWeight: FontWeight.w600),
+                                          ),
                                         ),
                                       ),
-                                      onPressed: () {
-                                        _nextStep(context, providerVM,
-                                            File(file.path));
-                                      },
-                                      child: const Text(
-                                        'Lanjut',
-                                        style: TextStyle(
-                                            fontFamily: 'Ubuntu',
-                                            fontSize: 16,
-                                            fontWeight: FontWeight.w600),
+                                      SizedBox(
+                                        width: w / 2.5,
+                                        height: h / 16 * 1.1,
+                                        child: ElevatedButton(
+                                          style: ElevatedButton.styleFrom(
+                                            primary: default2Color,
+                                            shape: RoundedRectangleBorder(
+                                              borderRadius:
+                                                  BorderRadius.circular(25),
+                                            ),
+                                          ),
+                                          onPressed: () {
+                                            _nextStep(context, providerVM,
+                                                File(file.path));
+                                          },
+                                          child: const Text(
+                                            'Lanjut',
+                                            style: TextStyle(
+                                                fontFamily: 'Ubuntu',
+                                                fontSize: 16,
+                                                fontWeight: FontWeight.w600),
+                                          ),
+                                        ),
                                       ),
-                                    ),
+                                    ],
+                                  ),
+                                  SizedBox(
+                                    height: size.height * 0.002,
                                   ),
                                 ],
                               ),
-                              SizedBox(
-                                height: size.height * 0.002,
-                              ),
-                            ],
-                          ),
-                        )
-                      ]),
-                    ),
-                  );
-                },
-              ),
-              info:
-                  'Pastikan seluruh bagian wajah kamu \nberada dalam bingkai foto dan terlihat\n dengan jelas.',
-              infoMargin: const EdgeInsets.only(top: 50, left: 20, right: 20),
-            );
-          } else {
-            return const Align(
-                alignment: Alignment.center,
-                child: Text(
-                  'Kamera tidak tersedia',
-                  style: TextStyle(color: Colors.black),
-                ));
-          }
-        },
+                            )
+                          ]),
+                        ),
+                      ),
+                    );
+                  },
+                ),
+                info:
+                    'Pastikan seluruh bagian wajah kamu \nberada dalam bingkai foto dan terlihat\n dengan jelas.',
+                infoMargin: const EdgeInsets.only(top: 50, left: 20, right: 20),
+              );
+            } else {
+              return const Align(
+                  alignment: Alignment.center,
+                  child: Text(
+                    'Kamera tidak tersedia',
+                    style: TextStyle(color: Colors.black),
+                  ));
+            }
+          },
+        ),
       ),
     );
   }

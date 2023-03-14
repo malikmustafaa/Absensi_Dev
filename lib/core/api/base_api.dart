@@ -130,10 +130,8 @@ abstract class BaseApi {
     var strLog = "";
     Map<String, String> headers = {};
     headers['content-type'] = "application/json";
-    // headers['accept'] = "application/json";
 
     headers['app_version'] = appVersion;
-    // headers['language'] = language;
     headers['latitude'] = '';
     headers['longitude'] = '';
 
@@ -162,11 +160,7 @@ abstract class BaseApi {
       if (method == _post) {
         response = await http
             .post(
-              Uri(
-                  host: host,
-                  //  port: _port,
-                  path: basePath + path,
-                  scheme: protocol),
+              Uri(host: host, path: basePath + path, scheme: protocol),
               headers: headers,
               body: reqBody,
             )

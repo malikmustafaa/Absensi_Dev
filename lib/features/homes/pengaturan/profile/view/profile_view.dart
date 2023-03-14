@@ -13,14 +13,14 @@ import '../../../../../contants/color_style.dart';
 import '../../../home_view.dart';
 import '../view_model/profile_view_model.dart';
 
-class DetailProfilePage extends StatefulWidget {
-  static const routeName = "/DetailProfilePage";
+class ProfileView extends StatefulWidget {
+  static const routeName = "/ProfileView";
 
   final String apiFullName;
   final String apiEmail;
   final String apifotoProfile;
 
-  const DetailProfilePage(
+  const ProfileView(
       {Key? key,
       required this.apiFullName,
       required this.apiEmail,
@@ -28,10 +28,10 @@ class DetailProfilePage extends StatefulWidget {
       : super(key: key);
 
   @override
-  State<DetailProfilePage> createState() => _DetailProfilePageState();
+  State<ProfileView> createState() => _ProfileViewState();
 }
 
-class _DetailProfilePageState extends State<DetailProfilePage> {
+class _ProfileViewState extends State<ProfileView> {
   late SharedPreferences pref;
 
   var controllerFullname = TextEditingController();
@@ -94,17 +94,6 @@ class _DetailProfilePageState extends State<DetailProfilePage> {
     });
   }
 
-  Future<void> setEmail(context, providerVM) async {
-    Map<String, Object> param = {};
-    param['fotoProfile'] = '-';
-    param['fullName'] = '-';
-    param['email'] = controllerEmail.text;
-    providerVM.updateProfile(context, param);
-    setState(() {
-      email = controllerEmail.text;
-    });
-  }
-
   getDataPref() async {
     pref = await SharedPreferences.getInstance();
 
@@ -132,570 +121,483 @@ class _DetailProfilePageState extends State<DetailProfilePage> {
     final providerVM = Provider.of<ProfileViewModel>(context, listen: false);
 
     return Scaffold(
-      body: SingleChildScrollView(
-        child: Stack(
-          children: [
-            Align(
-              alignment: Alignment.topLeft,
-              child: Image.asset(
-                'assets/images/header_login.png',
-              ),
-            ),
-            const SizedBox(
-              height: 170,
-            ),
-            Positioned(
-              top: 50,
-              left: 20,
-              right: 20,
-              child: Row(
-                children: [
-                  IconButton(
-                    onPressed: () {
-                      int index = 2;
-
-                      Navigator.of(context).push(
-                        MaterialPageRoute(
-                          builder: (context) => HomePage(
-                            indexPengaturan: index,
-                          ),
-                        ),
-                      );
-                    },
-                    icon: Container(
-                      decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(20),
-                        color: whiteColor,
-                      ),
-                      child: const Icon(
-                        Icons.arrow_back,
-                        color: default2Color,
-                      ),
-                    ),
-                  ),
-                  Padding(
-                    padding: const EdgeInsets.only(left: 70, right: 70),
-                    child: Text(
-                      'Profil Saya',
-                      style: styleTitleAppBarBlack,
-                    ),
-                  ),
-                ],
-              ),
-            ),
-            Positioned(
-              top: 120,
-              left: 130,
-              child: Stack(
-                children: [
-                  ClipOval(
-                    child: selectedImage != null
-                        ? Image.file(
-                            selectedImage!,
-                            fit: BoxFit.cover,
-                            height: 135,
-                            width: 135,
-                          )
-                        : widget.apiEmail != ''
-                            ? PhotoWidget(apifotoProfile: widget.apifotoProfile)
-                            : CircleAvatar(
-                                backgroundColor: default2Color,
-                                radius: 60,
-                                child: Image.asset(
-                                  'assets/images/orang.png',
-                                  fit: BoxFit.fitHeight,
-                                  height: 135,
-                                  width: 135,
-                                ),
-                              ),
-                  ),
-                  Positioned(
-                    right: 0,
-                    bottom: 0,
-                    child: IconButton(
-                        onPressed: () {
-                          showModalBottomSheet<void>(
-                            shape: const RoundedRectangleBorder(
-                                borderRadius: BorderRadius.only(
-                                    topLeft: Radius.circular(20),
-                                    topRight: Radius.circular(20))),
-                            context: context,
-                            builder: (BuildContext context) {
-                              return Container(
-                                padding: const EdgeInsets.symmetric(
-                                  vertical: 15,
-                                  horizontal: 15,
-                                ),
-                                height: 220,
-                                child: Column(
-                                  mainAxisAlignment: MainAxisAlignment.center,
-                                  crossAxisAlignment: CrossAxisAlignment.start,
-                                  children: [
-                                    Align(
-                                      alignment: Alignment.bottomLeft,
-                                      child: Text(
-                                        'Ubah Foto',
-                                        style: styleTxtfotoprofile,
-                                      ),
-                                    ),
-                                    const SizedBox(
-                                      height: 20,
-                                    ),
-                                    Material(
-                                      color: Colors.transparent,
-                                      child: InkWell(
-                                        onTap: () async {
-                                          await chooseImage(
-                                              context, providerVM, 'Galeri');
-                                        },
-                                        child: SizedBox(
-                                          height: 40,
-                                          child: Row(
-                                            mainAxisAlignment:
-                                                MainAxisAlignment.spaceBetween,
-                                            children: [
-                                              Row(
-                                                children: [
-                                                  const Icon(
-                                                    Icons.image_outlined,
-                                                    size: 25,
-                                                    color: black87Color,
-                                                  ),
-                                                  Padding(
-                                                    padding:
-                                                        const EdgeInsets.only(
-                                                            left: 10),
-                                                    child: Text(
-                                                      'Pilih Dari Galeri',
-                                                      style: styleTxtprofile,
-                                                    ),
-                                                  ),
-                                                ],
-                                              ),
-                                            ],
-                                          ),
-                                        ),
-                                      ),
-                                    ),
-                                    const SizedBox(
-                                      height: 10,
-                                    ),
-                                    Material(
-                                      color: Colors.transparent,
-                                      child: InkWell(
-                                        onTap: () async {
-                                          await chooseImage(
-                                              context, providerVM, 'camera');
-                                        },
-                                        child: SizedBox(
-                                          height: 40,
-                                          child: Row(
-                                            mainAxisAlignment:
-                                                MainAxisAlignment.spaceBetween,
-                                            children: [
-                                              Row(
-                                                children: [
-                                                  const Icon(
-                                                    Icons.camera_alt_outlined,
-                                                    color: black87Color,
-                                                    size: 25,
-                                                  ),
-                                                  Padding(
-                                                    padding:
-                                                        const EdgeInsets.only(
-                                                            left: 10),
-                                                    child: Text(
-                                                      'Ambil Dari Kamera',
-                                                      style: styleTxtprofile,
-                                                    ),
-                                                  ),
-                                                ],
-                                              ),
-                                            ],
-                                          ),
-                                        ),
-                                      ),
-                                    ),
-                                  ],
-                                ),
-                              );
-                            },
-                          );
-                        },
-                        icon: const CircleAvatar(
-                          radius: 15,
-                          backgroundColor: Colors.red,
-                          child: Icon(
-                            Icons.add_a_photo,
-                            color: whiteColor,
-                            size: 20,
-                          ),
-                        )),
-                  ),
-                ],
-              ),
-            ),
-            Container(
-              padding: const EdgeInsets.only(
-                top: 250,
-              ),
-              child: Padding(
-                padding: const EdgeInsets.symmetric(
-                  horizontal: 15,
-                  vertical: 15,
+      body: ScrollConfiguration(
+        behavior: const ScrollBehavior().copyWith(overscroll: false),
+        child: SingleChildScrollView(
+          child: Stack(
+            children: [
+              Align(
+                alignment: Alignment.topLeft,
+                child: Image.asset(
+                  'assets/images/header_login.png',
                 ),
-                child: Column(
+              ),
+              const SizedBox(
+                height: 170,
+              ),
+              Positioned(
+                top: 50,
+                left: 20,
+                right: 20,
+                child: Row(
                   children: [
-                    Container(
-                      padding: const EdgeInsets.symmetric(
-                        horizontal: 10,
-                      ),
-                      decoration: BoxDecoration(
-                        border: Border.all(
-                          color: default2Color,
-                          width: 1,
-                        ),
-                        borderRadius: BorderRadius.circular(15),
-                      ),
-                      height: 60,
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: [
-                          Row(
-                            children: [
-                              const Icon(
-                                Icons.person_outline_outlined,
-                                color: default2Color,
-                                size: 25,
-                              ),
-                              Padding(
-                                padding: const EdgeInsets.only(left: 10),
-                                child: Column(
-                                  mainAxisAlignment: MainAxisAlignment.center,
-                                  crossAxisAlignment: CrossAxisAlignment.start,
-                                  children: [
-                                    Text(
-                                      'Nama lengkap',
-                                      style: textDetailPrflepengaturanStyle,
-                                    ),
-                                    Text(
-                                      fullname,
-                                      style: textTglMasukStyle,
-                                    ),
-                                  ],
-                                ),
-                              ),
-                            ],
-                          ),
-                          IconButton(
-                            onPressed: () {
-                              showModalBottomSheet<void>(
-                                shape: const RoundedRectangleBorder(
-                                  borderRadius: BorderRadius.only(
-                                    topLeft: Radius.circular(20),
-                                    topRight: Radius.circular(20),
-                                  ),
-                                ),
-                                context: context,
-                                builder: (BuildContext context) {
-                                  return Form(
-                                    child: SingleChildScrollView(
-                                      child: Container(
-                                        padding: const EdgeInsets.symmetric(
-                                            horizontal: 15, vertical: 30),
-                                        child: AnimatedPadding(
-                                          padding:
-                                              MediaQuery.of(context).viewInsets,
-                                          duration:
-                                              const Duration(milliseconds: 100),
-                                          curve: Curves.decelerate,
-                                          child: Column(
-                                            crossAxisAlignment:
-                                                CrossAxisAlignment.start,
-                                            children: <Widget>[
-                                              Align(
-                                                alignment: Alignment.bottomLeft,
-                                                child: Text(
-                                                  'Ubah Nama Lengkap',
-                                                  style:
-                                                      textfllnamepengaturanStyle,
-                                                ),
-                                              ),
-                                              const SizedBox(
-                                                height: 12,
-                                              ),
-                                              TextField(
-                                                controller: controllerFullname,
-                                                decoration: InputDecoration(
-                                                  prefixIcon: const Icon(
-                                                    Icons
-                                                        .person_outline_outlined,
-                                                  ),
-                                                  hintText: fullname,
-                                                  focusedBorder:
-                                                      const UnderlineInputBorder(
-                                                          borderSide: BorderSide(
-                                                              color:
-                                                                  default2Color)),
-                                                ),
-                                              ),
-                                              const SizedBox(
-                                                height: 50,
-                                              ),
-                                              Row(
-                                                mainAxisAlignment:
-                                                    MainAxisAlignment.center,
-                                                children: [
-                                                  SizedBox(
-                                                    width: w / 2.5,
-                                                    height: h / 16 * 1.1,
-                                                    child: ElevatedButton(
-                                                      style: ElevatedButton
-                                                          .styleFrom(
-                                                        primary: default2Color,
-                                                        shape:
-                                                            RoundedRectangleBorder(
-                                                          borderRadius:
-                                                              BorderRadius
-                                                                  .circular(25),
-                                                        ),
-                                                      ),
-                                                      onPressed: () {
-                                                        setFullname(context,
-                                                            providerVM);
-                                                      },
-                                                      child: const Text(
-                                                        'OK',
-                                                      ),
-                                                    ),
-                                                  ),
-                                                ],
-                                              ),
-                                            ],
-                                          ),
-                                        ),
-                                      ),
-                                    ),
-                                  );
-                                },
-                              );
-                            },
-                            icon: const Icon(
-                              Icons.edit,
-                              color: default2Color,
-                              size: 20,
+                    IconButton(
+                      onPressed: () {
+                        int index = 2;
+
+                        Navigator.of(context).push(
+                          MaterialPageRoute(
+                            builder: (context) => HomeView(
+                              indexPengaturan: index,
                             ),
                           ),
-                        ],
-                      ),
-                    ),
-                    const SizedBox(
-                      height: 12,
-                    ),
-                    Container(
-                      height: 60,
-                      padding: const EdgeInsets.symmetric(
-                        horizontal: 10,
-                      ),
-                      decoration: BoxDecoration(
-                        border: Border.all(
-                          color: default2Color,
-                          width: 1,
+                        );
+                      },
+                      icon: Container(
+                        decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(20),
+                          color: whiteColor,
                         ),
-                        borderRadius: BorderRadius.circular(15),
-                      ),
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: [
-                          Row(
-                            children: [
-                              const Icon(
-                                Icons.email_outlined,
-                                color: default2Color,
-                                size: 25,
-                              ),
-                              Padding(
-                                padding: const EdgeInsets.only(left: 10),
-                                child: Column(
-                                  mainAxisAlignment: MainAxisAlignment.center,
-                                  crossAxisAlignment: CrossAxisAlignment.start,
-                                  children: [
-                                    Text(
-                                      'Email',
-                                      style: textDetailPrflepengaturanStyle,
-                                    ),
-                                    Text(
-                                      email,
-                                      style: textTglMasukStyle,
-                                    ),
-                                  ],
-                                ),
-                              ),
-                            ],
-                          ),
-                          // IconButton(
-                          //   onPressed: () {
-                          //     showModalBottomSheet<void>(
-                          //       shape: const RoundedRectangleBorder(
-                          //         borderRadius: BorderRadius.only(
-                          //           topLeft: Radius.circular(20),
-                          //           topRight: Radius.circular(20),
-                          //         ),
-                          //       ),
-                          //       context: context,
-                          //       builder: (BuildContext context) {
-                          //         return Form(
-                          //           child: SingleChildScrollView(
-                          //             child: Container(
-                          //               padding: const EdgeInsets.symmetric(
-                          //                   horizontal: 15, vertical: 30),
-                          //               child: AnimatedPadding(
-                          //                 padding:
-                          //                     MediaQuery.of(context).viewInsets,
-                          //                 duration:
-                          //                     const Duration(milliseconds: 100),
-                          //                 curve: Curves.decelerate,
-                          //                 child: Column(
-                          //                   crossAxisAlignment:
-                          //                       CrossAxisAlignment.start,
-                          //                   children: <Widget>[
-                          //                     Align(
-                          //                       alignment: Alignment.bottomLeft,
-                          //                       child: Text(
-                          //                         'Ubah Email',
-                          //                         style:
-                          //                             textfllnamepengaturanStyle,
-                          //                       ),
-                          //                     ),
-                          //                     const SizedBox(
-                          //                       height: 12,
-                          //                     ),
-                          //                     TextField(
-                          //                       controller: controllerEmail,
-                          //                       decoration: InputDecoration(
-                          //                         prefixIcon: const Icon(
-                          //                           Icons.email_outlined,
-                          //                         ),
-                          //                         hintText: email,
-                          //                         focusedBorder:
-                          //                             const UnderlineInputBorder(
-                          //                                 borderSide: BorderSide(
-                          //                                     color:
-                          //                                         default2Color)),
-                          //                       ),
-                          //                     ),
-                          //                     const SizedBox(
-                          //                       height: 50,
-                          //                     ),
-                          //                     Row(
-                          //                       mainAxisAlignment:
-                          //                           MainAxisAlignment.center,
-                          //                       children: [
-                          //                         SizedBox(
-                          //                           width: w / 2.5,
-                          //                           height: h / 16 * 1.1,
-                          //                           child: ElevatedButton(
-                          //                             style: ElevatedButton
-                          //                                 .styleFrom(
-                          //                               primary: default2Color,
-                          //                               shape:
-                          //                                   RoundedRectangleBorder(
-                          //                                 borderRadius:
-                          //                                     BorderRadius
-                          //                                         .circular(25),
-                          //                               ),
-                          //                             ),
-                          //                             onPressed: () {
-                          //                               setEmail(context,
-                          //                                   providerVM);
-
-                          //                               Navigator.of(context)
-                          //                                   .pop();
-                          //                             },
-                          //                             child: const Text(
-                          //                               'OK',
-                          //                             ),
-                          //                           ),
-                          //                         ),
-                          //                       ],
-                          //                     ),
-                          //                   ],
-                          //                 ),
-                          //               ),
-                          //             ),
-                          //           ),
-                          //         );
-                          //       },
-                          //     );
-                          //   },
-                          //   icon: const Icon(
-                          //     Icons.edit,
-                          //     color: default2Color,
-                          //     size: 20,
-                          //   ),
-                          // ),
-                        ],
-                      ),
-                    ),
-                    const SizedBox(
-                      height: 12,
-                    ),
-                    Container(
-                      padding: const EdgeInsets.symmetric(
-                        horizontal: 10,
-                      ),
-                      decoration: BoxDecoration(
-                        border: Border.all(
+                        child: const Icon(
+                          Icons.arrow_back,
                           color: default2Color,
-                          width: 1,
                         ),
-                        borderRadius: BorderRadius.circular(15),
                       ),
-                      height: 60,
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: [
-                          Row(
-                            children: [
-                              const Icon(
-                                Icons.numbers_outlined,
-                                color: default2Color,
-                                size: 25,
-                              ),
-                              Padding(
-                                padding: const EdgeInsets.only(left: 10),
-                                child: Column(
-                                  mainAxisAlignment: MainAxisAlignment.center,
-                                  crossAxisAlignment: CrossAxisAlignment.start,
-                                  children: [
-                                    Text(
-                                      'Nomor Induk Siswa/NIS',
-                                      style: textDetailPrflepengaturanStyle,
-                                    ),
-                                    Text(
-                                      noNis,
-                                      style: textTglMasukStyle,
-                                    ),
-                                  ],
-                                ),
-                              ),
-                            ],
-                          ),
-                          IconButton(
-                              onPressed: () {},
-                              icon: const Icon(
-                                Icons.api_sharp,
-                                size: 25,
-                                color: default2Color,
-                              ))
-                        ],
+                    ),
+                    Padding(
+                      padding: const EdgeInsets.only(left: 70, right: 70),
+                      child: Text(
+                        'Profil Saya',
+                        style: styleTitleAppBarBlack,
                       ),
                     ),
                   ],
                 ),
               ),
-            ),
-          ],
+              Positioned(
+                top: 120,
+                left: 130,
+                child: Stack(
+                  children: [
+                    ClipOval(
+                      child: selectedImage != null
+                          ? Image.file(
+                              selectedImage!,
+                              fit: BoxFit.cover,
+                              height: 135,
+                              width: 135,
+                            )
+                          : widget.apiEmail != ''
+                              ? PhotoWidget(
+                                  apifotoProfile: widget.apifotoProfile)
+                              : CircleAvatar(
+                                  backgroundColor: default2Color,
+                                  radius: 60,
+                                  child: Image.asset(
+                                    'assets/images/orang.png',
+                                    fit: BoxFit.fitHeight,
+                                    height: 135,
+                                    width: 135,
+                                  ),
+                                ),
+                    ),
+                    Positioned(
+                      right: 0,
+                      bottom: 0,
+                      child: IconButton(
+                          onPressed: () {
+                            showModalBottomSheet<void>(
+                              shape: const RoundedRectangleBorder(
+                                  borderRadius: BorderRadius.only(
+                                      topLeft: Radius.circular(20),
+                                      topRight: Radius.circular(20))),
+                              context: context,
+                              builder: (BuildContext context) {
+                                return Container(
+                                  padding: const EdgeInsets.symmetric(
+                                    vertical: 15,
+                                    horizontal: 15,
+                                  ),
+                                  height: 220,
+                                  child: Column(
+                                    mainAxisAlignment: MainAxisAlignment.center,
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.start,
+                                    children: [
+                                      Align(
+                                        alignment: Alignment.bottomLeft,
+                                        child: Text(
+                                          'Ubah Foto',
+                                          style: styleTxtfotoprofile,
+                                        ),
+                                      ),
+                                      const SizedBox(
+                                        height: 20,
+                                      ),
+                                      Material(
+                                        color: Colors.transparent,
+                                        child: InkWell(
+                                          onTap: () async {
+                                            await chooseImage(
+                                                context, providerVM, 'Galeri');
+                                          },
+                                          child: SizedBox(
+                                            height: 40,
+                                            child: Row(
+                                              mainAxisAlignment:
+                                                  MainAxisAlignment
+                                                      .spaceBetween,
+                                              children: [
+                                                Row(
+                                                  children: [
+                                                    const Icon(
+                                                      Icons.image_outlined,
+                                                      size: 25,
+                                                      color: black87Color,
+                                                    ),
+                                                    Padding(
+                                                      padding:
+                                                          const EdgeInsets.only(
+                                                              left: 10),
+                                                      child: Text(
+                                                        'Pilih Dari Galeri',
+                                                        style: styleTxtprofile,
+                                                      ),
+                                                    ),
+                                                  ],
+                                                ),
+                                              ],
+                                            ),
+                                          ),
+                                        ),
+                                      ),
+                                      const SizedBox(
+                                        height: 10,
+                                      ),
+                                      Material(
+                                        color: Colors.transparent,
+                                        child: InkWell(
+                                          onTap: () async {
+                                            await chooseImage(
+                                                context, providerVM, 'camera');
+                                          },
+                                          child: SizedBox(
+                                            height: 40,
+                                            child: Row(
+                                              mainAxisAlignment:
+                                                  MainAxisAlignment
+                                                      .spaceBetween,
+                                              children: [
+                                                Row(
+                                                  children: [
+                                                    const Icon(
+                                                      Icons.camera_alt_outlined,
+                                                      color: black87Color,
+                                                      size: 25,
+                                                    ),
+                                                    Padding(
+                                                      padding:
+                                                          const EdgeInsets.only(
+                                                              left: 10),
+                                                      child: Text(
+                                                        'Ambil Dari Kamera',
+                                                        style: styleTxtprofile,
+                                                      ),
+                                                    ),
+                                                  ],
+                                                ),
+                                              ],
+                                            ),
+                                          ),
+                                        ),
+                                      ),
+                                    ],
+                                  ),
+                                );
+                              },
+                            );
+                          },
+                          icon: const CircleAvatar(
+                            radius: 15,
+                            backgroundColor: Colors.red,
+                            child: Icon(
+                              Icons.add_a_photo,
+                              color: whiteColor,
+                              size: 20,
+                            ),
+                          )),
+                    ),
+                  ],
+                ),
+              ),
+              Container(
+                padding: const EdgeInsets.only(
+                  top: 250,
+                ),
+                child: Padding(
+                  padding: const EdgeInsets.symmetric(
+                    horizontal: 15,
+                    vertical: 15,
+                  ),
+                  child: Column(
+                    children: [
+                      Container(
+                        padding: const EdgeInsets.symmetric(
+                          horizontal: 10,
+                        ),
+                        decoration: BoxDecoration(
+                          border: Border.all(
+                            color: default2Color,
+                            width: 1,
+                          ),
+                          borderRadius: BorderRadius.circular(15),
+                        ),
+                        height: 60,
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            Row(
+                              children: [
+                                const Icon(
+                                  Icons.person_outline_outlined,
+                                  color: default2Color,
+                                  size: 25,
+                                ),
+                                Padding(
+                                  padding: const EdgeInsets.only(left: 10),
+                                  child: Column(
+                                    mainAxisAlignment: MainAxisAlignment.center,
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.start,
+                                    children: [
+                                      Text(
+                                        'Nama lengkap',
+                                        style: textDetailPrflepengaturanStyle,
+                                      ),
+                                      Text(
+                                        fullname,
+                                        style: textTglMasukStyle,
+                                      ),
+                                    ],
+                                  ),
+                                ),
+                              ],
+                            ),
+                            IconButton(
+                              onPressed: () {
+                                showModalBottomSheet<void>(
+                                  shape: const RoundedRectangleBorder(
+                                    borderRadius: BorderRadius.only(
+                                      topLeft: Radius.circular(20),
+                                      topRight: Radius.circular(20),
+                                    ),
+                                  ),
+                                  context: context,
+                                  builder: (BuildContext context) {
+                                    return Form(
+                                      child: SingleChildScrollView(
+                                        child: Container(
+                                          padding: const EdgeInsets.symmetric(
+                                              horizontal: 15, vertical: 30),
+                                          child: AnimatedPadding(
+                                            padding: MediaQuery.of(context)
+                                                .viewInsets,
+                                            duration: const Duration(
+                                                milliseconds: 100),
+                                            curve: Curves.decelerate,
+                                            child: Column(
+                                              crossAxisAlignment:
+                                                  CrossAxisAlignment.start,
+                                              children: <Widget>[
+                                                Align(
+                                                  alignment:
+                                                      Alignment.bottomLeft,
+                                                  child: Text(
+                                                    'Ubah Nama Lengkap',
+                                                    style:
+                                                        textfllnamepengaturanStyle,
+                                                  ),
+                                                ),
+                                                const SizedBox(
+                                                  height: 12,
+                                                ),
+                                                TextField(
+                                                  controller:
+                                                      controllerFullname,
+                                                  decoration: InputDecoration(
+                                                    prefixIcon: const Icon(
+                                                      Icons
+                                                          .person_outline_outlined,
+                                                    ),
+                                                    hintText: fullname,
+                                                    focusedBorder:
+                                                        const UnderlineInputBorder(
+                                                            borderSide: BorderSide(
+                                                                color:
+                                                                    default2Color)),
+                                                  ),
+                                                ),
+                                                const SizedBox(
+                                                  height: 50,
+                                                ),
+                                                Row(
+                                                  mainAxisAlignment:
+                                                      MainAxisAlignment.center,
+                                                  children: [
+                                                    SizedBox(
+                                                      width: w / 2.5,
+                                                      height: h / 16 * 1.1,
+                                                      child: ElevatedButton(
+                                                        style: ElevatedButton
+                                                            .styleFrom(
+                                                          primary:
+                                                              default2Color,
+                                                          shape:
+                                                              RoundedRectangleBorder(
+                                                            borderRadius:
+                                                                BorderRadius
+                                                                    .circular(
+                                                                        25),
+                                                          ),
+                                                        ),
+                                                        onPressed: () {
+                                                          setFullname(context,
+                                                              providerVM);
+                                                        },
+                                                        child: const Text(
+                                                          'OK',
+                                                        ),
+                                                      ),
+                                                    ),
+                                                  ],
+                                                ),
+                                              ],
+                                            ),
+                                          ),
+                                        ),
+                                      ),
+                                    );
+                                  },
+                                );
+                              },
+                              icon: const Icon(
+                                Icons.edit,
+                                color: default2Color,
+                                size: 20,
+                              ),
+                            ),
+                          ],
+                        ),
+                      ),
+                      const SizedBox(
+                        height: 12,
+                      ),
+                      Container(
+                        height: 60,
+                        padding: const EdgeInsets.symmetric(
+                          horizontal: 10,
+                        ),
+                        decoration: BoxDecoration(
+                          border: Border.all(
+                            color: default2Color,
+                            width: 1,
+                          ),
+                          borderRadius: BorderRadius.circular(15),
+                        ),
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            Row(
+                              children: [
+                                const Icon(
+                                  Icons.email_outlined,
+                                  color: default2Color,
+                                  size: 25,
+                                ),
+                                Padding(
+                                  padding: const EdgeInsets.only(left: 10),
+                                  child: Column(
+                                    mainAxisAlignment: MainAxisAlignment.center,
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.start,
+                                    children: [
+                                      Text(
+                                        'Email',
+                                        style: textDetailPrflepengaturanStyle,
+                                      ),
+                                      Text(
+                                        email,
+                                        style: textTglMasukStyle,
+                                      ),
+                                    ],
+                                  ),
+                                ),
+                              ],
+                            ),
+                          ],
+                        ),
+                      ),
+                      const SizedBox(
+                        height: 12,
+                      ),
+                      Container(
+                        padding: const EdgeInsets.symmetric(
+                          horizontal: 10,
+                        ),
+                        decoration: BoxDecoration(
+                          border: Border.all(
+                            color: default2Color,
+                            width: 1,
+                          ),
+                          borderRadius: BorderRadius.circular(15),
+                        ),
+                        height: 60,
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            Row(
+                              children: [
+                                const Icon(
+                                  Icons.numbers_outlined,
+                                  color: default2Color,
+                                  size: 25,
+                                ),
+                                Padding(
+                                  padding: const EdgeInsets.only(left: 10),
+                                  child: Column(
+                                    mainAxisAlignment: MainAxisAlignment.center,
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.start,
+                                    children: [
+                                      Text(
+                                        'Nomor Induk Siswa/NIS',
+                                        style: textDetailPrflepengaturanStyle,
+                                      ),
+                                      Text(
+                                        noNis,
+                                        style: textTglMasukStyle,
+                                      ),
+                                    ],
+                                  ),
+                                ),
+                              ],
+                            ),
+                            IconButton(
+                                onPressed: () {},
+                                icon: const Icon(
+                                  Icons.api_sharp,
+                                  size: 25,
+                                  color: default2Color,
+                                ))
+                          ],
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+              ),
+            ],
+          ),
         ),
       ),
     );

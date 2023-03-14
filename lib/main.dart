@@ -7,6 +7,7 @@ import 'package:b7c_clean_architecture/core/route/route.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 
 import 'core/route/route_observer.dart';
+import 'features/homes/beranda/ppdb/form_benar/view/form_benar_view.dart';
 
 Future<void> main() async {
   await dotenv.load(fileName: ".env.dev");

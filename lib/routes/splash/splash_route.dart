@@ -5,8 +5,8 @@ import '../../features/splashs/splash/view/splash_view.dart';
 class SplashRoute {
   static List<BaseRoute> listRoute = [
     BaseRoute(
-      routeName: SplashPage.routeName,
-      clazz: const SplashPage(),
+      routeName: SplashView.routeName,
+      clazz: const SplashView(),
     ),
 
     ///

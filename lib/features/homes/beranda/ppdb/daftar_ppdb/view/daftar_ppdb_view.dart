@@ -2,50 +2,57 @@ import 'package:b7c_clean_architecture/contants/color_style.dart';
 import 'package:b7c_clean_architecture/features/homes/home_view.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import '../../view/ppdb_view.dart';
 import '../view_model/ppdb_view_model.dart';
 import 'widgets/button_batal.dart';
 import 'widgets/button_lanjut.dart';
 
-class PpdbPage extends StatelessWidget {
-  static const routeName = "/PpdbPage";
-  const PpdbPage({Key? key}) : super(key: key);
+class DaftarPpdbView extends StatelessWidget {
+  static const routeName = "/DaftarPpdbView";
+  const DaftarPpdbView({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return ChangeNotifierProvider(
-      create: (BuildContext context) => PpdbViewModel(),
+      create: (BuildContext context) => DaftarPpdbViewModel(),
       builder: (context, child) => _buildPage(context),
     );
   }
 
   Widget _buildPage(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        backgroundColor: default2Color,
-        title: Row(
-          children: [
-            IconButton(
-              onPressed: () {
-                Navigator.pushNamedAndRemoveUntil(context, HomePage.routeName,
-                    ModalRoute.withName('/HomePage'));
-              },
-              icon: const Icon(Icons.arrow_back),
-            ),
-            const Text('Formulir Pendaftaran'),
-          ],
+    return WillPopScope(
+      onWillPop: () async => false,
+      child: Scaffold(
+        appBar: AppBar(
+          backgroundColor: default2Color,
+          title: Row(
+            children: [
+              IconButton(
+                onPressed: () {
+                  Navigator.pushNamedAndRemoveUntil(context, PpdbView.routeName,
+                      ModalRoute.withName('/PpdbView'));
+                },
+                icon: const Icon(Icons.arrow_back),
+              ),
+              const Text('Formulir Pendaftaran'),
+            ],
+          ),
+          automaticallyImplyLeading: false,
         ),
-        automaticallyImplyLeading: false,
-      ),
-      body: Consumer<PpdbViewModel>(
-        builder: (context, provider, child) => Stepper(
-          elevation: 01,
-          controlsBuilder: (context, controller) {
-            return const SizedBox.shrink();
-          },
-          type: StepperType.horizontal,
-          currentStep: provider.activeStepIndex,
-          steps: stepList(provider),
-          onStepTapped: provider.onStepTapped,
+        body: ScrollConfiguration(
+          behavior: const ScrollBehavior().copyWith(overscroll: false),
+          child: Consumer<DaftarPpdbViewModel>(
+            builder: (context, provider, child) => Stepper(
+              elevation: 01,
+              controlsBuilder: (context, controller) {
+                return const SizedBox.shrink();
+              },
+              type: StepperType.horizontal,
+              currentStep: provider.activeStepIndex,
+              steps: stepList(provider),
+              onStepTapped: provider.onStepTapped,
+            ),
+          ),
         ),
       ),
     );
@@ -61,26 +68,23 @@ class PpdbPage extends StatelessWidget {
               : StepState.disabled,
           isActive: provider.activeStepIndex >= 0,
           title: const Text('Data Siswa'),
-          content: Consumer<PpdbViewModel>(
+          content: Consumer<DaftarPpdbViewModel>(
             builder: (context, provider, child) => Form(
               key: provider.formkeys[0],
               child: Column(
                 children: [
-                  const Align(
+                  Align(
                     alignment: Alignment.bottomLeft,
                     child: Text(
                       'Detail Siswa Baru',
-                      style: TextStyle(
-                          fontFamily: 'Ubuntu',
-                          fontSize: 20,
-                          fontWeight: FontWeight.bold),
+                      style: styleHeaderForm,
                     ),
                   ),
                   const SizedBox(height: 16),
-                  Consumer<PpdbViewModel>(
+                  Consumer<DaftarPpdbViewModel>(
                     builder: (context, provider, child) => TextFormField(
                       validator: provider.validator,
-                      controller: provider.controllerEmail,
+                      controller: provider.controllerEmailF,
                       decoration: const InputDecoration(
                         hintText: 'Masukkan email',
                         labelText: 'Email',
@@ -88,7 +92,7 @@ class PpdbPage extends StatelessWidget {
                     ),
                   ),
                   const SizedBox(height: 8),
-                  Consumer<PpdbViewModel>(
+                  Consumer<DaftarPpdbViewModel>(
                     builder: (context, provider, child) => TextFormField(
                       validator: provider.validator,
                       controller: provider.controllerNamalengkap,
@@ -99,7 +103,7 @@ class PpdbPage extends StatelessWidget {
                     ),
                   ),
                   const SizedBox(height: 8),
-                  Consumer<PpdbViewModel>(
+                  Consumer<DaftarPpdbViewModel>(
                     builder: (context, provider, child) => TextFormField(
                       validator: provider.validator,
                       keyboardType: TextInputType.number,
@@ -111,7 +115,7 @@ class PpdbPage extends StatelessWidget {
                     ),
                   ),
                   const SizedBox(height: 8),
-                  Consumer<PpdbViewModel>(
+                  Consumer<DaftarPpdbViewModel>(
                     builder: (context, provider, child) =>
                         DropdownButtonFormField<String>(
                       validator: provider.validator,
@@ -132,7 +136,7 @@ class PpdbPage extends StatelessWidget {
                       onChanged: provider.onChangedJnsKlmn,
                     ),
                   ),
-                  Consumer<PpdbViewModel>(
+                  Consumer<DaftarPpdbViewModel>(
                     builder: (context, provider, child) => TextFormField(
                       validator: provider.validator,
                       controller: provider.controllerSekolahAsal,
@@ -143,7 +147,7 @@ class PpdbPage extends StatelessWidget {
                     ),
                   ),
                   const SizedBox(height: 8),
-                  Consumer<PpdbViewModel>(
+                  Consumer<DaftarPpdbViewModel>(
                     builder: (context, provider, child) => TextFormField(
                       validator: provider.validator,
                       controller: provider.controllerTempattggllahir,
@@ -153,7 +157,7 @@ class PpdbPage extends StatelessWidget {
                       ),
                     ),
                   ),
-                  Consumer<PpdbViewModel>(
+                  Consumer<DaftarPpdbViewModel>(
                     builder: (context, provider, child) => TextFormField(
                       validator: provider.validator,
                       controller: provider.controllerAlamat,
@@ -164,7 +168,7 @@ class PpdbPage extends StatelessWidget {
                     ),
                   ),
                   const SizedBox(height: 25),
-                  Consumer<PpdbViewModel>(
+                  Consumer<DaftarPpdbViewModel>(
                     builder: (context, value, child) => Row(
                       mainAxisAlignment: MainAxisAlignment.spaceAround,
                       children: [
@@ -193,23 +197,20 @@ class PpdbPage extends StatelessWidget {
                 : StepState.disabled,
             isActive: provider.activeStepIndex >= 1,
             title: const Text('Data Ortu'),
-            content: Consumer<PpdbViewModel>(
+            content: Consumer<DaftarPpdbViewModel>(
               builder: (context, provider, child) => Form(
                 key: provider.formkeys[1],
                 child: Column(
                   children: [
-                    const Align(
+                    Align(
                       alignment: Alignment.bottomLeft,
                       child: Text(
                         'Detail Orang Tua',
-                        style: TextStyle(
-                            fontFamily: 'Ubuntu',
-                            fontSize: 20,
-                            fontWeight: FontWeight.bold),
+                        style: styleHeaderForm,
                       ),
                     ),
                     const SizedBox(height: 16),
-                    Consumer<PpdbViewModel>(
+                    Consumer<DaftarPpdbViewModel>(
                       builder: (context, provider, child) => TextFormField(
                         validator: provider.validator,
                         controller: provider.controllerAyah,
@@ -220,7 +221,7 @@ class PpdbPage extends StatelessWidget {
                       ),
                     ),
                     const SizedBox(height: 8),
-                    Consumer<PpdbViewModel>(
+                    Consumer<DaftarPpdbViewModel>(
                       builder: (context, provider, child) => TextFormField(
                         validator: provider.validator,
                         controller: provider.controllerIbu,
@@ -231,7 +232,7 @@ class PpdbPage extends StatelessWidget {
                       ),
                     ),
                     const SizedBox(height: 8),
-                    Consumer<PpdbViewModel>(
+                    Consumer<DaftarPpdbViewModel>(
                       builder: (context, provider, child) => TextFormField(
                         validator: provider.validator,
                         keyboardType: TextInputType.number,
@@ -243,7 +244,7 @@ class PpdbPage extends StatelessWidget {
                       ),
                     ),
                     const SizedBox(height: 8),
-                    Consumer<PpdbViewModel>(
+                    Consumer<DaftarPpdbViewModel>(
                       builder: (context, provider, child) => TextFormField(
                         validator: provider.validator,
                         keyboardType: TextInputType.number,
@@ -255,7 +256,7 @@ class PpdbPage extends StatelessWidget {
                       ),
                     ),
                     const SizedBox(height: 25),
-                    Consumer<PpdbViewModel>(
+                    Consumer<DaftarPpdbViewModel>(
                       builder: (context, value, child) => Row(
                         mainAxisAlignment: MainAxisAlignment.spaceAround,
                         children: [
@@ -283,21 +284,18 @@ class PpdbPage extends StatelessWidget {
               : StepState.disabled,
           isActive: provider.activeStepIndex >= 2,
           title: const Text('Jurusan'),
-          content: Consumer<PpdbViewModel>(
+          content: Consumer<DaftarPpdbViewModel>(
             builder: (context, provider, child) => Form(
               key: provider.formkeys[2],
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 mainAxisAlignment: MainAxisAlignment.start,
                 children: [
-                  const Align(
+                  Align(
                     alignment: Alignment.bottomLeft,
                     child: Text(
                       'Detail Jurusan',
-                      style: TextStyle(
-                          fontFamily: 'Ubuntu',
-                          fontSize: 20,
-                          fontWeight: FontWeight.bold),
+                      style: styleHeaderForm,
                     ),
                   ),
                   const SizedBox(height: 30),
@@ -306,7 +304,7 @@ class PpdbPage extends StatelessWidget {
                     style: styleTxtfotoprofile,
                   ),
                   const SizedBox(height: 10),
-                  Consumer<PpdbViewModel>(
+                  Consumer<DaftarPpdbViewModel>(
                     builder: (context, provider, child) =>
                         DropdownButtonFormField<String>(
                       isDense: false,
@@ -334,7 +332,7 @@ class PpdbPage extends StatelessWidget {
                     style: styleTxtfotoprofile,
                   ),
                   const SizedBox(height: 10),
-                  Consumer<PpdbViewModel>(
+                  Consumer<DaftarPpdbViewModel>(
                     builder: (context, provider, child) =>
                         DropdownButtonFormField<String>(
                       isDense: false,
@@ -357,7 +355,7 @@ class PpdbPage extends StatelessWidget {
                     ),
                   ),
                   const SizedBox(height: 25),
-                  Consumer<PpdbViewModel>(
+                  Consumer<DaftarPpdbViewModel>(
                     builder: (context, value, child) => Row(
                       mainAxisAlignment: MainAxisAlignment.spaceAround,
                       children: [

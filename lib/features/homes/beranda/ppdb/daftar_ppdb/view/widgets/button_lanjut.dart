@@ -1,7 +1,7 @@
 // ignore_for_file: must_be_immutable
 
 import 'package:flutter/material.dart';
-import '../../../../../../contants/color_style.dart';
+import '../../../../../../../contants/color_style.dart';
 
 class ButtonLanjutWidget extends StatelessWidget {
   ButtonLanjutWidget({required this.nama, required this.onTap, Key? key})

@@ -27,7 +27,7 @@
 //     print(newuser);
 //     if (newuser == false) {
 //       Navigator.pushReplacement(
-//           context, new MaterialPageRoute(builder: (context) => GetDataSiswa()));
+//           context, MaterialPageRoute(builder: (context) => GetDataSiswa()));
 //     }
 //   }
 
