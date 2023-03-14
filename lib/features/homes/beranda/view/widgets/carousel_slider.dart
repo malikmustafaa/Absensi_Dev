@@ -7,8 +7,8 @@ import '../../../../../../contants/color_style.dart';
 import '../../../../dummy/dummy.dart';
 
 class CarouselSliderBeranda extends StatefulWidget {
-  String icon = '';
-  CarouselSliderBeranda({required this.icon, Key? key}) : super(key: key);
+  String? icon = '';
+  CarouselSliderBeranda({this.icon, Key? key}) : super(key: key);
 
   @override
   State<CarouselSliderBeranda> createState() => _CarouselSliderBerandaState();
@@ -107,10 +107,10 @@ class _CarouselSliderBerandaState extends State<CarouselSliderBeranda> {
 
 class ImageSliderWidget extends StatelessWidget {
   ImageSliderWidget({
-    required this.icon,
+    this.icon,
     Key? key,
   }) : super(key: key);
-  String icon;
+  String? icon = '';
   @override
   Widget build(BuildContext context) {
     return Padding(
@@ -121,7 +121,7 @@ class ImageSliderWidget extends StatelessWidget {
           image: DecorationImage(
             fit: BoxFit.cover,
             image: AssetImage(
-              icon,
+              '$icon',
             ),
           ),
         ),

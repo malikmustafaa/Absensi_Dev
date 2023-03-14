@@ -17,7 +17,6 @@ dependencies:
     sdk: flutter
   flutter_dotenv: ^5.0.2
   flutter_image_compress: ^1.1.3
-  fluttertoast: any
   form_field_validator: ^1.1.0
   google_fonts: ^3.0.1
   google_maps_flutter: ^2.2.3

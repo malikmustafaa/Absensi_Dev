@@ -5,7 +5,11 @@ import 'package:b7c_clean_architecture/routes/login/login_route.dart';
 import 'package:b7c_clean_architecture/routes/register/register_route.dart';
 import 'package:b7c_clean_architecture/routes/splash/splash_route.dart';
 import '../core/route/base_route.dart';
+import 'beasiswa_hafiz/beasiswa_hafiz_route.dart';
+import 'berkas_yd/berkas_yd_route.dart';
+import 'daftar_ppdb/daftar_ppdb_route.dart';
 import 'event/event_route.dart';
+import 'form_benar/form_benar_route.dart';
 import 'home/home_route.dart';
 import 'jadwal_shalat/jadwal_shalat_route.dart';
 import 'pengaturan/pengaturan_route.dart';
@@ -31,6 +35,10 @@ class AllRoute {
     ...EventRoute.listRoute,
     ...JadwalShalatRoute.listRoute,
     ...ProfileRoute.listRoute,
+    ...DaftarPpdbRoute.listRoute,
+    ...FormBenarRoute.listRoute,
+    ...BerkasYDRoute.listRoute,
+    ...BeasiswaHafizRoute.listRoute,
   ];
 
   void getKey() {

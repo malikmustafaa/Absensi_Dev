@@ -9,7 +9,6 @@ import 'package:flutter_image_compress/flutter_image_compress.dart';
 import 'package:provider/provider.dart';
 
 import '../../../../../../../contants/color_style.dart';
-import '../../../../../home_view.dart';
 import '../../../../view_model/beranda_view_model.dart';
 import 'camera_ui.dart';
 
@@ -23,11 +22,10 @@ class CameraPage extends StatefulWidget {
   final String cLongitude;
 
   @override
-  // ignore: library_private_types_in_public_api
-  _CameraPageState createState() => _CameraPageState();
+  CameraPageState createState() => CameraPageState();
 }
 
-class _CameraPageState extends State<CameraPage> {
+class CameraPageState extends State<CameraPage> {
   FharFormat format = FharFormat.formatSwafoto;
   String long = '';
   String lat = '';

@@ -150,6 +150,13 @@ var textJamMasukStyle = const TextStyle(
     color: default2Color,
     fontSize: 16,
     fontWeight: FontWeight.w600);
+var textTitle = const TextStyle(
+    height: 1.5,
+    decoration: TextDecoration.underline,
+    fontFamily: 'Ubuntu',
+    color: blackColor,
+    fontSize: 16,
+    fontWeight: FontWeight.w600);
 
 var textTglMasukStyle = const TextStyle(
     fontFamily: 'Ubuntu',
@@ -218,3 +225,5 @@ var styleDroa = const TextStyle(
   fontFamily: 'Ubuntu',
   fontSize: 12,
 );
+var styleHeaderForm = const TextStyle(
+    fontFamily: 'Ubuntu', fontSize: 20, fontWeight: FontWeight.bold);

@@ -1,4 +1,4 @@
-import 'package:b7c_clean_architecture/features/homes/beranda/ppdb/view/ppbd_view.dart';
+import 'package:b7c_clean_architecture/features/homes/beranda/ppdb/daftar_ppdb/view/daftar_ppdb_view.dart';
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
@@ -107,7 +107,7 @@ class _HasilPengisiFormpndaftrnState extends State<HasilPengisiFormpndaftrn> {
                       Navigator.pushReplacement(
                         context,
                         MaterialPageRoute(
-                          builder: (context) => const PpdbView(),
+                          builder: (context) => const DaftarPpdbView(),
                         ),
                       );
                     },

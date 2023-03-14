@@ -1,7 +1,7 @@
 // ignore_for_file: avoid_init_to_null
 import 'package:badges/badges.dart';
 import 'dart:developer';
-import 'package:b7c_clean_architecture/features/homes/beranda/ppdb/view/ppbd_view.dart';
+import 'package:b7c_clean_architecture/features/homes/beranda/ppdb/daftar_ppdb/view/daftar_ppdb_view.dart';
 import 'package:b7c_clean_architecture/features/homes/beranda/view/widgets/carousel_slider.dart';
 import 'package:b7c_clean_architecture/features/homes/beranda/view/widgets/data_user_widget.dart';
 import 'package:flutter/material.dart';
@@ -14,6 +14,7 @@ import '../../riwayat/view/widgets/tile_new_trx.dart';
 import '../event/view/event_view.dart';
 import '../jadwal_shalat/view/jadwal_shalat_view.dart';
 import '../model/beranda_model.dart';
+import '../ppdb/view/ppdb_view.dart';
 import '../rekam_kehadiran/view/rekam_kehadiran.dart';
 import '../services/data_user_services.dart';
 import '../view_model/beranda_view_model.dart';
@@ -50,8 +51,6 @@ class _BerandaViewState extends State<BerandaView> {
     _getDataUser();
     super.initState();
   }
-
-  bool invisibility = false;
 
   _getDataUser() async {
     final pref = await SharedPreferences.getInstance();
@@ -166,6 +165,7 @@ class _BerandaViewState extends State<BerandaView> {
     });
   }
 
+  int? index;
   @override
   Widget build(BuildContext context) {
     return ChangeNotifierProvider(
@@ -251,24 +251,22 @@ class _BerandaViewState extends State<BerandaView> {
                   ],
                 ),
                 Badge(
+                  showBadge: provider.index == 0 ? false : true,
                   badgeContent: Text(provider.index.toString()),
                   child: Material(
-                    borderRadius: BorderRadius.circular(15),
-                    color: Colors.transparent,
-                    child: InkWell(
-                      onTap: () {
-                        provider.klik(context);
-                      },
-                      child: Icon(
-                        invisibility
-                            ? Icons.notifications
-                            : Icons.notifications_off,
-                        size: 30,
-                        color: whiteColor,
-                      ),
-                    ),
-                  ),
-                ),
+                      borderRadius: BorderRadius.circular(15),
+                      color: Colors.transparent,
+                      child: InkWell(
+                        onTap: () {
+                          provider.klik(context);
+                        },
+                        child: const Icon(
+                          Icons.notifications,
+                          size: 30,
+                          color: whiteColor,
+                        ),
+                      )),
+                )
               ],
             ),
             _listDataUser()
@@ -430,8 +428,8 @@ class _BerandaViewState extends State<BerandaView> {
                   const SizedBox(
                     height: 20,
                   ),
-                  CarouselSliderBeranda(
-                    icon: '',
+                  SizedBox(
+                    child: CarouselSliderBeranda(),
                   ),
                   Container(
                     padding:
@@ -565,29 +563,4 @@ class _BerandaViewState extends State<BerandaView> {
             },
           );
   }
-
-  // buttonKehadiran() {
-  //   return Positioned(
-  //     bottom: 30,
-  //     left: 5,
-  //     right: 5,
-  //     child: Padding(
-  //       padding: const EdgeInsets.symmetric(horizontal: 12),
-  //       child: ButtonWidget(
-  //         text: 'Absen Sekarang',
-  //         color: default2Color,
-  //         ontap: () {
-  //           var dt1 = "ini data 1";
-  //           Navigator.of(context).push(
-  //             MaterialPageRoute(
-  //               builder: (context) => RekamKehadiran(
-  //                 dt1: dt1,
-  //               ),
-  //             ),
-  //           );
-  //         },
-  //       ),
-  //     ),
-  //   );
-  // }
 }

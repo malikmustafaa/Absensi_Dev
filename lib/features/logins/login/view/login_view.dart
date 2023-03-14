@@ -100,7 +100,7 @@ class _LoginViewState extends State<LoginView> {
                           autocorrect: false,
                           obscureText: obscureText,
                           decoration: InputDecoration(
-                            labelText: 'Passwowrd',
+                            labelText: 'Password',
                             labelStyle: textFieldStyle,
                             suffixIcon: IconButton(
                               icon: Icon(

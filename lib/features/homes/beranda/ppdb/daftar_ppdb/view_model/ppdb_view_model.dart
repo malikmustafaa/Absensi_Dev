@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-import '../../../../../domain/entity/ppbd/request_ppdb_entity.dart';
-import '../../../../../testing/get_data/get_data_siswa.dart';
-import '../services/ppdb_services.dart';
+import '../../../../../../domain/entity/ppbd/request_ppdb_entity.dart';
+import '../../../../../../testing/get_data/get_data_siswa.dart';
+import '../../services/ppdb_services.dart';
 
-class PpdbViewModel extends ChangeNotifier {
+class DaftarPpdbViewModel extends ChangeNotifier {
   var controllerEmailF = TextEditingController();
   var controllerNamalengkap = TextEditingController();
   var controllerNisn = TextEditingController();
@@ -48,6 +48,7 @@ class PpdbViewModel extends ChangeNotifier {
     if (activeStepIndex >= 0) {
       activeStepIndex = activeStepIndex + 1;
       notifyListeners();
+      ppdbVM(context);
     }
   }
 
@@ -58,6 +59,7 @@ class PpdbViewModel extends ChangeNotifier {
     if (activeStepIndex >= 1) {
       activeStepIndex = activeStepIndex + 1;
       notifyListeners();
+      ppdbVM(context);
     }
   }
 
@@ -67,35 +69,36 @@ class PpdbViewModel extends ChangeNotifier {
     }
 
     if (activeStepIndex >= 2) {
-      pref = await SharedPreferences.getInstance();
-      String emailF = controllerEmailF.text;
-      String namaLengkap = controllerNamalengkap.text;
-      String nisn = controllerNisn.text;
-      String jenisKelamin = controllerJeniskelamin.text;
-      String sekolahAsal = controllerSekolahAsal.text;
-      String tempattgglLahir = controllerTempattggllahir.text;
-      String alamat = controllerAlamat.text;
-      String namaAyah = controllerAyah.text;
-      String namaIbu = controllerIbu.text;
-      String noSiswa = controllernotlpnSiswa.text;
-      String noOrtu = controllernotlpnOrtu.text;
-      String jurusanTeknologi = controllerjurusanTeknologi.text;
-      String jurusanbisnisManajemen = controllerjurusanBisnismnjmn.text;
-      pref.setString('emailF', emailF);
-      pref.setString('namaLengkap', namaLengkap);
-      pref.setString('nisn', nisn);
-      pref.setString('jenisKelamin', jenisKelamin);
-      pref.setString('sekolahAsal', sekolahAsal);
-      pref.setString('tempattgglLahir', tempattgglLahir);
-      pref.setString('alamat', alamat);
-      pref.setString('namaAyah', namaAyah);
-      pref.setString('namaIbu', namaIbu);
-      pref.setString('noSiswa', noSiswa);
-      pref.setString('noOrtu', noOrtu);
-      pref.setString('jurusanTeknologi', jurusanTeknologi);
-      pref.setString('jurusanbisnisManajemen', jurusanbisnisManajemen);
-      goToStep(context);
+      // pref = await SharedPreferences.getInstance();
+      // String emailF = controllerEmailF.text;
+      // String namaLengkap = controllerNamalengkap.text;
+      // String nisn = controllerNisn.text;
+      // String jenisKelamin = controllerJeniskelamin.text;
+      // String sekolahAsal = controllerSekolahAsal.text;
+      // String tempattgglLahir = controllerTempattggllahir.text;
+      // String alamat = controllerAlamat.text;
+      // String namaAyah = controllerAyah.text;
+      // String namaIbu = controllerIbu.text;
+      // String noSiswa = controllernotlpnSiswa.text;
+      // String noOrtu = controllernotlpnOrtu.text;
+      // String jurusanTeknologi = controllerjurusanTeknologi.text;
+      // String jurusanbisnisManajemen = controllerjurusanBisnismnjmn.text;
+      // pref.setString('emailF', emailF);
+      // pref.setString('namaLengkap', namaLengkap);
+      // pref.setString('nisn', nisn);
+      // pref.setString('jenisKelamin', jenisKelamin);
+      // pref.setString('sekolahAsal', sekolahAsal);
+      // pref.setString('tempattgglLahir', tempattgglLahir);
+      // pref.setString('alamat', alamat);
+      // pref.setString('namaAyah', namaAyah);
+      // pref.setString('namaIbu', namaIbu);
+      // pref.setString('noSiswa', noSiswa);
+      // pref.setString('noOrtu', noOrtu);
+      // pref.setString('jurusanTeknologi', jurusanTeknologi);
+      // pref.setString('jurusanbisnisManajemen', jurusanbisnisManajemen);
+      // goToStep(context);
       notifyListeners();
+      ppdbVM(context);
     }
   }
 
