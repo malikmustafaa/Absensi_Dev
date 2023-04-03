@@ -13,7 +13,6 @@ import '../../home_view.dart';
 import '../../pengaturan/view/widgets/dialog.dart';
 import '../../riwayat/view/widgets/tile_new_trx.dart';
 import '../event/view/event_view.dart';
-import '../event/view/event_view1.dart';
 import '../jadwal_shalat/view/jadwal_shalat_view.dart';
 import '../model/beranda_model.dart';
 import '../ppdb/view/ppdb_view.dart';
@@ -22,7 +21,6 @@ import '../services/data_user_services.dart';
 import '../view_model/beranda_view_model.dart';
 import 'widgets/custom_grid_view.dart';
 import 'widgets/dialog.dart';
-import 'widgets/item_kategori.dart';
 import 'package:permission_handler/permission_handler.dart';
 import 'package:app_settings/app_settings.dart';
 

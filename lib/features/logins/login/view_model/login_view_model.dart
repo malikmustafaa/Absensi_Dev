@@ -12,8 +12,8 @@ import '../../../homes/home_view.dart';
 class LoginViewModel extends ChangeNotifier {
   LoginServices loginServices = LoginServices();
 
-  var controllerEmail = TextEditingController();
-  var controllerPassword = TextEditingController();
+  var controllerEmail = TextEditingController(text: 'malik@gmail.com');
+  var controllerPassword = TextEditingController(text: '12345678');
   bool isLogin = false;
   var formatDenySpase = FilteringTextInputFormatter.deny(RegExp(" "));
   late SharedPreferences pref;
