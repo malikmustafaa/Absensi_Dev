@@ -1,3 +1,7 @@
+// ignore_for_file: use_build_context_synchronously, unused_local_variable, library_private_types_in_public_api, unnecessary_null_comparison
+
+import 'dart:convert';
+import 'dart:typed_data';
 import 'package:b7c_clean_architecture/contants/color_style.dart';
 import 'package:b7c_clean_architecture/features/homes/beranda/rekam_kehadiran/view/widgets/camera/camera_store.dart';
 import 'package:b7c_clean_architecture/features/homes/home_view.dart';
@@ -5,7 +9,8 @@ import 'package:flutter/material.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:location/location.dart';
 import 'package:provider/provider.dart';
-
+import 'package:shared_preferences/shared_preferences.dart';
+import '../../../../../application/component/resize_image/resize_image.dart';
 import '../../view_model/beranda_view_model.dart';
 
 class RekamKehadiranView extends StatefulWidget {
@@ -15,7 +20,6 @@ class RekamKehadiranView extends StatefulWidget {
       : super(key: key);
 
   @override
-  // ignore: library_private_types_in_public_api
   _MyHomePageState createState() => _MyHomePageState();
 }
 
@@ -28,7 +32,6 @@ class _MyHomePageState extends State<RekamKehadiranView> {
   late final BitmapDescriptor iconSMKN1;
   late final BitmapDescriptor iconUser;
   List<Marker> _markers = <Marker>[];
-
   bool isLocation = false;
   Set<Circle> circles = {
     Circle(
@@ -43,19 +46,38 @@ class _MyHomePageState extends State<RekamKehadiranView> {
   @override
   void initState() {
     super.initState();
-    BitmapDescriptor.fromAssetImage(
-      const ImageConfiguration(),
-      'assets/images/smk1.png',
-    ).then((value) => iconSMKN1 = value);
-    BitmapDescriptor.fromAssetImage(
-      const ImageConfiguration(),
-      'assets/images/orang.png',
-    ).then((value) => iconUser = value);
+    _imageUser();
   }
 
   @override
   void dispose() {
     super.dispose();
+  }
+
+  late SharedPreferences pref;
+  void _imageUser() async {
+    BitmapDescriptor.fromAssetImage(
+      const ImageConfiguration(),
+      'assets/images/smk1.png',
+    ).then((value) => iconSMKN1 = value);
+    final pref = await SharedPreferences.getInstance();
+    final fotoProfile = pref.getString('fotoProfile') ?? "";
+
+    if (fotoProfile != '') {
+      Uint8List hasilGmabarOrang = base64Decode(fotoProfile);
+
+      iconUser =
+          BitmapDescriptor.fromBytes(await ResizeImageServices.thisImageDecode(
+        hasilGmabarOrang,
+        width: 150,
+        height: 150,
+      ));
+    } else {
+      BitmapDescriptor.fromAssetImage(
+        const ImageConfiguration(size: Size(50, 50)),
+        'assets/images/orang.png',
+      ).then((value) => iconUser = value);
+    }
   }
 
   void _onMapCreated(GoogleMapController cntlr) {
@@ -237,6 +259,8 @@ class _MyHomePageState extends State<RekamKehadiranView> {
                             height: h / 16 * 1.1,
                             child: OutlinedButton(
                               style: ElevatedButton.styleFrom(
+                                side: const BorderSide(
+                                    width: 1, color: default2Color),
                                 shape: RoundedRectangleBorder(
                                   borderRadius: BorderRadius.circular(25),
                                 ),

@@ -5,7 +5,7 @@ class FormBenarRoute {
   static List<BaseRoute> listRoute = [
     BaseRoute(
       routeName: FormBenarView.routeName,
-      clazz: FormBenarView(),
+      clazz: const FormBenarView(),
     ),
   ];
 }

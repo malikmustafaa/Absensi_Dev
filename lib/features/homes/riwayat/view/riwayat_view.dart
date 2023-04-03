@@ -7,13 +7,16 @@ import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import '../../../../contants/color_style.dart';
 import '../../../../domain/entity/absensi/request_absensi_entity.dart';
+import '../../pengaturan/view/widgets/dialog.dart';
 import '../services/riwayat_services.dart';
 import 'widgets/tile_new_trx.dart';
 import 'package:intl/intl.dart';
 
 class RiwayatView extends StatefulWidget {
   static const routeName = "/RiwayatView";
-  const RiwayatView({Key? key}) : super(key: key);
+  const RiwayatView({
+    Key? key,
+  }) : super(key: key);
 
   @override
   State<RiwayatView> createState() => _RiwayatState();
@@ -305,57 +308,83 @@ class _RiwayatState extends State<RiwayatView> {
   @override
   Widget build(BuildContext context) {
     log('ddddddddd> $isDataUser');
-    return Scaffold(
-      backgroundColor: whiteColor,
-      body: ScrollConfiguration(
-        behavior: const ScrollBehavior().copyWith(overscroll: false),
-        child: CustomScrollView(
-          slivers: [
-            SliverAppBar(
-              automaticallyImplyLeading: false,
-              shape: const ContinuousRectangleBorder(
-                borderRadius: BorderRadius.only(
-                  bottomLeft: Radius.circular(45),
-                  bottomRight: Radius.circular(45),
+    return WillPopScope(
+      onWillPop: () async {
+        final shouldPop = await showDialog<bool>(
+            context: context,
+            builder: (context) {
+              return DialogWidget(
+                icon: Icons.logout,
+                message: 'Apakah anda ingin keluar?',
+                buttonCancel: 'Batal',
+                buttonOk: 'Ya',
+                onCancel: () {
+                  Navigator.of(context).pop(false);
+                },
+                onOk: () {
+                  Navigator.of(context)
+                      .pushNamedAndRemoveUntil('-', (Route route) => true);
+                },
+              );
+            });
+        if (shouldPop != null) {
+          return Future.value(shouldPop);
+        } else {
+          Future.value(false);
+        }
+        return shouldPop!;
+      },
+      child: Scaffold(
+        backgroundColor: whiteColor,
+        body: ScrollConfiguration(
+          behavior: const ScrollBehavior().copyWith(overscroll: false),
+          child: CustomScrollView(
+            slivers: [
+              SliverAppBar(
+                automaticallyImplyLeading: false,
+                shape: const ContinuousRectangleBorder(
+                  borderRadius: BorderRadius.only(
+                    bottomLeft: Radius.circular(45),
+                    bottomRight: Radius.circular(45),
+                  ),
+                ),
+                backgroundColor: default2Color,
+                floating: true,
+                pinned: true,
+                snap: false,
+                centerTitle: false,
+                title: buildHeader(),
+                bottom: AppBar(
+                  automaticallyImplyLeading: false,
+                  backgroundColor: default2Color,
+                  title: buildDateRange(),
                 ),
               ),
-              backgroundColor: default2Color,
-              floating: true,
-              pinned: true,
-              snap: false,
-              centerTitle: false,
-              title: buildHeader(),
-              bottom: AppBar(
-                automaticallyImplyLeading: false,
-                backgroundColor: default2Color,
-                title: buildDateRange(),
-              ),
-            ),
-            loading
-                ? const SliverFillRemaining(
-                    child: Center(child: Text('Loading...')),
-                  )
-                : SliverList(
-                    delegate: SliverChildBuilderDelegate(
-                      (BuildContext context, int index) {
-                        return GestureDetector(
-                          child: TileNewTransaksi(
-                            idAbsen: listHistoriTrx[index].idAbsen,
-                            jamKeluar: listHistoriTrx[index].jamKeluar,
-                            jamMasuk: listHistoriTrx[index].jamMasuk,
-                            tglAbsen: listHistoriTrx[index].tglAbsen,
-                            colorLabel: listHistoriTrx[index].colorLabel,
-                            isResendTrx: listHistoriTrx[index].isResendTrx,
-                            isActive: listHistoriTrx[index].isActive,
-                            items: listHistoriTrx[index].items,
-                          ),
-                        );
-                      },
-                      // childCount: 10,
-                      childCount: listHistoriTrx.length,
+              loading
+                  ? const SliverFillRemaining(
+                      child: Center(child: Text('Loading...')),
+                    )
+                  : SliverList(
+                      delegate: SliverChildBuilderDelegate(
+                        (BuildContext context, int index) {
+                          return GestureDetector(
+                            child: TileNewTransaksi(
+                              idAbsen: listHistoriTrx[index].idAbsen,
+                              jamKeluar: listHistoriTrx[index].jamKeluar,
+                              jamMasuk: listHistoriTrx[index].jamMasuk,
+                              tglAbsen: listHistoriTrx[index].tglAbsen,
+                              colorLabel: listHistoriTrx[index].colorLabel,
+                              isResendTrx: listHistoriTrx[index].isResendTrx,
+                              isActive: listHistoriTrx[index].isActive,
+                              items: listHistoriTrx[index].items,
+                            ),
+                          );
+                        },
+                        childCount: listHistoriTrx.length,
+                      ),
                     ),
-                  ),
-          ],
+            ],
+          ),
         ),
       ),
     );

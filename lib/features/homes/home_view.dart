@@ -10,9 +10,12 @@ import 'riwayat/view/riwayat_view.dart';
 class HomeView extends StatefulWidget {
   static const routeName = "/HomeView";
 
+  final Map<String, Object>? respon;
+
   final int indexPengaturan;
 
-  const HomeView({Key? key, required this.indexPengaturan}) : super(key: key);
+  const HomeView({Key? key, required this.indexPengaturan, this.respon})
+      : super(key: key);
 
   @override
   HomeViewState createState() => HomeViewState();

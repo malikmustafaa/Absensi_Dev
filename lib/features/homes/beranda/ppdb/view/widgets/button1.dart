@@ -38,21 +38,25 @@ class Button1WidgetPpdb extends StatelessWidget {
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
-                  Row(
-                    children: [
-                      Icon(
-                        icon ? Icons.description : Icons.local_activity,
-                        size: 25,
-                        color: default2Color,
-                      ),
-                      Padding(
-                        padding: const EdgeInsets.only(left: 10),
-                        child: Text(
-                          '$title',
-                          style: textDetailPrflepengaturanStyle,
+                  Expanded(
+                    child: Row(
+                      children: [
+                        Icon(
+                          icon ? Icons.description : Icons.school_rounded,
+                          size: 25,
+                          color: default2Color,
                         ),
-                      ),
-                    ],
+                        Expanded(
+                          child: Padding(
+                            padding: const EdgeInsets.only(left: 10),
+                            child: Text(
+                              '$title',
+                              style: textDetailPrflepengaturanStyle,
+                            ),
+                          ),
+                        ),
+                      ],
+                    ),
                   ),
                   const Icon(
                     Icons.arrow_forward_ios_rounded,

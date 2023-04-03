@@ -1,5 +1,4 @@
 import 'package:b7c_clean_architecture/contants/color_style.dart';
-import 'package:b7c_clean_architecture/core/route/route.dart';
 import 'package:b7c_clean_architecture/features/homes/home_view.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -83,6 +82,14 @@ class PpdbView extends StatelessWidget {
                   provider.goTo4(context);
                 },
                 title: 'Qr Code Grup Wa',
+                icon: true,
+              ),
+              Button2WidgetPpdb(
+                onTap: () {
+                  provider.goTo5(context);
+                },
+                title: 'Informasi PPDB Tahun 2023/2024',
+                icon: false,
               ),
               ButtonWidgetPpdb(
                 icon: false,

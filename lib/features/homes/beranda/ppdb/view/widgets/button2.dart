@@ -8,12 +8,12 @@ class Button2WidgetPpdb extends StatelessWidget {
   Button2WidgetPpdb({
     required this.title,
     required this.onTap,
-    // required this.icon,
+    required this.icon,
     Key? key,
   }) : super(key: key);
 
   String? title;
-  // final bool icon;
+  final bool icon;
   GestureTapCallback? onTap;
   @override
   Widget build(BuildContext context) {
@@ -38,21 +38,25 @@ class Button2WidgetPpdb extends StatelessWidget {
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
-                  Row(
-                    children: [
-                      const Icon(
-                        Icons.qr_code_rounded,
-                        size: 25,
-                        color: default2Color,
-                      ),
-                      Padding(
-                        padding: const EdgeInsets.only(left: 10),
-                        child: Text(
-                          '$title',
-                          style: textDetailPrflepengaturanStyle,
+                  Expanded(
+                    child: Row(
+                      children: [
+                        Icon(
+                          icon ? Icons.qr_code_rounded : Icons.timer,
+                          size: 25,
+                          color: default2Color,
                         ),
-                      ),
-                    ],
+                        Expanded(
+                          child: Padding(
+                            padding: const EdgeInsets.only(left: 10),
+                            child: Text(
+                              '$title',
+                              style: textDetailPrflepengaturanStyle,
+                            ),
+                          ),
+                        ),
+                      ],
+                    ),
                   ),
                   const Icon(
                     Icons.arrow_forward_ios_rounded,

@@ -61,7 +61,7 @@ class DialogWidget extends StatelessWidget {
                 buttonCancel!,
                 style: Theme.of(context).textTheme.bodyText1!.copyWith(
                     fontWeight: FontWeight.w600,
-                    color: isError ? default2Color : null),
+                    color: isError ? default2Color : default2Color),
               )),
         ),
       );
@@ -141,24 +141,21 @@ class DialogWidget extends StatelessWidget {
       barrierDismissible: false,
       useRootNavigator: true,
       builder: (BuildContext? context) {
-        return WillPopScope(
-          child: DialogWidget(
-            title: title ?? 'Peringatan',
-            image: image != null
-                ? Image(
-                    image: image.image,
-                    height: MediaQuery.of(context!).size.width * 0.25,
-                  )
-                : Container(),
-            message: message,
-            message1: message1,
-            buttonOk: buttonOk,
-            buttonCancel: buttonCancel,
-            onCancel: onCancel,
-            isError: isError,
-            onOk: onOk,
-          ),
-          onWillPop: () async => false,
+        return DialogWidget(
+          title: title ?? 'Peringatan',
+          image: image != null
+              ? Image(
+                  image: image.image,
+                  height: MediaQuery.of(context!).size.width * 0.25,
+                )
+              : Container(),
+          message: message,
+          message1: message1,
+          buttonOk: buttonOk,
+          buttonCancel: buttonCancel,
+          onCancel: onCancel,
+          isError: isError,
+          onOk: onOk,
         );
       },
       context: context ?? BuildContext,
@@ -176,6 +173,7 @@ class DialogWidget extends StatelessWidget {
           icon != null
               ? Icon(
                   icon,
+                  color: blackColor,
                   size: 100,
                 )
               : Container(),

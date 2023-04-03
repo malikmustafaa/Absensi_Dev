@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 
-// global colors
 const defaultColor = Color.fromRGBO(97, 6, 165, 1.0);
 const default2Color = Color(0xff1815a4);
 const defaultBgColor = Color(0xFFF3E5F5);
@@ -11,14 +10,12 @@ const black87Color = Color(0xDD000000);
 const black38Color = Color(0x61000000);
 const black12Color = Color(0x1F000000);
 const redColor = Color(0xFFF44336);
-Color orangeColor = const Color(0xFFFF9800);
+const orangeColor = Color(0xFFFF9800);
 const whiteColor = Color(0xFFF5F5F5);
-
 const thirdy = Color.fromRGBO(0, 130, 74, 1);
 const bgAlertOTP = Color.fromARGB(255, 205, 13, 13);
 const warning = Color.fromRGBO(231, 112, 8, 1);
 const silver2 = Color.fromARGB(77, 181, 166, 166);
-// const silver2 = Color.fromARGB(173, 255, 177, 59);
 
 Color getDynamicColor(String status) {
   if (status == '1') {
@@ -93,13 +90,13 @@ var buttonKehadiranStyle = const TextStyle(
   fontWeight: FontWeight.w500,
   fontSize: 18,
 );
-var registerStyle = TextStyle(
+var registerStyle = const TextStyle(
   fontFamily: 'Ubuntu',
   fontSize: 14,
   fontWeight: FontWeight.w400,
   color: orangeColor,
 );
-var loginStyle = TextStyle(
+var loginStyle = const TextStyle(
   fontFamily: 'Ubuntu',
   fontSize: 14,
   fontWeight: FontWeight.w400,
@@ -216,6 +213,7 @@ var styleTxtfotoprofile = const TextStyle(
     fontWeight: FontWeight.w700);
 var styleDropdown = const TextStyle(
   color: blackColor,
+  fontStyle: FontStyle.italic,
   fontWeight: FontWeight.w400,
   fontFamily: 'Ubuntu',
   fontSize: 16,
@@ -227,3 +225,9 @@ var styleDroa = const TextStyle(
 );
 var styleHeaderForm = const TextStyle(
     fontFamily: 'Ubuntu', fontSize: 20, fontWeight: FontWeight.bold);
+var styleppdb = const TextStyle(
+  color: blackColor,
+  fontFamily: 'Ubuntu',
+  fontWeight: FontWeight.w500,
+  fontSize: 14,
+);
