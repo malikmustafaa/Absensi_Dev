@@ -365,23 +365,23 @@ class _BerandaViewState extends State<BerandaView> {
                     ),
                   ],
                 ),
-                Badge(
-                  showBadge: provider.index == 0 ? false : true,
-                  badgeContent: Text(provider.index.toString()),
-                  child: Material(
-                      borderRadius: BorderRadius.circular(15),
-                      color: Colors.transparent,
-                      child: InkWell(
-                        onTap: () {
-                          provider.klik(context);
-                        },
-                        child: const Icon(
-                          Icons.notifications,
-                          size: 30,
-                          color: whiteColor,
-                        ),
-                      )),
-                )
+                // Badge(
+                //   showBadge: provider.index == 0 ? false : true,
+                //   badgeContent: Text(provider.index.toString()),
+                //   child: Material(
+                //       borderRadius: BorderRadius.circular(15),
+                //       color: Colors.transparent,
+                //       child: InkWell(
+                //         onTap: () {
+                //           provider.klik(context);
+                //         },
+                //         child: const Icon(
+                //           Icons.notifications,
+                //           size: 30,
+                //           color: whiteColor,
+                //         ),
+                //       )),
+                // )
               ],
             ),
             const SizedBox(
