@@ -29,6 +29,11 @@ class ProfileViewModel extends ChangeNotifier {
       if (param['fullName'] != '-') {
         pref.setString("fullname", param['fullName'].toString());
       }
+
+      if (param['fotoProfile'] != '-') {
+        pref.setString("fotoProfile", param['fotoProfile'].toString());
+      }
+
       //  klo yg di apdate email
       // if (param['email'] != '-') {
       //   pref.setString("email", param['email'].toString());

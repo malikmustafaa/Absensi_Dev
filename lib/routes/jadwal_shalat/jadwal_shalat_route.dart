@@ -5,11 +5,8 @@ import '../../features/homes/beranda/jadwal_shalat/view/jadwal_shalat_view.dart'
 class JadwalShalatRoute {
   static List<BaseRoute> listRoute = [
     BaseRoute(
-      routeName: JadwalShalatView.routeName,
-      clazz: const JadwalShalatView(
-        subtitle: '',
-        title: '',
-      ),
+      routeName: SchedulePray.routeName,
+      clazz: const SchedulePray(),
     ),
   ];
 }

@@ -212,6 +212,8 @@ class CameraPageState extends State<CameraPage> {
                                         height: h / 16 * 1.1,
                                         child: OutlinedButton(
                                           style: ElevatedButton.styleFrom(
+                                            side: const BorderSide(
+                                                color: default2Color, width: 1),
                                             shape: RoundedRectangleBorder(
                                               borderRadius:
                                                   BorderRadius.circular(25),

@@ -1,11 +1,11 @@
-class ResponsePpdbEntity {
-  ResponsePpdbEntity({
+class ResponseDaftarPpdbEntity {
+  ResponseDaftarPpdbEntity({
     required this.email,
     required this.namaLengkap,
     required this.nisn,
     required this.jenisKelamin,
     required this.sekolahAsal,
-    required this.tempattgglLahir,
+    required this.tempatTgl,
     required this.alamat,
     required this.namaAyah,
     required this.namaIbu,
@@ -20,7 +20,7 @@ class ResponsePpdbEntity {
   String nisn;
   String jenisKelamin;
   String sekolahAsal;
-  String tempattgglLahir;
+  String tempatTgl;
   String alamat;
   String namaAyah;
   String namaIbu;
@@ -29,14 +29,14 @@ class ResponsePpdbEntity {
   String jurusanTeknologi;
   String jurusanBisnismnjmn;
 
-  factory ResponsePpdbEntity.fromJson(Map<String, dynamic> json) =>
-      ResponsePpdbEntity(
+  factory ResponseDaftarPpdbEntity.fromJson(Map<String, dynamic> json) =>
+      ResponseDaftarPpdbEntity(
         email: json["email"].toString(),
         namaLengkap: json["namaLengkap"].toString(),
         nisn: json["nisn"].toString(),
         jenisKelamin: json["jenisKelamin"].toString(),
         sekolahAsal: json["sekolahAsal"].toString(),
-        tempattgglLahir: json["tempattgglLahir"].toString(),
+        tempatTgl: json["tempatTgl"].toString(),
         alamat: json["alamat"].toString(),
         namaAyah: json["namaAyah"].toString(),
         namaIbu: json["namaIbu"].toString(),
@@ -47,12 +47,13 @@ class ResponsePpdbEntity {
       );
 
   Map<String, dynamic> toJson() => {
+        // api/pendaftaran/ppdb
         "email": email,
         "namaLengkap": namaLengkap,
         "nisn": nisn,
         "jenisKelamin": jenisKelamin,
         "sekolahAsal": sekolahAsal,
-        "tempattgglLahir": tempattgglLahir,
+        "tempatTgl": tempatTgl,
         "alamat": alamat,
         "namaAyah": namaAyah,
         "namaIbu": namaIbu,

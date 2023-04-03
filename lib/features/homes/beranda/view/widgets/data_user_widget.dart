@@ -46,15 +46,22 @@ class DataUserWidget extends StatelessWidget {
         ? Row(
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [
-              CircleAvatar(
-                backgroundColor: blackColor,
-                radius: 40,
-                child: ClipOval(
-                  child: Image.memory(
-                    hasilGmabarOrang,
-                    fit: BoxFit.cover,
-                    height: 120,
-                    width: 120,
+              Container(
+                padding: const EdgeInsets.all(2),
+                decoration: const BoxDecoration(
+                  color: Colors.white54,
+                  shape: BoxShape.circle,
+                ),
+                child: CircleAvatar(
+                  backgroundColor: blackColor,
+                  radius: 35,
+                  child: ClipOval(
+                    child: Image.memory(
+                      hasilGmabarOrang,
+                      fit: BoxFit.cover,
+                      height: 120,
+                      width: 120,
+                    ),
                   ),
                 ),
               ),
@@ -81,22 +88,22 @@ class DataUserWidget extends StatelessWidget {
           )
         : Column(
             children: [
-              // const CircleAvatar(
-              //         backgroundColor: default2Color,
-              //         radius: 60,
-              //         backgroundImage: AssetImage(
-              //           'assets/images/orang.png',
-              //         ),
-              //       )
-              CircleAvatar(
-                backgroundColor: blackColor,
-                radius: 60,
-                child: ClipOval(
-                  child: Image.memory(
-                    hasilGmabarOrang,
-                    fit: BoxFit.cover,
-                    height: 120,
-                    width: 120,
+              Container(
+                padding: const EdgeInsets.all(2),
+                decoration: const BoxDecoration(
+                  color: Colors.grey,
+                  shape: BoxShape.circle,
+                ),
+                child: CircleAvatar(
+                  backgroundColor: blackColor,
+                  radius: 60,
+                  child: ClipOval(
+                    child: Image.memory(
+                      hasilGmabarOrang,
+                      fit: BoxFit.cover,
+                      height: 120,
+                      width: 120,
+                    ),
                   ),
                 ),
               ),

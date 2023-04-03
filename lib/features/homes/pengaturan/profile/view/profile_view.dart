@@ -55,6 +55,19 @@ class _ProfileViewState extends State<ProfileView> {
 
   File? selectedImage;
 
+  // Future<File?> testCompressAndGetFile(File file, String targetPath) async {
+  //   final result = await FlutterImageCompress.compressAndGetFile(
+  //     file.absolute.path,
+  //     targetPath,
+  //     quality: 10,
+  //     minWidth: 53,
+  //     minHeight: 53,
+  //     rotate: 0,
+  //   );
+
+  //   return result;
+  // }
+
   Future<void> chooseImage(context, providerVM, String type) async {
     var image;
     if (type == "camera") {
@@ -69,9 +82,14 @@ class _ProfileViewState extends State<ProfileView> {
       );
     }
     if (image != null) {
+// disini
+
+      // final imgFile123 = await testCompressAndGetFile(image, image.path);
+
       final bytes = File(image.path).readAsBytesSync();
       String img64 = base64Encode(bytes);
       Map<String, Object> param = {};
+      // param['imgFile123'] = '$imgFile123';
       param['fotoProfile'] = img64;
       param['fullName'] = '-';
       param['email'] = '-';
@@ -79,6 +97,9 @@ class _ProfileViewState extends State<ProfileView> {
       setState(() {
         selectedImage = File(image.path);
       });
+
+      // Directory tempDir = await getApplicationDocumentsDirectory();
+      // final File newImage = await image.copy('$tempDir/fotoProfile.png');
     }
   }
 
@@ -179,27 +200,34 @@ class _ProfileViewState extends State<ProfileView> {
                 left: 130,
                 child: Stack(
                   children: [
-                    ClipOval(
-                      child: selectedImage != null
-                          ? Image.file(
-                              selectedImage!,
-                              fit: BoxFit.cover,
-                              height: 135,
-                              width: 135,
-                            )
-                          : widget.apiEmail != ''
-                              ? PhotoWidget(
-                                  apifotoProfile: widget.apifotoProfile)
-                              : CircleAvatar(
-                                  backgroundColor: default2Color,
-                                  radius: 60,
-                                  child: Image.asset(
-                                    'assets/images/orang.png',
-                                    fit: BoxFit.fitHeight,
-                                    height: 135,
-                                    width: 135,
+                    Container(
+                      padding: const EdgeInsets.all(2),
+                      decoration: const BoxDecoration(
+                        color: Colors.grey,
+                        shape: BoxShape.circle,
+                      ),
+                      child: ClipOval(
+                        child: selectedImage != null
+                            ? Image.file(
+                                selectedImage!,
+                                fit: BoxFit.cover,
+                                height: 135,
+                                width: 135,
+                              )
+                            : widget.apiEmail != ''
+                                ? PhotoWidget(
+                                    apifotoProfile: widget.apifotoProfile)
+                                : CircleAvatar(
+                                    backgroundColor: default2Color,
+                                    radius: 60,
+                                    child: Image.asset(
+                                      'assets/images/orang.png',
+                                      fit: BoxFit.fitHeight,
+                                      height: 135,
+                                      width: 135,
+                                    ),
                                   ),
-                                ),
+                      ),
                     ),
                     Positioned(
                       right: 0,

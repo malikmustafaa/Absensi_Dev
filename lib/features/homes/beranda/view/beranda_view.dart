@@ -1,7 +1,7 @@
-// ignore_for_file: avoid_init_to_null
+// ignore_for_file: prefer_typing_uninitialized_variables
+
 import 'package:badges/badges.dart';
 import 'dart:developer';
-import 'package:b7c_clean_architecture/features/homes/beranda/ppdb/daftar_ppdb/view/daftar_ppdb_view.dart';
 import 'package:b7c_clean_architecture/features/homes/beranda/view/widgets/carousel_slider.dart';
 import 'package:b7c_clean_architecture/features/homes/beranda/view/widgets/data_user_widget.dart';
 import 'package:flutter/material.dart';
@@ -10,18 +10,25 @@ import 'package:shared_preferences/shared_preferences.dart';
 import '../../../../contants/color_style.dart';
 import '../../../../domain/entity/data_user/request_data_user_entity.dart';
 import '../../home_view.dart';
+import '../../pengaturan/view/widgets/dialog.dart';
 import '../../riwayat/view/widgets/tile_new_trx.dart';
 import '../event/view/event_view.dart';
+import '../event/view/event_view1.dart';
 import '../jadwal_shalat/view/jadwal_shalat_view.dart';
 import '../model/beranda_model.dart';
 import '../ppdb/view/ppdb_view.dart';
 import '../rekam_kehadiran/view/rekam_kehadiran.dart';
 import '../services/data_user_services.dart';
 import '../view_model/beranda_view_model.dart';
+import 'widgets/custom_grid_view.dart';
+import 'widgets/dialog.dart';
 import 'widgets/item_kategori.dart';
+import 'package:permission_handler/permission_handler.dart';
+import 'package:app_settings/app_settings.dart';
 
 class BerandaView extends StatefulWidget {
   static const routeName = "/BerandaView";
+
   const BerandaView({
     Key? key,
   }) : super(key: key);
@@ -36,6 +43,7 @@ class _BerandaViewState extends State<BerandaView> {
   late SharedPreferences pref;
   List<TileNewTransaksi> listDataProfile = [];
   List<DataUserWidget> listDataUser = [];
+  String alertMessage = "Peringatan: \nAnda belum absen hari ini";
   String fullname = '';
   String username = '';
   String noNis = '';
@@ -44,7 +52,7 @@ class _BerandaViewState extends State<BerandaView> {
   bool isDataUser = true;
   bool alertNotif = false;
   bool loading = false;
-  var dataDecode = null;
+  var dataDecode;
   @override
   void initState() {
     getDataPref();
@@ -52,9 +60,86 @@ class _BerandaViewState extends State<BerandaView> {
     super.initState();
   }
 
+  Future<void> _checkPermission(context) async {
+    final serviceStatus = await Permission.location.serviceStatus;
+    final isGpsOn = serviceStatus == ServiceStatus.enabled;
+    // final isGpsoff = serviceStatus == ServiceStatus.disabled;
+    if (serviceStatus.isDisabled) {
+      const DialogBox().showImageDialog(
+        isError: false,
+        onOk: () {
+          AppSettings.openLocationSettings(asAnotherTask: true);
+          Navigator.pop(context);
+        },
+        // image: Icon(
+        //   Icons.camera_alt,
+        //   color: Pallete.PRIMARY,
+        // ),
+        onCancel: () => Navigator.pop(context),
+        title: "Perhatian",
+        buttonOk: "OK",
+        buttonCancel: "Batal",
+        context: context,
+        message:
+            "Untuk menggunakan fitur ini, mohon aktifkan lokasi pada pengaturan perangkat anda",
+      );
+      return;
+    }
+    if (!isGpsOn) {
+      log('Turn on location services before requesting permission.');
+      return;
+    }
+
+    final status = await Permission.location.request();
+    if (status == PermissionStatus.granted) {
+      log('Permission granted');
+      Navigator.pushNamed(context, SchedulePray.routeName);
+    } else if (status == PermissionStatus.denied) {
+      log('Permission denied. Show a dialog and again ask for the permission');
+      const DialogBox().showImageDialog(
+        isError: false,
+        onOk: () {
+          openAppSettings();
+          //  AppSettings.openLocationSettings();
+          Navigator.pop(context);
+        },
+        // image: Icon(
+        //   Icons.camera_alt,
+        //   color: Pallete.PRIMARY,
+        // ),
+        buttonCancel: 'Batal',
+        onCancel: () => Navigator.pop(context),
+        title: "Perhatian",
+        buttonOk: "OK",
+        context: context,
+        message: "Fitur ini membutuhkan akses lokasi anda",
+      );
+    } else if (status == PermissionStatus.permanentlyDenied) {
+      log('Take the user to the settings page.');
+      // await openAppSettings();
+      const DialogBox().showImageDialog(
+        isError: false,
+        onOk: () {
+          openAppSettings();
+          Navigator.pop(context);
+        },
+        // image: Icon(
+        //   Icons.camera_alt,
+        //   color: Pallete.PRIMARY,
+        // ),
+        buttonCancel: 'Batal',
+        onCancel: () => Navigator.pop(context),
+        title: "Perhatian",
+        buttonOk: "OK",
+        context: context,
+        message: "Fitur ini membutuhkan akses lokasi anda",
+      );
+    }
+  }
+
   _getDataUser() async {
     final pref = await SharedPreferences.getInstance();
-
+    pref.setString("fotoProfile", '');
     noNis = pref.getString('noNis') ?? "";
     if (listDataProfile.isEmpty) {
       setState(() {
@@ -81,6 +166,9 @@ class _BerandaViewState extends State<BerandaView> {
         List<dynamic> listMap = [dataProfile];
 
         for (var itemDUser in listMap) {
+          if (itemDUser['foto_profile'] != '') {
+            pref.setString("fotoProfile", itemDUser['foto_profile'].toString());
+          }
           DataUserWidget itemDataUser = DataUserWidget(
             fullName: itemDUser['full_name'] ?? '',
             email: itemDUser['email'] ?? '',
@@ -175,15 +263,42 @@ class _BerandaViewState extends State<BerandaView> {
   }
 
   Widget _buildPage(BuildContext context) {
-    return Scaffold(
-      backgroundColor: Colors.white54,
-      body: Stack(
-        children: [
-          _headSection(),
-          dataUser(),
-          _listBills(),
-          // buttonKehadiran(),
-        ],
+    return WillPopScope(
+      onWillPop: () async {
+        final shouldPop = await showDialog<bool>(
+            context: context,
+            builder: (context) {
+              return DialogWidget(
+                icon: Icons.logout,
+                message: 'Apakah anda ingin keluar?',
+                buttonCancel: 'Batal',
+                buttonOk: 'Ya',
+                onCancel: () {
+                  Navigator.of(context).pop(false);
+                },
+                onOk: () {
+                  Navigator.of(context)
+                      .pushNamedAndRemoveUntil('-', (Route route) => true);
+                },
+              );
+            });
+        if (shouldPop != null) {
+          return Future.value(shouldPop);
+        } else {
+          Future.value(false);
+        }
+        return shouldPop!;
+      },
+      child: Scaffold(
+        backgroundColor: Colors.white54,
+        body: Stack(
+          children: [
+            _headSection(),
+            dataUser(),
+            _listBills(),
+            // buttonKehadiran(),
+          ],
+        ),
       ),
     );
   }
@@ -223,7 +338,7 @@ class _BerandaViewState extends State<BerandaView> {
     return Consumer<HomeViewModel>(builder: (context, provider, child) {
       return Positioned(
         left: 25,
-        top: 40,
+        top: 45,
         right: 15,
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
@@ -269,6 +384,9 @@ class _BerandaViewState extends State<BerandaView> {
                 )
               ],
             ),
+            const SizedBox(
+              height: 14,
+            ),
             _listDataUser()
           ],
         ),
@@ -289,14 +407,14 @@ class _BerandaViewState extends State<BerandaView> {
       ),
       child: Row(
         children: [
-          const Expanded(
+          Expanded(
               flex: 4,
               child: Padding(
-                padding: EdgeInsets.only(left: 18, top: 8, bottom: 8),
+                padding: const EdgeInsets.only(left: 18, top: 8, bottom: 8),
                 child: Text(
-                  "Peringatan: \nAnda belum absen hari ini",
+                  alertMessage,
                   textAlign: TextAlign.left,
-                  style: TextStyle(
+                  style: const TextStyle(
                       fontSize: 14,
                       fontWeight: FontWeight.w700,
                       fontFamily: 'Ubuntu',
@@ -344,89 +462,165 @@ class _BerandaViewState extends State<BerandaView> {
               child: Column(
                 children: [
                   alertNotif ? appAlert() : const SizedBox(),
-                  SizedBox(
-                    height: 120,
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceAround,
-                      children: [
-                        ItemKategoriBeranda(
-                          onTap: () {
-                            Navigator.of(context).push(
-                              MaterialPageRoute(
-                                builder: (context) {
-                                  return const RekamKehadiranView(
-                                      title: 'ABSEN',
-                                      subtitle:
-                                          'Fitur absen akan segera hadir!');
-                                },
-                              ),
-                            );
-                          },
-                          icon: const Icon(
-                            Icons.ads_click,
-                            color: Colors.white,
-                          ),
-                          title: 'REKAM\nABSEN',
-                        ),
-                        ItemKategoriBeranda(
-                          onTap: () {
-                            Navigator.of(context).push(
-                              MaterialPageRoute(
-                                builder: (context) {
-                                  return const PpdbView();
-                                },
-                              ),
-                            );
-                          },
-                          icon: const Icon(
-                            Icons.person_add,
-                            color: Colors.white,
-                          ),
-                          title: 'PPBD',
-                        ),
-                        ItemKategoriBeranda(
-                          onTap: () {
-                            Navigator.of(context).push(
-                              MaterialPageRoute(
-                                builder: (context) {
-                                  return const EventView(
-                                      title: 'Event',
-                                      subtitle:
-                                          'Fitur event akan segera hadir!');
-                                },
-                              ),
-                            );
-                          },
-                          icon: const Icon(
-                            Icons.event,
-                            color: Colors.white,
-                          ),
-                          title: 'EVENT',
-                        ),
-                        ItemKategoriBeranda(
-                          onTap: () {
-                            Navigator.of(context).push(
-                              MaterialPageRoute(
-                                builder: (context) {
-                                  return const JadwalShalatView(
-                                      title: 'Jadwal Shalat',
-                                      subtitle:
-                                          'Fitur jadwal shalat akan segera hadir!');
-                                },
-                              ),
-                            );
-                          },
-                          icon: const Icon(
-                            Icons.alarm,
-                            color: Colors.white,
-                          ),
-                          title: 'JADWAL\nSHALAT',
-                        ),
-                      ],
-                    ),
-                  ),
                   const SizedBox(
-                    height: 20,
+                    height: 15,
+                  ),
+                  GridView(
+                    shrinkWrap: true,
+                    gridDelegate:
+                        const SliverGridDelegateWithFixedCrossAxisCount(
+                      crossAxisCount: 4,
+                    ),
+                    children: [
+                      CustomGDWidget(
+                        onTap: () {
+                          Navigator.of(context).push(
+                            MaterialPageRoute(
+                              builder: (context) {
+                                return const RekamKehadiranView(
+                                    title: 'ABSEN',
+                                    subtitle: 'Fitur absen akan segera hadir!');
+                              },
+                            ),
+                          );
+                        },
+                        icon: const Icon(
+                          Icons.touch_app_rounded,
+                          color: Colors.white,
+                        ),
+                        title: 'Rekam\nKehadiran',
+                      ),
+                      CustomGDWidget(
+                        onTap: () {
+                          Navigator.of(context).push(
+                            MaterialPageRoute(
+                              builder: (context) {
+                                return const PpdbView();
+                              },
+                            ),
+                          );
+                        },
+                        icon: const Icon(
+                          Icons.person_add,
+                          color: Colors.white,
+                        ),
+                        title: 'Pendaftaran\n(PPBD)',
+                      ),
+                      CustomGDWidget(
+                        onTap: () {
+                          Navigator.of(context).push(
+                            MaterialPageRoute(
+                              builder: (context) {
+                                return const EventView(
+                                    title: 'Event',
+                                    subtitle: 'Fitur event akan segera hadir!');
+                              },
+                            ),
+                          );
+                        },
+                        icon: const Icon(
+                          Icons.event,
+                          color: Colors.white,
+                        ),
+                        title: 'Event',
+                      ),
+                      CustomGDWidget(
+                        onTap: () {
+                          _checkPermission(context);
+                        },
+                        icon: const Icon(
+                          Icons.alarm,
+                          color: Colors.white,
+                        ),
+                        title: 'Jadwal\nShalat',
+                      ),
+                    ],
+                  ),
+                  // SizedBox(
+                  //   height: 120,
+                  //   child: Row(
+                  //     mainAxisAlignment: MainAxisAlignment.spaceAround,
+                  //     children: [
+                  //       ItemKategoriBeranda(
+                  //         onTap: () {
+                  //           Navigator.of(context).push(
+                  //             MaterialPageRoute(
+                  //               builder: (context) {
+                  //                 return const RekamKehadiranView(
+                  //                     title: 'ABSEN',
+                  //                     subtitle:
+                  //                         'Fitur absen akan segera hadir!');
+                  //               },
+                  //             ),
+                  //           );
+                  //         },
+                  //         icon: const Icon(
+                  //           Icons.touch_app_rounded,
+                  //           color: Colors.white,
+                  //         ),
+                  //         title: 'REKAM\nABSENasasasa',
+                  //       ),
+                  //       ItemKategoriBeranda(
+                  //         onTap: () {
+                  //           Navigator.of(context).push(
+                  //             MaterialPageRoute(
+                  //               builder: (context) {
+                  //                 return const PpdbView();
+                  //               },
+                  //             ),
+                  //           );
+                  //         },
+                  //         icon: const Icon(
+                  //           Icons.person_add,
+                  //           color: Colors.white,
+                  //         ),
+                  //         title: 'Pendaftaran\n(PPBD)',
+                  //       ),
+                  //       ItemKategoriBeranda(
+                  //         onTap: () {
+                  //           Navigator.of(context).push(
+                  //             MaterialPageRoute(
+                  //               builder: (context) {
+                  //                 return const EventView(
+                  //                     title: 'Event',
+                  //                     subtitle:
+                  //                         'Fitur event akan segera hadir!');
+                  //               },
+                  //             ),
+                  //           );
+                  //         },
+                  //         icon: const Icon(
+                  //           Icons.event,
+                  //           color: Colors.white,
+                  //         ),
+                  //         title: 'Event',
+                  //       ),
+                  //       ItemKategoriBeranda(
+                  //         onTap: () {
+                  //           _checkPermission(context);
+                  //           // Navigator.of(context).push(
+                  //           //   MaterialPageRoute(
+                  //           //     builder: (context) {
+                  //           //       return const SchedulePray();
+                  //           //     },
+                  //           //   ),
+                  //           // );
+                  //         },
+                  //         icon: const Icon(
+                  //           Icons.alarm,
+                  //           color: Colors.white,
+                  //         ),
+                  //         title: 'JADWAL\nSHALAT',
+                  //       ),
+                  //     ],
+                  //   ),
+                  // ),
+                  const SizedBox(
+                    height: 10,
+                  ),
+                  const Divider(thickness: 1),
+                  const SizedBox(
+                    height: 10,
                   ),
                   SizedBox(
                     child: CarouselSliderBeranda(),
@@ -512,7 +706,7 @@ class _BerandaViewState extends State<BerandaView> {
                 children: [
                   const CircleAvatar(
                     backgroundColor: default2Color,
-                    radius: 40,
+                    radius: 35,
                     backgroundImage: AssetImage(
                       'assets/images/orang.png',
                     ),

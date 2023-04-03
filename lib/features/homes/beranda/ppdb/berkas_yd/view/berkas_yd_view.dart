@@ -40,10 +40,13 @@ class BerkasYDView extends StatelessWidget {
         ),
         child: Column(
           children: [
-            Card(
-              shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(15)),
-              elevation: 3,
+            // Card(
+            //   shape: RoundedRectangleBorder(
+            //       borderRadius: BorderRadius.circular(15)),
+            //   elevation: 3,
+            //   child: _listBerkas(context),
+            // ),
+            Container(
               child: _listBerkas(context),
             ),
           ],

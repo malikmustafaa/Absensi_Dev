@@ -1,3 +1,5 @@
+// ignore_for_file: unnecessary_null_comparison
+
 import 'package:b7c_clean_architecture/contants/color_style.dart';
 import 'package:flutter/material.dart';
 
@@ -20,11 +22,15 @@ class EventView extends StatelessWidget {
           title,
         ),
       ),
-      body: Center(
-        child: Text(
-          subtitle,
-          style: textTglMasukStyle,
-        ),
+      body: Column(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+          Center(
+              child: Text(
+            subtitle,
+            style: const TextStyle(fontWeight: FontWeight.bold),
+          )),
+        ],
       ),
     );
   }

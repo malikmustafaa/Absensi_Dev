@@ -1,12 +1,11 @@
-
-
-class RequestPpdbEntity {
+class RequestDaftarPpdbEntity {
+  String noNis;
   String email;
   String namaLengkap;
   String nisn;
   String jenisKelamin;
   String sekolahAsal;
-  String tempattgglLahir;
+  String tempatTgl;
   String alamat;
   String namaAyah;
   String namaIbu;
@@ -15,13 +14,14 @@ class RequestPpdbEntity {
   String jurusanTeknologi;
   String jurusanBisnismnjmn;
 
-  RequestPpdbEntity({
+  RequestDaftarPpdbEntity({
+    required this.noNis,
     required this.email,
     required this.namaLengkap,
     required this.nisn,
     required this.jenisKelamin,
     required this.sekolahAsal,
-    required this.tempattgglLahir,
+    required this.tempatTgl,
     required this.alamat,
     required this.namaAyah,
     required this.namaIbu,
@@ -32,12 +32,13 @@ class RequestPpdbEntity {
   });
 
   Map<String, dynamic> toMap() => {
+        "no_nis": noNis,
         "email": email,
         "namaLengkap": namaLengkap,
         "nisn": nisn,
         "jenisKelamin": jenisKelamin,
         "sekolahAsal": sekolahAsal,
-        "tempattgglLahir": tempattgglLahir,
+        "tempatTgl": tempatTgl,
         "alamat": alamat,
         "namaAyah": namaAyah,
         "namaIbu": namaIbu,

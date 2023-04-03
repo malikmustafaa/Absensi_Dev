@@ -16,13 +16,13 @@ var listPengisianBenar = [
     "angka": "1.",
     "kategori": "Email",
     "deskription": "Wajib menggunakan email yang aktif",
-    "title": "muhammadudin@gmail.com",
+    "title": "udin@gmail.com",
   },
   {
     "angka": "2.",
     "kategori": "Nama Lengkap",
     "deskription": "Wajib sesuai ijazah/akte kelahiran",
-    "title": "Muhammad Udin",
+    "title": "Udin Bono",
   },
   {
     "angka": "3.",

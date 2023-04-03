@@ -42,13 +42,13 @@ class FormBenarView extends StatelessWidget {
                     const EdgeInsets.symmetric(horizontal: 15, vertical: 15),
                 child: Column(
                   children: [
-                    Card(
-                      shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(15)),
-                      elevation: 3,
-                      child: _listData(context),
-                    ),
-                    // _listData(context),
+                    // Card(
+                    //   shape: RoundedRectangleBorder(
+                    //       borderRadius: BorderRadius.circular(15)),
+                    //   elevation: 3,
+                    //   child: _listData(context),
+                    // ),
+                    _listData(context),
                     const SizedBox(height: 20),
                   ],
                 ),

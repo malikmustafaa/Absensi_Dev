@@ -140,7 +140,7 @@ class _KameraUIState extends State<KameraUI> {
                     widget.onCapture(file);
                   },
                   icon: const Icon(
-                    Icons.radar,
+                    Icons.radio_button_checked,
                   ),
                   iconSize: 80,
                 ),
